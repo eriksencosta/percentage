@@ -221,7 +221,7 @@ class PercentageTest {
     @Test
     fun `Given a Percentage for zero and a number When valueWhen is called Then an Exception is thrown`() {
         val exception = assertThrows<OperationUndefinedForZero> { Percentage(0).valueWhen(5) }
-        assertEquals("Can not calculate the number when Percentage is zero", exception.message)
+        assertEquals("This operation cannot execute when Percentage is zero", exception.message)
     }
 
     @TestFactory

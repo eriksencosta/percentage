@@ -150,7 +150,7 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
      * @return The number that the passed number represents as the current [Percentage].
      */
     infix fun valueWhen(number: Number): Double =
-        checkNonZero(decimal) { "Can not calculate the number when Percentage is zero" }.run {
+        checkNonZero(decimal) { "This operation cannot execute when Percentage is zero" }.run {
             number.toDouble() / decimal
         }
 
