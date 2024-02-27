@@ -55,7 +55,7 @@ println(percentage) // Prints: 80%
 ```kotlin
 val value = 5
 val percentage = 20.percent()
-val result = value numberOf percentage
+val result = value of percentage
 
 println(result) // Prints: 25.0
                 // 5 is 20% of 25
@@ -80,10 +80,11 @@ docker run --rm -u gradle -v "$PWD":/home/gradle/project -w /home/gradle/project
 - Decide if the `Number` extension methods should throw their own exceptions instead of just throwing `Percentage`'s
   exceptions
 - Review scale and precision on `Percentage`
-- Review method names: `ratioOf`, `rangeOf`, and `numberOf`
+- Review method names: `ratioOf`, `rangeOf`, and `numberOf`/`of`
 - Multiplatform build
 - Decent README
-- Configure static code analysis (Sonacloud, Codacy, CodeRabbit, Snyk, detekt?)
+- Configure static code analysis (Sonarcloud, Codacy, CodeRabbit, Snyk, detekt?)
+- Squash all commits
 
 ## Disclaimer
 
