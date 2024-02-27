@@ -167,8 +167,8 @@ class PercentageTest {
 
     @Test
     fun `Given two numbers with the second being zero When of is called Then an Exception is thrown`() {
-        val exception = assertThrows<ArgumentCanNotBeZero> { Percentage.ratioOf(1, 0) }
-        assertEquals("The argument \"other\" can not be zero", exception.message)
+        val exception = assertThrows<ArgumentCannotBeZero> { Percentage.ratioOf(1, 0) }
+        assertEquals("The argument \"other\" cannot be zero", exception.message)
     }
 
     @TestFactory
@@ -191,8 +191,8 @@ class PercentageTest {
 
     @Test
     fun `Given two numbers with the first being zero When relativeChange is called Then an Exception is thrown`() {
-        val exception = assertThrows<ArgumentCanNotBeZero> { Percentage.relativeChange(0, 100) }
-        assertEquals("The argument \"initial\" can not be zero", exception.message)
+        val exception = assertThrows<ArgumentCannotBeZero> { Percentage.relativeChange(0, 100) }
+        assertEquals("The argument \"initial\" cannot be zero", exception.message)
     }
 
     @TestFactory

@@ -56,7 +56,7 @@ infix fun Number.toPercentage(precision: Int): Percentage = percent(precision)
  *
  * @param[other] The other number.
  *
- * @throws[ArgumentCanNotBeZero] When the `other` number is zero.
+ * @throws[ArgumentCannotBeZero] When the `other` number is zero.
  *
  * @return A [Percentage] that represents the ratio of this number and the `other` number.
  *
@@ -81,7 +81,7 @@ infix fun Number.ratioOf(other: Number): Percentage = Percentage.ratioOf(this, o
  * @param[other]     The other number.
  * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
  *
- * @throws[ArgumentCanNotBeZero] When the other number is zero.
+ * @throws[ArgumentCannotBeZero] When the other number is zero.
  *
  * @return A [Percentage] that represents the ratio of this number and the `other` number.
  *
@@ -112,7 +112,7 @@ fun Number.ratioOf(other: Number, precision: Int): Percentage = Percentage.ratio
  *
  * @param[other] The other number.
  *
- * @throws[ArgumentCanNotBeZero] When this number is zero.
+ * @throws[ArgumentCannotBeZero] When this number is zero.
  *
  * @return A [Percentage] that represents the percentage change of this number and the other number.
  *
@@ -145,7 +145,7 @@ infix fun Number.relativeChange(other: Number): Percentage = Percentage.relative
  * @param[other]     The other number.
  * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
  *
- * @throws[ArgumentCanNotBeZero] When this number is zero.
+ * @throws[ArgumentCannotBeZero] When this number is zero.
  *
  * @return A [Percentage] that represents the percentage change of this number and the other number.
  *

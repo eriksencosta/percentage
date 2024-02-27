@@ -82,7 +82,7 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
          * @param[other]     The second number.
          * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
          *
-         * @throws[ArgumentCanNotBeZero] When the second number is zero.
+         * @throws[ArgumentCannotBeZero] When the second number is zero.
          *
          * @return A [Percentage] that represents the ratio of [number] and [other].
          */
@@ -110,7 +110,7 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
          * @param[ending]    The ending number.
          * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
          *
-         * @throws[ArgumentCanNotBeZero] When the initial number is zero.
+         * @throws[ArgumentCannotBeZero] When the initial number is zero.
          *
          * @return A [Percentage] that represents the percentage change of an initial and ending numbers.
          */
