@@ -22,12 +22,10 @@ val discountedValue = value - percentage
 println(discountedValue) // Prints: 95.0
 ```
 
-You may also simply multiply a value by a percentage to calculate its result:
+You may also simply multiply a value by a `Percentage` to calculate its result:
 
 ```kotlin
-val value = 100
-val percentage = 10.percent() // Alternatively: Percentage(10)
-val result = value * percentage()
+val result = 100 * Percentage(10)
 
 println(result) // Prints: 10.0
 ```
@@ -63,6 +61,28 @@ println(result) // Prints: 25.0
                 // 5 is 20% of 25
 ```
 
+## Development setup
+
+This project uses JDK 18 for development. You IDE of choice may use Gradle for building and executing the project code.
+
+## Running locally
+
+You need Gradle 8.6+ to run the project locally and Java 18. If you don't have them, you may use Docker to build the
+project and check if its working properly:
+
+```bash
+docker run --rm -u gradle -v "$PWD":/home/gradle/project -w /home/gradle/project gradle gradle build
+```
+
+## TODO
+
+- Decide the library name
+- Decide if the `Number` extension methods should throw their own exceptions instead of just throwing `Percentage`'s
+  exceptions
+- Review scale and precision on `Percentage`
+- Review method names: `ratioOf`, `rangeOf`, and `numberOf`
+- Configure static code analysis (Sonacloud, Codacy, CodeRabbit, Snyk, detekt?)
+
 ## Disclaimer
 
-This is WIP, published for close friends reviews only. It is unfinished.
+This is WIP, published for close friends reviews only.
