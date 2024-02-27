@@ -38,7 +38,7 @@ println(result) // Prints: 10.0
 
 ## Other calculations
 
-### Percentage change
+### Relative change
 
 ```kotlin
 val initial = 33
@@ -48,7 +48,7 @@ val change = initial relativeChange ending
 println(change) // Prints: 133%
 ```
 
-## Percentage calculation
+### Percentage calculation
 
 ```kotlin
 val percentage = 4 ratioOf 5
@@ -56,7 +56,7 @@ val percentage = 4 ratioOf 5
 println(percentage) // Prints: 80%
 ```
 
-## The basic value of a number and a percentage
+### The basic value of a number and a percentage
 
 ```kotlin
 val value = 5
@@ -71,7 +71,7 @@ println(result) // Prints: 25.0
 
 I used JDK 18 for development. You IDE of choice may use Gradle for building and executing the project code.
 
-## Running locally
+### Running locally
 
 You need Gradle 8.6+ to run the project locally and Java 18. If you don't have them, you may use Docker to build the
 project and check if it is working properly:
