@@ -210,17 +210,17 @@ class PercentageTest {
             }
 
     @TestFactory
-    fun `Given a Percentage and a number When numberOf is called Then a proportional number is returned`() =
+    fun `Given a Percentage and a number When valueWhen is called Then a proportional number is returned`() =
         Fixtures.numberOf
             .map { (percentage, number, expected) ->
                 dynamicTest("given $percentage when I pass $number then I should get $expected") {
-                    assertEquals(expected, percentage.numberOf(number))
+                    assertEquals(expected, percentage.valueWhen(number))
                 }
             }
 
     @Test
-    fun `Given a Percentage for zero and a number When numberOf is called Then an Exception is thrown`() {
-        val exception = assertThrows<OperationUndefinedForZero> { Percentage(0).numberOf(5) }
+    fun `Given a Percentage for zero and a number When valueWhen is called Then an Exception is thrown`() {
+        val exception = assertThrows<OperationUndefinedForZero> { Percentage(0).valueWhen(5) }
         assertEquals("Can not calculate the number when Percentage is zero", exception.message)
     }
 

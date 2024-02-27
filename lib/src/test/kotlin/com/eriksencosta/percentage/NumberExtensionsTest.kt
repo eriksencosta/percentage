@@ -101,11 +101,11 @@ class NumberExtensionsTest {
             }
 
     @TestFactory
-    fun `Given a Number and a Percentage When of is called Then a proportional number is returned`() =
+    fun `Given a Number and a Percentage When valueWhen is called Then a proportional number is returned`() =
         Fixtures.numberOf
             .map { (percentage, number, expected) ->
                 dynamicTest("given $number when I pass $percentage then I should get $expected") {
-                    assertEquals(expected, number.of(percentage))
+                    assertEquals(expected, number.valueWhen(percentage))
                 }
             }
 

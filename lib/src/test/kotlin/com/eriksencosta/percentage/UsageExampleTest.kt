@@ -28,8 +28,8 @@ class UsageExampleTest {
             ),
             Quadruple(
                 "100 * 7 is 80% of what + 1/4 (25%)", // 7 is 80% of 8.75
-                { (Percentage.ratioOf(1, 4)) + ((Percentage(80).numberOf(7)) * 100) },
-                { 100 * (7 of 80.percent()) + (1 ratioOf 4) },
+                { (Percentage.ratioOf(1, 4)) + ((Percentage(80).valueWhen(7)) * 100) },
+                { 100 * (7 valueWhen 80.percent()) + (1 ratioOf 4) },
                 1093.75
             ),
             Quadruple(

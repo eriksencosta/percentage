@@ -177,7 +177,7 @@ fun Number.relativeChange(other: Number, precision: Int): Percentage = Percentag
  * TODO: I'm undecided if this should throw the ArgumentCanNotBeZero exception (invariant unsatisfied when
  *       `percentage = 0`) or just throw the Percentage's OperationUndefinedForZero exception (currently implemented).
  */
-infix fun Number.of(percentage: Percentage): Double = percentage.numberOf(this)
+infix fun Number.valueWhen(percentage: Percentage): Double = percentage.valueWhen(this)
 
 /**
  * Calculates the proportional part of this number according to a `Percentage`.
