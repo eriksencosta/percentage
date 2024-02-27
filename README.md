@@ -81,6 +81,8 @@ docker run --rm -u gradle -v "$PWD":/home/gradle/project -w /home/gradle/project
   exceptions
 - Review scale and precision on `Percentage`
 - Review method names: `ratioOf`, `rangeOf`, and `numberOf`
+- Multiplatform build
+- Decent README
 - Configure static code analysis (Sonacloud, Codacy, CodeRabbit, Snyk, detekt?)
 
 ## Disclaimer
