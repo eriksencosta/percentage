@@ -40,8 +40,8 @@ class UsageExampleTest {
             ),
             Quadruple(
                 "(100 + change of 33 to 77) * 10%",
-                { Percentage(10, 2) * (Percentage.changeOf(33, 77) + 100) },
-                { (100 + (33 changeOf 77)) * 10.percent(2) },
+                { Percentage(10, 2) * (Percentage.relativeChange(33, 77) + 100) },
+                { (100 + (33 relativeChange 77)) * 10.percent(2) },
                 23.333333333333332
             )
         )

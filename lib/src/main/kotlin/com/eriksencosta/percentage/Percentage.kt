@@ -114,7 +114,7 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
          *
          * @return A [Percentage] that represents the percentage change of an initial and ending numbers.
          */
-        fun changeOf(initial: Number, ending: Number, precision: Int? = null): Percentage =
+        fun relativeChange(initial: Number, ending: Number, precision: Int? = null): Percentage =
             when {
                 0 == initial && 0 == ending -> Percentage(0, precision)
                 else -> {

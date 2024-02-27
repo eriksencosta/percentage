@@ -172,26 +172,26 @@ class PercentageTest {
     }
 
     @TestFactory
-    fun `Given two numbers When changeOf is called Then a Percentage change of them is returned`() =
+    fun `Given two numbers When relativeChange is called Then a Percentage change of them is returned`() =
         Fixtures.changeOf
             .map { (initial, ending, expected) ->
                 dynamicTest("when I pass $initial and $ending then I should get $expected") {
-                    assertEquals(expected, Percentage.changeOf(initial, ending))
+                    assertEquals(expected, Percentage.relativeChange(initial, ending))
                 }
             }
 
     @TestFactory
-    fun `Given two numbers and a precision When changeOf is called Then a precise Percentage change of them is returned`() =
+    fun `Given two numbers and a precision When relativeChange is called Then a precise Percentage change of them is returned`() =
         Fixtures.changeOfWithPrecision
             .map { (initial, ending, precision, expected) ->
                 dynamicTest("when I pass $initial, $ending, and $precision then I should get $expected") {
-                    assertEquals(expected, Percentage.changeOf(initial, ending, precision))
+                    assertEquals(expected, Percentage.relativeChange(initial, ending, precision))
                 }
             }
 
     @Test
-    fun `Given two numbers with the first being zero When changeOf is called Then an Exception is thrown`() {
-        val exception = assertThrows<ArgumentCanNotBeZero> { Percentage.changeOf(0, 100) }
+    fun `Given two numbers with the first being zero When relativeChange is called Then an Exception is thrown`() {
+        val exception = assertThrows<ArgumentCanNotBeZero> { Percentage.relativeChange(0, 100) }
         assertEquals("The argument \"initial\" can not be zero", exception.message)
     }
 
