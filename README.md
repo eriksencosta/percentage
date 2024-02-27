@@ -1,5 +1,11 @@
 # Percentage library
 
+## Disclaimer
+
+This is WIP, published for close friends reviews only. This README is temporary.
+
+## Usage
+
 Percentage is a library that introduces the `Percentage` type: a class make percentage calculations in Kotlin easier.
 
 Let's say you want to calculate a 5% discount of a value. In vanilla Kotlin, you would do:
@@ -37,7 +43,7 @@ println(result) // Prints: 10.0
 ```kotlin
 val initial = 33
 val ending = 77
-val change = initial changeOf ending
+val change = initial relativeChange ending
 
 println(change) // Prints: 133%
 ```
@@ -50,12 +56,12 @@ val percentage = 4 ratioOf 5
 println(percentage) // Prints: 80%
 ```
 
-## The number represented by a percentage
+## The basic value of a number and a percentage
 
 ```kotlin
 val value = 5
 val percentage = 20.percent()
-val result = value of percentage
+val result = value valueWhen percentage
 
 println(result) // Prints: 25.0
                 // 5 is 20% of 25
@@ -63,12 +69,12 @@ println(result) // Prints: 25.0
 
 ## Development setup
 
-This project uses JDK 18 for development. You IDE of choice may use Gradle for building and executing the project code.
+I used JDK 18 for development. You IDE of choice may use Gradle for building and executing the project code.
 
 ## Running locally
 
 You need Gradle 8.6+ to run the project locally and Java 18. If you don't have them, you may use Docker to build the
-project and check if its working properly:
+project and check if it is working properly:
 
 ```bash
 docker run --rm -u gradle -v "$PWD":/home/gradle/project -w /home/gradle/project gradle gradle build
@@ -80,12 +86,7 @@ docker run --rm -u gradle -v "$PWD":/home/gradle/project -w /home/gradle/project
 - Decide if the `Number` extension methods should throw their own exceptions instead of just throwing `Percentage`'s
   exceptions
 - Review scale and precision on `Percentage`
-- Review method names: `ratioOf`, `rangeOf`, and `numberOf`/`of`
 - Multiplatform build
 - Decent README
 - Configure static code analysis (Sonarcloud, Codacy, CodeRabbit, Snyk, detekt?)
 - Squash all commits
-
-## Disclaimer
-
-This is WIP, published for close friends reviews only.
