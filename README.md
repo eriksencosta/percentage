@@ -73,8 +73,8 @@ I used JDK 18 for IDE development while using version 8 as the Gradle JDK.
 
 ### Running locally
 
-You need Gradle 8.6+ to run the project locally and Java 18. If you don't have them, you may use Docker to build the
-project and check if it is working properly:
+You need Gradle 8.6+ to run the project locally. If you don't have them, you may use Docker to build the project and
+check if it is working properly:
 
 ```bash
 docker run --rm -u gradle -v "$PWD":/home/gradle/project -w /home/gradle/project gradle gradle build
@@ -88,5 +88,5 @@ docker run --rm -u gradle -v "$PWD":/home/gradle/project -w /home/gradle/project
 - Review scale and precision on `Percentage`
 - Multiplatform build
 - Decent README
-- Configure static code analysis (Sonarcloud, Codacy, CodeRabbit, Snyk, detekt?)
+- Configure static code analysis (Sonarcloud, Code Climate, Codacy, CodeRabbit, Snyk, detekt?)
 - Squash all commits
