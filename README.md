@@ -69,7 +69,7 @@ println(result) // Prints: 25.0
 
 ## Development setup
 
-I used JDK 18 for development. You IDE of choice may use Gradle for building and executing the project code.
+I used JDK 18 for IDE development while using version 8 as the Gradle JDK.
 
 ### Running locally
 
