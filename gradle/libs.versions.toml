@@ -5,6 +5,7 @@
 kotlin-stdlib = { strictly = "[1.9,2.0[" }
 junit-jupiter-engine = { strictly = "[5.10,6.0]" }
 junit-platform-launcher = { strictly = "[1.10,2.0]" }
+sonatype-central-upload = { strictly = "[1.0.3,2.0]" }
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin-stdlib" }
@@ -13,5 +14,5 @@ junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", vers
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform-launcher" }
 
 [plugins]
-jvm = { id = "org.jetbrains.kotlin.jvm", version = "1.9.22" }
-sonatype-central-upload = { id = "cl.franciscosolis.sonatype-central-upload", version = "1.0.3" }
+jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-stdlib" }
+sonatype-central-upload = { id = "cl.franciscosolis.sonatype-central-upload", version.ref = "sonatype-central-upload" }

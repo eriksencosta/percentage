@@ -18,6 +18,7 @@ version = System.getenv("BUILD_VERSION").let {
 plugins {
     `java-library`
     `maven-publish`
+    alias(libs.plugins.jvm)
     alias(libs.plugins.sonatype.central.upload)
 }
 
@@ -26,7 +27,6 @@ repositories {
 }
 
 dependencies {
-    compileOnly(libs.kotlin.stdlib)
     testImplementation(libs.kotlin.test.junit5)
     testImplementation(libs.junit.jupiter.engine)
     testRuntimeOnly(libs.junit.platform.launcher)
@@ -71,7 +71,7 @@ tasks {
     }
 
     named<Task>("build") {
-        dependsOn("generatePomFileForPomPublication")
+        dependsOn("test", "generatePomFileForPomPublication")
     }
 
     named<Task>("sonatypeCentralUpload") {
