@@ -1,7 +1,15 @@
 pluginManagement {
+    resolutionStrategy {
+        eachPlugin {
+            if ("cl.franciscosolis.sonatype-central-upload" == requested.id.toString()) {
+                useModule("com.github.eriksencosta:SonatypeCentralUpload:publishing-type-option-jitpack-SNAPSHOT")
+            }
+        }
+    }
+
     repositories {
-        mavenLocal()
         gradlePluginPortal()
+        maven("https://jitpack.io")
     }
 }
 
