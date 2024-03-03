@@ -1,4 +1,5 @@
 jdk:
   - openjdk11
-env:
-  GROUP: "com.eriksencosta"
+install:
+  - echo "Running a custom install command"
+  - ./gradlew clean build publishToMavenLocal
