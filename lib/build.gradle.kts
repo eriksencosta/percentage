@@ -43,6 +43,7 @@ tasks {
 
     named<JacocoReport>("jacocoTestReport") {
         reports.xml.required = true
+        sourceSets(sourceSets.main.get())
         dependsOn("test")
     }
 
