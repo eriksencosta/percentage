@@ -19,6 +19,7 @@ plugins {
     `java-library`
     `maven-publish`
     alias(libs.plugins.jvm)
+    alias(libs.plugins.dokka)
     alias(libs.plugins.sonatype.central.upload)
 }
 
@@ -33,10 +34,7 @@ dependencies {
 }
 
 java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(8))
-    }
-    withJavadocJar()
+    toolchain.languageVersion = JavaLanguageVersion.of(8)
     withSourcesJar()
 }
 
@@ -68,25 +66,35 @@ tasks {
         publicKey = System.getenv("GPG_PUBLIC_KEY")
 
         publishingType = "MANUAL"
+
+        mustRunAfter("build", "generateJavadocJar")
     }
 
     named<Task>("build") {
         dependsOn("test", "generatePomFileForPomPublication")
     }
 
-    named<Task>("sonatypeCentralUpload") {
-        mustRunAfter("build")
+    register<Jar>("generateJavadocJar") {
+        dependsOn(dokkaJavadoc)
+        from(dokkaJavadoc.flatMap { it.outputDirectory })
+        archiveClassifier.set("javadoc")
+
+        mustRunAfter("sourcesJar")
     }
 
-    register("release") {
+    register<Task>("generateDocs") {
+        dependsOn("dokkaHtml", "dokkaGfm", "dokkaJavadoc")
+    }
+
+    register<Task>("release") {
         description = "Build and publish the library to Maven Central."
         group = "Release"
 
-        dependsOn("build", "sonatypeCentralUpload")
-        mustRunAfter("sonatypeCentralUpload")
+        dependsOn("build", "generateJavadocJar", "sonatypeCentralUpload", "version")
+        mustRunAfter("sonatypeCentralUpload", "version")
     }
 
-    register("version") {
+    register<Task>("version") {
         description = "Prints the version stamp."
         group = "Verification"
 
@@ -99,7 +107,6 @@ tasks {
         }
     }
 }
-
 
 publishing {
     publications {

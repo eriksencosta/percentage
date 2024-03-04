@@ -15,4 +15,5 @@ junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher
 
 [plugins]
 jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-stdlib" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "kotlin-stdlib" }
 sonatype-central-upload = { id = "cl.franciscosolis.sonatype-central-upload", version.ref = "sonatype-central-upload" }
