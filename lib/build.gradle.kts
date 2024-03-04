@@ -14,6 +14,7 @@ version = "%s%s".format(version, snapshot)
 plugins {
     `java-library`
     `maven-publish`
+    jacoco
     alias(libs.plugins.jvm)
     alias(libs.plugins.dokka)
     alias(libs.plugins.sonatype.central.upload)
@@ -37,6 +38,12 @@ java {
 tasks {
     named<Test>("test") {
         useJUnitPlatform()
+        finalizedBy("jacocoTestReport")
+    }
+
+    named<JacocoReport>("jacocoTestReport") {
+        reports.xml.required = true
+        dependsOn("test")
     }
 
     named<Jar>("jar") {
