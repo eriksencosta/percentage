@@ -7,6 +7,17 @@ on:
     branches: [ "*" ]
 
 jobs:
+  env_vars:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+    - name: Check GITHUB_REF_NAME
+      run: echo "::debug ${{ GITHUB_REF_NAME }}"
+    - name: Check GITHUB_REF_TYPE
+      run: echo "::debug ${{ GITHUB_REF_TYPE }}"
+
   build:
 
     runs-on: ubuntu-latest
