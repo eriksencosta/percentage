@@ -6,14 +6,10 @@ val snapshotOption = System.getenv("SNAPSHOT_BUILD").let {
     it.isNullOrBlank() || "yes" == it.lowercase(Locale.getDefault())
 }
 
-val snapshot = if (snapshotOption) "-SNAPSHOT" else ""
+val snapshot = if (snapshotOption) "-snapshot" else ""
 
 group = "com.eriksencosta"
-version = System.getenv("BUILD_VERSION").let {
-    (it?.ifBlank { "0.0.0" } ?: "0.0.0").let { version ->
-        "%s%s".format(version, snapshot)
-    }
-}
+version = "%s%s".format(version, snapshot)
 
 plugins {
     `java-library`
