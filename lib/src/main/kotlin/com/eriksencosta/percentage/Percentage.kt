@@ -87,9 +87,9 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
          * @return A [Percentage] that represents the ratio of [number] and [other].
          */
         fun ratioOf(number: Number, other: Number, precision: Int? = null): Percentage =
-           requireNonZero(other, "other").run {
-               Percentage(number.toDouble() / other.toDouble() * 100, precision)
-           }
+            requireNonZero(other, "other").run {
+                Percentage(number.toDouble() / other.toDouble() * 100, precision)
+            }
 
         /**
          * Creates a `Percentage` which represents the percentage change of an initial and ending numbers.
@@ -114,16 +114,15 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
          *
          * @return A [Percentage] that represents the percentage change of an initial and ending numbers.
          */
-        fun relativeChange(initial: Number, ending: Number, precision: Int? = null): Percentage =
-            when {
-                0 == initial && 0 == ending -> Percentage(0, precision)
-                else -> {
-                    requireNonZero(initial, "initial")
+        fun relativeChange(initial: Number, ending: Number, precision: Int? = null): Percentage = when {
+            0 == initial && 0 == ending -> Percentage(0, precision)
+            else -> {
+                requireNonZero(initial, "initial")
 
-                    val initialValue = initial.toDouble()
-                    Percentage((ending.toDouble() - initialValue) / abs(initialValue) * 100, precision)
-                }
+                val initialValue = initial.toDouble()
+                Percentage((ending.toDouble() - initialValue) / abs(initialValue) * 100, precision)
             }
+        }
     }
 
     /**
