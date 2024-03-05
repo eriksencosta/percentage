@@ -208,8 +208,5 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
 
     override fun hashCode(): Int = decimal.hashCode()
 
-    override fun toString(): String = when {
-        null == precision || 0 > precision -> "%.0f%%"
-        else -> "%.${precision}f%%"
-    }.format(value)
+    override fun toString(): String = when { null == precision || 0 > precision -> "%.0f%%" else -> "%.${precision}f%%" }.format(value)
 }
