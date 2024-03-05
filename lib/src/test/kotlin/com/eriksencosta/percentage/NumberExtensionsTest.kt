@@ -84,7 +84,7 @@ class NumberExtensionsTest {
 
     @TestFactory
     fun `Given a Number and a second number When relativeChange is called Then a Percentage change of them is returned`() =
-        Fixtures.changeOf
+        Fixtures.relativeChange
             .map { (number, other, expected) ->
                 dynamicTest("given $number when I pass $other then I should get $expected") {
                     assertEquals(expected, number.relativeChange(other))
@@ -93,7 +93,7 @@ class NumberExtensionsTest {
 
     @TestFactory
     fun `Given a Number and a second number and a precision When relativeChange is called Then a precise Percentage change of them is returned`() =
-        Fixtures.changeOfWithPrecision
+        Fixtures.relativeChangeWithPrecision
             .map { (number, other, precision, expected) ->
                 dynamicTest("given $number when I pass $other and $precision then I should get $expected") {
                     assertEquals(expected, number.relativeChange(other, precision))
@@ -102,7 +102,7 @@ class NumberExtensionsTest {
 
     @TestFactory
     fun `Given a Number and a Percentage When valueWhen is called Then a proportional number is returned`() =
-        Fixtures.numberOf
+        Fixtures.valueWhen
             .map { (percentage, number, expected) ->
                 dynamicTest("given $number when I pass $percentage then I should get $expected") {
                     assertEquals(expected, number.valueWhen(percentage))

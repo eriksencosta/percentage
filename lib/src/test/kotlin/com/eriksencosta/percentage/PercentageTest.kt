@@ -173,7 +173,7 @@ class PercentageTest {
 
     @TestFactory
     fun `Given two numbers When relativeChange is called Then a Percentage change of them is returned`() =
-        Fixtures.changeOf
+        Fixtures.relativeChange
             .map { (initial, ending, expected) ->
                 dynamicTest("when I pass $initial and $ending then I should get $expected") {
                     assertEquals(expected, Percentage.relativeChange(initial, ending))
@@ -182,7 +182,7 @@ class PercentageTest {
 
     @TestFactory
     fun `Given two numbers and a precision When relativeChange is called Then a precise Percentage change of them is returned`() =
-        Fixtures.changeOfWithPrecision
+        Fixtures.relativeChangeWithPrecision
             .map { (initial, ending, precision, expected) ->
                 dynamicTest("when I pass $initial, $ending, and $precision then I should get $expected") {
                     assertEquals(expected, Percentage.relativeChange(initial, ending, precision))
@@ -211,7 +211,7 @@ class PercentageTest {
 
     @TestFactory
     fun `Given a Percentage and a number When valueWhen is called Then a proportional number is returned`() =
-        Fixtures.numberOf
+        Fixtures.valueWhen
             .map { (percentage, number, expected) ->
                 dynamicTest("given $percentage when I pass $number then I should get $expected") {
                     assertEquals(expected, percentage.valueWhen(number))

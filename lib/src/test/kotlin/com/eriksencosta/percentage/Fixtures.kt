@@ -1,7 +1,7 @@
 package com.eriksencosta.percentage
 
 object Fixtures {
-    val changeOf = listOf(
+    val relativeChange = listOf(
         Triple(50, -250, Percentage(-600)),
         Triple(40, -80, Percentage(-300)),
         Triple(10, -10, Percentage(-200)),
@@ -20,7 +20,7 @@ object Fixtures {
         Triple(0, 0, Percentage(0)),
     )
 
-    val changeOfWithPrecision = listOf(
+    val relativeChangeWithPrecision = listOf(
         Quadruple(50, -250, 1, Percentage(-600, 1)),
         Quadruple(40, -80, 2, Percentage(-300, 2)),
         Quadruple(10, -10, 3, Percentage(-200, 3)),
@@ -51,7 +51,7 @@ object Fixtures {
         Quadruple(-1, -2, 3, Percentage(50, 3)),
     )
 
-    val numberOf = listOf(
+    val valueWhen = listOf(
         Triple(Percentage(125), 25, 20.0),
         Triple(Percentage(60), 45, 75.0),
         Triple(Percentage(10), 10, 100.0),
