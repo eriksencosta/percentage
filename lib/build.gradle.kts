@@ -71,11 +71,12 @@ tasks {
 
         publishingType = "MANUAL"
 
-        mustRunAfter("build", "generateJavadocJar")
+        dependsOn("build")
+        mustRunAfter("build")
     }
 
     named<Task>("build") {
-        dependsOn("test", "generatePomFileForPomPublication")
+        dependsOn("test", "generatePomFileForPomPublication", "generateJavadocJar")
     }
 
     register<Jar>("generateJavadocJar") {
@@ -94,7 +95,7 @@ tasks {
         description = "Build and publish the library to Maven Central."
         group = "Release"
 
-        dependsOn("build", "generateJavadocJar", "sonatypeCentralUpload", "version")
+        dependsOn("build", "sonatypeCentralUpload", "version")
         mustRunAfter("sonatypeCentralUpload", "version")
     }
 
