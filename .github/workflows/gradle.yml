@@ -25,13 +25,17 @@ jobs:
       run: echo "::debug ${{ github.ref_type }}"
 
   build:
-
+    name: Build
     runs-on: ubuntu-latest
     permissions:
       contents: read
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action@v2
 
     - name: Set up JDK 17
       uses: actions/setup-java@v4
@@ -42,8 +46,14 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
 
-    - name: Build with Gradle Wrapper
+    - name: Build the project
+      run: ./gradlew build
+      env:
+        SNAPSHOT_BUILD: ${{ github.ref_name == 'trunk' && 'yes' || 'no' }}
+
+    - name: Release the project
       run: ./gradlew release
+      if: github.ref_name == 'trunk' || github.ref_name == 'tag'
       env:
         SNAPSHOT_BUILD: ${{ github.ref_name == 'trunk' && 'yes' || 'no' }}
         MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
