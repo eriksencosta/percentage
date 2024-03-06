@@ -89,7 +89,7 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
          * @return A [Percentage] that represents the ratio of [number] and [other].
          */
         fun ratioOf(number: Number, other: Number, precision: Int? = null): Percentage =
-            require(0 != other) { "The argument \"other\" can not be zero" }.let {
+            require(0 != other) { "The argument \"other\" can not be zero" }.run {
                 Percentage(number.toDouble() / other.toDouble() * PERCENT, precision)
             }
 
