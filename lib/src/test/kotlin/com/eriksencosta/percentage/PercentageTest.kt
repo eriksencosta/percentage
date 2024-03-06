@@ -6,7 +6,7 @@ import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class PercentageTest {
+internal class PercentageTest {
     private data class AccessorsTestTable(
         val number: Number,
         val isZero: Boolean,
@@ -167,8 +167,8 @@ class PercentageTest {
 
     @Test
     fun `Given two numbers with the second being zero When of is called Then an Exception is thrown`() {
-        val exception = assertThrows<ArgumentCannotBeZero> { Percentage.ratioOf(1, 0) }
-        assertEquals("The argument \"other\" cannot be zero", exception.message)
+        val exception = assertThrows<IllegalArgumentException> { Percentage.ratioOf(1, 0) }
+        assertEquals("The argument \"other\" can not be zero", exception.message)
     }
 
     @TestFactory
@@ -191,8 +191,8 @@ class PercentageTest {
 
     @Test
     fun `Given two numbers with the first being zero When relativeChange is called Then an Exception is thrown`() {
-        val exception = assertThrows<ArgumentCannotBeZero> { Percentage.relativeChange(0, 100) }
-        assertEquals("The argument \"initial\" cannot be zero", exception.message)
+        val exception = assertThrows<IllegalArgumentException> { Percentage.relativeChange(0, 100) }
+        assertEquals("The argument \"initial\" can not be zero", exception.message)
     }
 
     @TestFactory
@@ -220,7 +220,7 @@ class PercentageTest {
 
     @Test
     fun `Given a Percentage for zero and a number When valueWhen is called Then an Exception is thrown`() {
-        val exception = assertThrows<OperationUndefinedForZero> { Percentage(0).valueWhen(5) }
+        val exception = assertThrows<IllegalStateException> { Percentage(0).valueWhen(5) }
         assertEquals("This operation cannot execute when Percentage is zero", exception.message)
     }
 
@@ -327,7 +327,7 @@ class PercentageTest {
 
     @Test
     fun `Given a Percentage When hashCode is called Then a hash value is returned`() =
-        assertEquals(1072693248, Percentage(100).hashCode())
+        assertEquals(1_072_693_248, Percentage(100).hashCode())
 
     @TestFactory
     fun `Given a Percentage When toString is called Then an appropriately formatted string is returned`() =
