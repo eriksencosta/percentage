@@ -1,6 +1,6 @@
 package com.eriksencosta.percentage
 
-object Fixtures {
+internal object Fixtures {
     val relativeChange = listOf(
         Triple(50, -250, Percentage(-600)),
         Triple(40, -80, Percentage(-300)),
@@ -95,4 +95,8 @@ object Fixtures {
         Triple(100, Percentage(0), 100.0),
         Triple(0, Percentage(100), 0.0),
     )
+}
+
+internal data class Quadruple<out A, out B, out C, out D>(val first: A, val second: B, val third: C, val fourth: D) {
+    override fun toString(): String = "($first, $second, $third, $fourth)"
 }

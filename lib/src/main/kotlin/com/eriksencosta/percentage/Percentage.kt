@@ -26,6 +26,7 @@ import kotlin.math.abs
  *
  * TODO: expose rounding option? Create a type with precision and rounding?
  */
+@Suppress("TooManyFunctions")
 class Percentage(value: Number, private val precision: Int? = null) : Comparable<Percentage>, Serializable {
     /**
      * The percentage value.
@@ -35,7 +36,7 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
     /**
      * The percentage value divided by 100 and optionally rounded using the [precision] scale.
      */
-    val decimal: Double = (this.value / 100).let { result ->
+    val decimal: Double = (this.value / PERCENT).let { result ->
         precision?.let { result.toBigDecimal().setScale(it, RoundingMode.HALF_UP).toDouble() } ?: result
     }
 
@@ -70,6 +71,9 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
     val isNegativeOrZero: Boolean = isNegative || isZero
 
     companion object {
+        private const val serialVersionUID = 1L
+        private const val PERCENT = 100
+
         /**
          * Creates a `Percentage` based on the ratio of two numbers.
          *
@@ -82,14 +86,14 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
          * @param[other]     The second number.
          * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
          *
-         * @throws[ArgumentCannotBeZero] When the second number is zero.
+         * @throws[IllegalArgumentException] When the second number is zero.
          *
          * @return A [Percentage] that represents the ratio of [number] and [other].
          */
         fun ratioOf(number: Number, other: Number, precision: Int? = null): Percentage =
-           requireNonZero(other, "other").run {
-               Percentage(number.toDouble() / other.toDouble() * 100, precision)
-           }
+            require(0 != other) { "The argument \"other\" can not be zero" }.let {
+                Percentage(number.toDouble() / other.toDouble() * PERCENT, precision)
+            }
 
         /**
          * Creates a `Percentage` which represents the percentage change of an initial and ending numbers.
@@ -110,20 +114,19 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
          * @param[ending]    The ending number.
          * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
          *
-         * @throws[ArgumentCannotBeZero] When the initial number is zero.
+         * @throws[IllegalArgumentException] When the initial number is zero.
          *
          * @return A [Percentage] that represents the percentage change of an initial and ending numbers.
          */
-        fun relativeChange(initial: Number, ending: Number, precision: Int? = null): Percentage =
-            when {
-                0 == initial && 0 == ending -> Percentage(0, precision)
-                else -> {
-                    requireNonZero(initial, "initial")
+        fun relativeChange(initial: Number, ending: Number, precision: Int? = null): Percentage = when {
+            0 == initial && 0 == ending -> Percentage(0, precision)
+            else -> {
+                require(0 != initial) { "The argument \"initial\" can not be zero" }
 
-                    val initialValue = initial.toDouble()
-                    Percentage((ending.toDouble() - initialValue) / abs(initialValue) * 100, precision)
-                }
+                val initialValue = initial.toDouble()
+                Percentage((ending.toDouble() - initialValue) / abs(initialValue) * PERCENT, precision)
             }
+        }
     }
 
     /**
@@ -133,8 +136,7 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
      *
      * @return A [Percentage] with the precision scale.
      */
-    infix fun with(precision: Int): Percentage = if (this.precision == precision) this
-        else Percentage(value, precision)
+    infix fun with(precision: Int): Percentage = if (this.precision == precision) this else Percentage(value, precision)
 
     /**
      * Calculates the number that the passed number represents as the current `Percentage`.
@@ -145,12 +147,12 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
      *
      * @param[number] The number represented by this [Percentage].
      *
-     * @throws[OperationUndefinedForZero] When the [Percentage] value is zero.
+     * @throws[IllegalStateException] When the [Percentage] value is zero.
      *
      * @return The number that the passed number represents as the current [Percentage].
      */
     infix fun valueWhen(number: Number): Double =
-        checkNonZero(decimal) { "This operation cannot execute when Percentage is zero" }.run {
+        check(0.0 != decimal) { "This operation cannot execute when Percentage is zero" }.run {
             number.toDouble() / decimal
         }
 
@@ -159,8 +161,7 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
      *
      * @return A positive [Percentage] object.
      */
-    operator fun unaryPlus(): Percentage = if (isPositive) this
-        else Percentage(value * -1, precision)
+    operator fun unaryPlus(): Percentage = if (isPositive) this else Percentage(value * -1, precision)
 
     /**
      * Returns this `Percentage` after applying a negation.

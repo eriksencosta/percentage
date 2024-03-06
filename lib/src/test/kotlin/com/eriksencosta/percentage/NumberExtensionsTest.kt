@@ -4,7 +4,7 @@ import org.junit.jupiter.api.DynamicTest.dynamicTest
 import org.junit.jupiter.api.TestFactory
 import kotlin.test.assertEquals
 
-class NumberExtensionsTest {
+internal class NumberExtensionsTest {
     private val percentageCreation = listOf(
         Pair(100.0, Percentage(100)),
         Pair(50.0, Percentage(50)),
@@ -29,37 +29,39 @@ class NumberExtensionsTest {
     )
 
     @TestFactory
-    fun `Given a Number When percent is called Then a Percentage is returned`() =
-        percentageCreation
-            .map { (number, expected) ->
-                dynamicTest("given $number when I convert to a Percentage I should get a $expected") {
-                    assertEquals(expected, number.percent())
-                }
+    fun `Given a Number When percent is called Then a Percentage is returned`() = percentageCreation
+        .map { (number, expected) ->
+            dynamicTest("given $number when I convert to a Percentage I should get a $expected") {
+                assertEquals(expected, number.percent())
             }
+        }
 
     @TestFactory
     fun `Given a Number and a precision When percent is called Then a precise Percentage is returned`() =
         percentageCreationWithPrecision
             .map { (number, precision, expected) ->
-                dynamicTest("given $number when I convert to a Percentage with the precision $precision I should get $expected") {
+                dynamicTest(
+                    "given $number when I convert to a Percentage with the precision $precision I should get $expected"
+                ) {
                     assertEquals(expected, number.percent(precision))
                 }
             }
 
     @TestFactory
-    fun `Given a Number When toPercentage is called Then a Percentage is returned`() =
-        percentageCreation
-            .map { (number, expected) ->
-                dynamicTest("given $number when I convert to a Percentage I should get a $expected") {
-                    assertEquals(expected, number.toPercentage())
-                }
+    fun `Given a Number When toPercentage is called Then a Percentage is returned`() = percentageCreation
+        .map { (number, expected) ->
+            dynamicTest("given $number when I convert to a Percentage I should get a $expected") {
+                assertEquals(expected, number.toPercentage())
             }
+        }
 
     @TestFactory
     fun `Given a Number and a precision When toPercentage is called Then a precise Percentage is returned`() =
         percentageCreationWithPrecision
             .map { (number, precision, expected) ->
-                dynamicTest("given $number when I convert to a Percentage with the precision $precision I should get $expected") {
+                dynamicTest(
+                    "given $number when I convert to a Percentage with the precision $precision I should get $expected"
+                ) {
                     assertEquals(expected, number.toPercentage(precision))
                 }
             }
