@@ -10,6 +10,10 @@ on:
   pull_request:
     branches: [ "*" ]
 
+env:
+  JAVA_VERSION: 21
+  JAVA_DISTRIBUTION: temurin
+
 jobs:
   build:
     name: Build
@@ -27,6 +31,9 @@ jobs:
         echo "GITHUB_REF=\"${{ github.ref }}\"" >> $GITHUB_STEP_SUMMARY
         echo "GITHUB_REF_NAME=\"${{ github.ref_name }}\"" >> $GITHUB_STEP_SUMMARY
         echo "GITHUB_REF_TYPE=\"${{ github.ref_type }}\"" >> $GITHUB_STEP_SUMMARY
+        echo "### Java variables" >> $GITHUB_STEP_SUMMARY
+        echo "JAVA_VERSION=\"$JAVA_VERSION\"" >> $GITHUB_STEP_SUMMARY
+        echo "JAVA_DISTRIBUTION=\"$JAVA_DISTRIBUTION\"" >> $GITHUB_STEP_SUMMARY
 
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -34,19 +41,19 @@ jobs:
     - name: Validate Gradle wrapper
       uses: gradle/wrapper-validation-action@v2
 
-    - name: Set up JDK 17
+    - name: Set up JDK
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
-        distribution: 'temurin'
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: ${{ env.JAVA_DISTRIBUTION }}
 
     - name: Set up Gradle
       uses: gradle/actions/setup-gradle@v3
 
-    - name: Check build version
+    - name: Check project version
       run: ./gradlew version
 
-    - name: Run tests
+    - name: Run project tests
       run: ./gradlew test
 
     #- name: Check coding style
@@ -74,21 +81,25 @@ jobs:
         coverage-reports: lib/build/reports/jacoco/test/jacocoTestReport.xml
         language: Kotlin
 
-  dependency-submission:
-
+  submit-dependency:
+    name: Submit dependency graph
     runs-on: ubuntu-latest
     permissions:
       contents: write
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 17
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up JDK
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
-        distribution: 'temurin'
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: ${{ env.JAVA_DISTRIBUTION }}
 
-    # Generates and submits a dependency graph, enabling Dependabot Alerts for all project dependencies.
-    # See: https://github.com/gradle/actions/blob/main/dependency-submission/README.md
     - name: Generate and submit dependency graph
-      uses: gradle/actions/dependency-submission@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
+      uses: gradle/actions/dependency-submission@v3
+      with:
+        build-scan-publish: true
+        build-scan-terms-of-service-url: "https://gradle.com/terms-of-service"
+        build-scan-terms-of-service-agree: "yes"
