@@ -16,6 +16,7 @@ plugins {
     `maven-publish`
     jacoco
     alias(libs.plugins.jvm)
+    alias(libs.plugins.detekt)
     alias(libs.plugins.dokka)
     alias(libs.plugins.sonatype.central.upload)
 }
@@ -28,11 +29,19 @@ dependencies {
     testImplementation(libs.kotlin.test.junit5)
     testImplementation(libs.junit.jupiter.engine)
     testRuntimeOnly(libs.junit.platform.launcher)
+
+    detektPlugins(libs.detekt.formatting)
+    detektPlugins(libs.detekt.libraries)
 }
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(8)
     withSourcesJar()
+}
+
+detekt {
+    config.setFrom("../detekt.yml")
+    buildUponDefaultConfig = true
 }
 
 tasks {
@@ -73,6 +82,10 @@ tasks {
 
         dependsOn("build")
         mustRunAfter("build")
+
+        // Allows to run the plugin without rebuilding the project due to available jar files in
+        // its publishing directory.
+        doFirst { delete("build/sonatype-central-upload") }
     }
 
     named<Task>("build") {
@@ -88,6 +101,7 @@ tasks {
     }
 
     register<Task>("generateDocs") {
+        // TODO: description and group
         dependsOn("dokkaHtml", "dokkaGfm", "dokkaJavadoc")
     }
 
