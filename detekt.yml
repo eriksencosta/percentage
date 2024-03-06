@@ -782,6 +782,8 @@ formatting:
   Indentation:
     active: true
     indentSize: 4
+  MultiLineIfElse:
+    active: false
   NoSemicolons:
     active: true
   NoTrailingSpaces:
