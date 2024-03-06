@@ -11,25 +11,12 @@ config:
   validation: true
   warningsAsErrors: false
   checkExhaustiveness: false
-  # when writing own rules with new properties, exclude the property path e.g.: 'my_rule_set,.*>.*>[my_property]'
   excludes: ''
 
 processors:
   active: true
   exclude:
     - 'DetektProgressListener'
-  # - 'KtFileCountProcessor'
-  # - 'PackageCountProcessor'
-  # - 'ClassCountProcessor'
-  # - 'FunctionCountProcessor'
-  # - 'PropertyCountProcessor'
-  # - 'ProjectComplexityProcessor'
-  # - 'ProjectCognitiveComplexityProcessor'
-  # - 'ProjectLLOCProcessor'
-  # - 'ProjectCLOCProcessor'
-  # - 'ProjectLOCProcessor'
-  # - 'ProjectSLOCProcessor'
-  # - 'LicenseHeaderLoaderExtension'
 
 console-reports:
   active: true
@@ -39,16 +26,9 @@ console-reports:
     - 'NotificationReport'
     - 'FindingsReport'
     - 'FileBasedFindingsReport'
-  #  - 'LiteFindingsReport'
 
 output-reports:
   active: true
-  #exclude:
-  # - 'TxtOutputReport'
-  # - 'XmlOutputReport'
-  # - 'HtmlOutputReport'
-  # - 'MdOutputReport'
-  # - 'SarifOutputReport'
 
 comments:
   active: true
@@ -785,35 +765,33 @@ style:
       - 'java.util.*'
 
 formatting:
-  ParameterListSpacing:
-    active: true
-  CommentSpacing:
-    active: true
-  FunKeywordSpacing:
+  AnnotationSpacing:
     active: true
   BlockCommentInitialStarAlignment:
     active: true
-  ImportOrdering:
+  CommentSpacing:
     active: true
   FinalNewline:
     active: true
+  FunctionSignature:
+    active: true
+  FunKeywordSpacing:
+    active: true
+  ImportOrdering:
+    active: true
+  Indentation:
+    active: true
+    indentSize: 4
   NoSemicolons:
     active: true
   NoTrailingSpaces:
     active: true
   NoUnusedImports:
     active: false # TODO: remove
-  FunctionSignature:
-    active: true
   NoConsecutiveBlankLines:
     active: true
-  Indentation:
+  ParameterListSpacing:
     active: true
-    indentSize: 4
-  Wrapping:
-    active: true
-    indentSize: 4
-    maxLineLength: 120
   SpacingAroundAngleBrackets:
     active: true
   SpacingAroundColon:
@@ -842,8 +820,10 @@ formatting:
     active: true
   SpacingBetweenFunctionNameAndOpeningParenthesis:
     active: true
-  AnnotationSpacing:
+  Wrapping:
     active: true
+    indentSize: 4
+    maxLineLength: 120
 
 libraries:
   ForbiddenPublicDataClass:
