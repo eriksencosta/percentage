@@ -1,5 +1,8 @@
 # Percentage library
 
+[![Codacy code quality](https://app.codacy.com/project/badge/Grade/5feda3d6ceb54ec58806b144bc77f606)](https://app.codacy.com/gh/eriksencosta/percentage/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy code coverage](https://app.codacy.com/project/badge/Coverage/5feda3d6ceb54ec58806b144bc77f606)](https://app.codacy.com/gh/eriksencosta/percentage/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
+
 ## Disclaimer
 
 This is WIP, published for close friends reviews only. This README is temporary.
