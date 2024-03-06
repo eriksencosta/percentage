@@ -1,6 +1,5 @@
 package com.eriksencosta.percentage
 
-import java.io.Serializable
 import java.math.RoundingMode
 import kotlin.math.abs
 
@@ -27,7 +26,7 @@ import kotlin.math.abs
  * TODO: expose rounding option? Create a type with precision and rounding?
  */
 @Suppress("TooManyFunctions")
-class Percentage(value: Number, private val precision: Int? = null) : Comparable<Percentage>, Serializable {
+class Percentage(value: Number, private val precision: Int? = null) : Comparable<Percentage> {
     /**
      * The percentage value.
      */
@@ -71,8 +70,7 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
     val isNegativeOrZero: Boolean = isNegative || isZero
 
     companion object {
-        private const val serialVersionUID = 1L
-        private const val PERCENT = 100
+        private const val PERCENT: Int = 100
 
         /**
          * Creates a `Percentage` based on the ratio of two numbers.
