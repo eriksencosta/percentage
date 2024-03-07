@@ -83,13 +83,21 @@ check if it is working properly:
 docker run --rm -u gradle -v "$PWD":/home/gradle/project -w /home/gradle/project gradle gradle build
 ```
 
+## Publishing to Maven Central
+
+```bash
+./gradlew clean release
+```
+
 ## TODO
 
-- Decide the library name
-- Decide if the `Number` extension methods should throw their own exceptions instead of just throwing `Percentage`'s
+- [ ] Decide the library name
+- [ ] Decide if the `Number` extension methods should throw their own exceptions instead of just throwing `Percentage`'s
   exceptions
-- Review scale and precision on `Percentage`
-- Multiplatform build
-- Decent README
-- Configure static code analysis (Sonarcloud, Code Climate, Codacy, CodeRabbit, Snyk, detekt?)
-- Squash all commits
+- [ ] Review scale and precision on `Percentage`
+- [X] Multiplatform build - not needed
+- [ ] Decent README
+- [X] Configure static code analysis (Sonarcloud, Code Climate, Codacy, CodeRabbit, Snyk, detekt?)
+- [ ] OSSF scorecard - https://github.com/symfony/symfony/blob/7.1/.github/workflows/scorecards.yml
+- [ ] Squash all commits
+- [X] Dokka
