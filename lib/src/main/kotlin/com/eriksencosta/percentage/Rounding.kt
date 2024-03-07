@@ -8,6 +8,7 @@ sealed class Rounding {
 
     companion object {
         fun default(mode: RoundingMode = RoundingMode.HALF_UP) = ImpreciseRounding(mode)
+
         fun of(precision: Int, mode: RoundingMode = RoundingMode.HALF_UP) = PreciseRounding(precision, mode)
     }
 
@@ -33,6 +34,7 @@ class ImpreciseRounding(override val mode: RoundingMode) : Rounding() {
 
     override fun toString(): String = "mode=%s".format(mode)
 }
+
 class PreciseRounding(override val precision: Int, override val mode: RoundingMode) : Rounding() {
     override fun round(value: Double): Double = value.toBigDecimal().setScale(precision, mode).toDouble()
 

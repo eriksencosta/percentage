@@ -90,6 +90,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          */
         fun ratioOf(number: Number, other: Number): Percentage =
             ratioOf(number, other, Rounding.default())
+
         fun ratioOf(number: Number, other: Number, precision: Int): Percentage =
             ratioOf(number, other, Rounding.of(precision))
 
@@ -115,7 +116,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          *
          * @param[initial]   The initial number.
          * @param[ending]    The ending number.
-         * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
+         * '@param precision' The precision scale to round the decimal (value / 100) representation of the [Percentage].
          *
          * @throws[IllegalArgumentException] When the initial number is zero.
          *
@@ -174,14 +175,14 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
      *
      * @return A positive [Percentage] object.
      */
-    operator fun unaryPlus(): Percentage = if (isPositive) this else Percentage(value * -1, rounding)
+    operator fun unaryPlus(): Percentage = if (isPositive) this else of(value * -1, rounding)
 
     /**
      * Returns this `Percentage` after applying a negation.
      *
      * @return A [Percentage] object with the negation applied.
      */
-    operator fun unaryMinus(): Percentage = Percentage(value * -1, rounding)
+    operator fun unaryMinus(): Percentage = of(value * -1, rounding)
 
     /**
      * Multiplies this `Percentage` by a number.

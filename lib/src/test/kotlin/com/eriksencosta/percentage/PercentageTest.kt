@@ -110,6 +110,15 @@ class PercentageTest {
             }
         }
 
+    @TestFactory
+    fun `Calculate the rounded percentage ratio of two numbers`() = Fixtures.ratioOfWithRounding
+        .map { (number, other, rounding, expected) ->
+            dynamicTest("given numbers $number and $other, and rounding $rounding then I should get $expected") {
+                assertEquals(expected, Percentage.ratioOf(number, other, rounding))
+                assertEquals(expected, number.ratioOf(other, rounding))
+            }
+        }
+
     @Test
     fun `Throw exception when calculating the percentage ratio of a number and zero`() =
         assertThrows<IllegalArgumentException> { Percentage.ratioOf(1, 0) }.run {
@@ -131,6 +140,15 @@ class PercentageTest {
             dynamicTest("given numbers $initial and $ending, and precision $precision then I should get $expected") {
                 assertEquals(expected, Percentage.relativeChange(initial, ending, precision))
                 assertEquals(expected, initial.relativeChange(ending, precision))
+            }
+        }
+
+    @TestFactory
+    fun `Calculate the rounded relative change percentage of two numbers`() = Fixtures.roundedChangeWithPrecision
+        .map { (initial, ending, rounding, expected) ->
+            dynamicTest("given numbers $initial and $ending, and rounding $rounding then I should get $expected") {
+                assertEquals(expected, Percentage.relativeChange(initial, ending, rounding))
+                assertEquals(expected, initial.relativeChange(ending, rounding))
             }
         }
 
@@ -183,6 +201,7 @@ class PercentageTest {
         .map { (percentage, number, expected) ->
             dynamicTest("given $percentage when I calculate the value for $number then I should get $expected") {
                 assertEquals(expected, percentage.valueWhen(number))
+                assertEquals(expected, number valueWhen percentage)
             }
         }
 
@@ -199,7 +218,13 @@ class PercentageTest {
         Pair(one, one),
 
         // Precision case
-        Pair(Percentage.of(-11.11, 4), Percentage.of(11.11, 4))
+        Pair(Percentage.of(-11.11, 4), Percentage.of(11.11, 4)),
+
+        // Rounding case
+        Pair(
+            Percentage.of(-11.11, Rounding.of(2, RoundingMode.HALF_DOWN)),
+            Percentage.of(11.11, Rounding.of(2, RoundingMode.HALF_DOWN))
+        ),
     )
         .map { (percentage, expected) ->
             dynamicTest("given $percentage when I cast it to positive then I should get $expected") {
@@ -214,7 +239,13 @@ class PercentageTest {
         Pair(minusOne, one),
 
         // Precision case
-        Pair(Percentage.of(11.11, 4), Percentage.of(-11.11, 4))
+        Pair(Percentage.of(11.11, 4), Percentage.of(-11.11, 4)),
+
+        // Rounding case
+        Pair(
+            Percentage.of(11.11, Rounding.of(2, RoundingMode.HALF_DOWN)),
+            Percentage.of(-11.11, Rounding.of(2, RoundingMode.HALF_DOWN))
+        ),
     )
         .map { (percentage, expected) ->
             dynamicTest("given $percentage when I negate it then I should get $expected") {
