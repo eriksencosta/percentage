@@ -9,7 +9,7 @@ package com.eriksencosta.percentage
  *
  * @return The [Percentage] value of this number.
  */
-fun Number.percent(): Percentage = Percentage(this)
+fun Number.percent(): Percentage = percent(Rounding.default())
 
 /**
  * Returns the value of this number as a `Percentage`.
@@ -20,7 +20,9 @@ fun Number.percent(): Percentage = Percentage(this)
  *
  * @return The [Percentage] value of this number.
  */
-infix fun Number.percent(precision: Int): Percentage = Percentage(this, precision)
+infix fun Number.percent(precision: Int): Percentage = percent(Rounding.of(precision))
+
+infix fun Number.percent(rounding: Rounding): Percentage = Percentage.of(this, rounding)
 
 /**
  * Returns the value of this number as a `Percentage`.
@@ -41,6 +43,8 @@ fun Number.toPercentage(): Percentage = percent()
  * @return The [Percentage] value of this number.
  */
 infix fun Number.toPercentage(precision: Int): Percentage = percent(precision)
+
+infix fun Number.toPercentage(rounding: Rounding): Percentage = percent(rounding)
 
 /**
  * Creates a `Percentage` based on the ratio of this number and other number.
