@@ -1,6 +1,5 @@
 package com.eriksencosta.percentage
 
-import java.math.RoundingMode
 import java.util.Objects
 import kotlin.math.abs
 
@@ -20,25 +19,20 @@ import kotlin.math.abs
  *     percentage.decimal  // Results: 0.5
  *     println(percentage) // Prints:  50%
  *
- * @param[value]     The numerical value of the [Percentage].
- * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
- *                   The rounding is always done using `RoundingMode.HALF_UP`.
- *
- * TODO: expose rounding option? Create a type with precision and rounding?
+ * @param[value]    The numerical value of the [Percentage].
+ * @param[rounding] The strategy to round the decimal (value / 100) representation of the [Percentage].
  */
 @Suppress("TooManyFunctions")
-class Percentage(value: Number, private val precision: Int? = null) : Comparable<Percentage> {
+class Percentage private constructor(value: Number, private val rounding: Rounding) : Comparable<Percentage> {
     /**
      * The percentage value.
      */
     val value: Double = value.toDouble()
 
     /**
-     * The percentage value divided by 100 and optionally rounded using the [precision] scale.
+     * The percentage value divided by 100 and optionally rounded using [rounding].
      */
-    val decimal: Double = (this.value / PERCENT).let { result ->
-        precision?.let { result.toBigDecimal().setScale(it, RoundingMode.HALF_UP).toDouble() } ?: result
-    }
+    val decimal: Double = rounding.round(this.value / PERCENT)
 
     /**
      * true if the `Percentage` is zero.
@@ -71,7 +65,13 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
     val isNegativeOrZero: Boolean = isNegative || isZero
 
     companion object {
-        private const val PERCENT: Int = 100
+        private const val PERCENT: Double = 100.0
+
+        fun of(value: Number): Percentage = of(value, Rounding.default())
+
+        fun of(value: Number, precision: Int): Percentage = of(value, Rounding.of(precision))
+
+        fun of(value: Number, rounding: Rounding): Percentage = Percentage(value, rounding)
 
         /**
          * Creates a `Percentage` based on the ratio of two numbers.
@@ -83,15 +83,19 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
          *
          * @param[number]    The first number.
          * @param[other]     The second number.
-         * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
          *
          * @throws[IllegalArgumentException] When the second number is zero.
          *
          * @return A [Percentage] that represents the ratio of [number] and [other].
          */
-        fun ratioOf(number: Number, other: Number, precision: Int? = null): Percentage =
+        fun ratioOf(number: Number, other: Number): Percentage =
+            ratioOf(number, other, Rounding.default())
+        fun ratioOf(number: Number, other: Number, precision: Int): Percentage =
+            ratioOf(number, other, Rounding.of(precision))
+
+        fun ratioOf(number: Number, other: Number, rounding: Rounding): Percentage =
             require(0 != other) { "The argument \"other\" can not be zero" }.run {
-                Percentage(number.toDouble() / other.toDouble() * PERCENT, precision)
+                of(number.toDouble() / other.toDouble() * PERCENT, rounding)
             }
 
         /**
@@ -117,13 +121,19 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
          *
          * @return A [Percentage] that represents the percentage change of an initial and ending numbers.
          */
-        fun relativeChange(initial: Number, ending: Number, precision: Int? = null): Percentage = when {
-            0 == initial && 0 == ending -> Percentage(0, precision)
+        fun relativeChange(initial: Number, ending: Number): Percentage =
+            relativeChange(initial, ending, Rounding.default())
+
+        fun relativeChange(initial: Number, ending: Number, precision: Int): Percentage =
+            relativeChange(initial, ending, Rounding.of(precision))
+
+        fun relativeChange(initial: Number, ending: Number, rounding: Rounding): Percentage = when {
+            0 == initial && 0 == ending -> of(0, rounding)
             else -> {
                 require(0 != initial) { "The argument \"initial\" can not be zero" }
 
                 val initialValue = initial.toDouble()
-                Percentage((ending.toDouble() - initialValue) / abs(initialValue) * PERCENT, precision)
+                of((ending.toDouble() - initialValue) / abs(initialValue) * PERCENT, rounding)
             }
         }
     }
@@ -134,8 +144,12 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
      * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
      *
      * @return A [Percentage] with the precision scale.
+     *
+     * TODO: replace with precision: Int with Rounding
      */
-    infix fun with(precision: Int): Percentage = if (this.precision == precision) this else Percentage(value, precision)
+    infix fun with(precision: Int): Percentage = with(rounding.with(precision))
+
+    infix fun with(rounding: Rounding): Percentage = of(value, rounding)
 
     /**
      * Calculates the number that the passed number represents as the current `Percentage`.
@@ -160,14 +174,14 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
      *
      * @return A positive [Percentage] object.
      */
-    operator fun unaryPlus(): Percentage = if (isPositive) this else Percentage(value * -1, precision)
+    operator fun unaryPlus(): Percentage = if (isPositive) this else Percentage(value * -1, rounding)
 
     /**
      * Returns this `Percentage` after applying a negation.
      *
      * @return A [Percentage] object with the negation applied.
      */
-    operator fun unaryMinus(): Percentage = Percentage(value * -1, precision)
+    operator fun unaryMinus(): Percentage = Percentage(value * -1, rounding)
 
     /**
      * Multiplies this `Percentage` by a number.
@@ -203,12 +217,9 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
     override fun compareTo(other: Percentage): Int = decimal.compareTo(other.decimal) // we disregard the precision
 
     override fun equals(other: Any?): Boolean = this === other ||
-        (other is Percentage && value == other.value && decimal == other.decimal && precision == other.precision)
+        (other is Percentage && value == other.value && decimal == other.decimal && rounding == other.rounding)
 
-    override fun hashCode(): Int = Objects.hash(decimal, precision)
+    override fun hashCode(): Int = Objects.hash(decimal, rounding)
 
-    override fun toString(): String = when {
-        null == precision || 0 > precision -> "%.0f%%"
-        else -> "%.${precision}f%%"
-    }.format(value)
+    override fun toString(): String = "${rounding.roundingFormat()}%%".format(value)
 }
