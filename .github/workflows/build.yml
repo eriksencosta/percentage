@@ -66,11 +66,6 @@ jobs:
     - name: Run project tests
       run: ./gradlew test
 
-    #- name: Check coding style
-    #  run: ./gradlew detekt
-    #  env:
-    #    SNAPSHOT_BUILD: ${{ github.ref_name == 'trunk' && 'yes' || 'no' }}
-
     - name: Build the project
       run: ./gradlew build
 

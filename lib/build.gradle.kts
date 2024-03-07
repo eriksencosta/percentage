@@ -48,6 +48,7 @@ tasks {
     named<Test>("test") {
         useJUnitPlatform()
         finalizedBy("jacocoTestReport")
+        dependsOn("detekt")
     }
 
     named<JacocoReport>("jacocoTestReport") {
