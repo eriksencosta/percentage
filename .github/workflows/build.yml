@@ -32,6 +32,7 @@ jobs:
         echo "### Concurrency control variables" >> $GITHUB_STEP_SUMMARY
         echo "GITHUB_WORKFLOW=\"${{ github.workflow }}\"" >> $GITHUB_STEP_SUMMARY
         echo "GITHUB_REF=\"${{ github.ref }}\"" >> $GITHUB_STEP_SUMMARY
+        echo "GITHUB_HEAD_REF=\"${{ github.head_ref }}\"" >> $GITHUB_STEP_SUMMARY
         echo "GITHUB_RUN_ID=\"${{ github.run_id }}\"" >> $GITHUB_STEP_SUMMARY
         echo "GITHUB_CONTROL=\"${{ github.workflow }}-${{ github.ref || github.run_id }}\"" >> $GITHUB_STEP_SUMMARY
         echo "### Build decision variables" >> $GITHUB_STEP_SUMMARY
