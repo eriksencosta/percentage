@@ -35,6 +35,16 @@ class PercentageTest {
         }
 
     @TestFactory
+    fun `Calculate the decimal value of the rounded percentage upon its creation`() = Fixtures.roundedCreation
+        .map { (number, rounding, expected) ->
+            dynamicTest("given percentage for $number and rounding $rounding then I should get $expected") {
+                assertEquals(expected, Percentage.of(number, rounding).decimal)
+                assertEquals(expected, number.percent(rounding).decimal)
+                assertEquals(expected, number.toPercentage(rounding).decimal)
+            }
+        }
+
+    @TestFactory
     fun `Return true when the percentage is zero`() = Fixtures.accessors
         .map {
             dynamicTest("given percentage for ${it.number} then I should get ${it.isZero}") {

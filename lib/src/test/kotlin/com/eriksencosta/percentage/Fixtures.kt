@@ -28,6 +28,25 @@ internal object Fixtures {
         Triple(100.0 / 3, 8, 0.33333333),
     )
 
+    val roundedCreation = listOf(
+        Triple(piRounding, Rounding.default(), Math.PI),
+        Triple(piRounding, Rounding.of(1), 3.1),
+        Triple(piRounding, Rounding.of(2), 3.14),
+        Triple(piRounding, Rounding.of(2, RoundingMode.CEILING), 3.15),
+        Triple(piRounding, Rounding.of(2, RoundingMode.UP), 3.15),
+        Triple(piRounding, Rounding.of(2, RoundingMode.DOWN), 3.14),
+        Triple(piRounding, Rounding.of(2, RoundingMode.FLOOR), 3.14),
+        Triple(piRounding, Rounding.of(2, RoundingMode.HALF_DOWN), 3.14),
+        Triple(piRounding, Rounding.of(2, RoundingMode.HALF_EVEN), 3.14),
+        Triple(piRounding, Rounding.of(3), 3.142),
+        Triple(piRounding, Rounding.of(3, RoundingMode.CEILING), 3.142),
+        Triple(piRounding, Rounding.of(3, RoundingMode.UP), 3.142),
+        Triple(piRounding, Rounding.of(3, RoundingMode.DOWN), 3.141),
+        Triple(piRounding, Rounding.of(3, RoundingMode.FLOOR), 3.141),
+        Triple(piRounding, Rounding.of(3, RoundingMode.HALF_DOWN), 3.142),
+        Triple(piRounding, Rounding.of(3, RoundingMode.HALF_EVEN), 3.142),
+    )
+
     val accessors = listOf(
         AccessorsTestTable(
             number = -1,
