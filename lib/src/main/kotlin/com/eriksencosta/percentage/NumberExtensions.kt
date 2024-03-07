@@ -68,7 +68,7 @@ infix fun Number.toPercentage(rounding: Rounding): Percentage = percent(rounding
  *
  * @see Percentage.ratioOf
  */
-infix fun Number.ratioOf(other: Number): Percentage = Percentage.ratioOf(this, other)
+infix fun Number.ratioOf(other: Number): Percentage = ratioOf(other, Rounding.default())
 
 /**
  * Creates a `Percentage` based on the ratio of this number and other number.
@@ -93,7 +93,9 @@ infix fun Number.ratioOf(other: Number): Percentage = Percentage.ratioOf(this, o
  *
  * @see Percentage.ratioOf
  */
-fun Number.ratioOf(other: Number, precision: Int): Percentage = Percentage.ratioOf(this, other, precision)
+fun Number.ratioOf(other: Number, precision: Int): Percentage = ratioOf(other, Rounding.of(precision))
+
+fun Number.ratioOf(other: Number, rounding: Rounding): Percentage = Percentage.ratioOf(this, other, rounding)
 
 /**
  * Creates a `Percentage` which represents the percentage change of this number and other number.
@@ -125,7 +127,7 @@ fun Number.ratioOf(other: Number, precision: Int): Percentage = Percentage.ratio
  * TODO: I'm undecided if this should throw the OperationUndefinedForZero exception (invariant unsatisfied when
  *       `this = 0 && other != 0`) or just throw the Percentage's ArgumentCanNotBeZero exception (current impl).
  */
-infix fun Number.relativeChange(other: Number): Percentage = Percentage.relativeChange(this, other)
+infix fun Number.relativeChange(other: Number): Percentage = relativeChange(other, Rounding.default())
 
 /**
  * Creates a `Percentage` which represents the percentage change of this number and other number.
@@ -158,7 +160,9 @@ infix fun Number.relativeChange(other: Number): Percentage = Percentage.relative
  * TODO: I'm undecided if this should throw the OperationUndefinedForZero exception (invariant unsatisfied when
  *       `this = 0 && other != 0`) or just throw the Percentage's ArgumentCanNotBeZero exception (current impl).
  */
-fun Number.relativeChange(other: Number, precision: Int): Percentage = Percentage.relativeChange(this, other, precision)
+fun Number.relativeChange(other: Number, precision: Int): Percentage = relativeChange(other, Rounding.of(precision))
+
+fun Number.relativeChange(other: Number, rounding: Rounding): Percentage = Percentage.relativeChange(this, other, rounding)
 
 /**
  * Calculates the number that this number represents as the given `Percentage`.
