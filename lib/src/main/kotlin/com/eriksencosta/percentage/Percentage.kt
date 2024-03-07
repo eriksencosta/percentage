@@ -1,6 +1,7 @@
 package com.eriksencosta.percentage
 
 import java.math.RoundingMode
+import java.util.Objects
 import kotlin.math.abs
 
 /**
@@ -150,7 +151,7 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
      * @return The number that the passed number represents as the current [Percentage].
      */
     infix fun valueWhen(number: Number): Double =
-        check(0.0 != decimal) { "This operation cannot execute when Percentage is zero" }.run {
+        check(0.0 != decimal) { "This operation can not execute when Percentage is zero" }.run {
             number.toDouble() / decimal
         }
 
@@ -199,12 +200,12 @@ class Percentage(value: Number, private val precision: Int? = null) : Comparable
         whole - whole * decimal
     }
 
-    override fun compareTo(other: Percentage): Int = decimal.compareTo(other.decimal)
+    override fun compareTo(other: Percentage): Int = decimal.compareTo(other.decimal) // we disregard the precision
 
     override fun equals(other: Any?): Boolean = this === other ||
         (other is Percentage && value == other.value && decimal == other.decimal && precision == other.precision)
 
-    override fun hashCode(): Int = decimal.hashCode()
+    override fun hashCode(): Int = Objects.hash(decimal, precision)
 
     override fun toString(): String = when {
         null == precision || 0 > precision -> "%.0f%%"

@@ -119,7 +119,7 @@ fun Number.ratioOf(other: Number, precision: Int): Percentage = Percentage.ratio
  * @return A [Percentage] that represents the percentage change of this number and the other number.
  *
  * TODO: I'm undecided if this should throw the OperationUndefinedForZero exception (invariant unsatisfied when
- *       `this = 0 && other != 0`) or just throw the Percentage's ArgumentCanNotBeZero exception (currently implemented).
+ *       `this = 0 && other != 0`) or just throw the Percentage's ArgumentCanNotBeZero exception (current impl).
  */
 infix fun Number.relativeChange(other: Number): Percentage = Percentage.relativeChange(this, other)
 
@@ -152,7 +152,7 @@ infix fun Number.relativeChange(other: Number): Percentage = Percentage.relative
  * @return A [Percentage] that represents the percentage change of this number and the other number.
  *
  * TODO: I'm undecided if this should throw the OperationUndefinedForZero exception (invariant unsatisfied when
- *       `this = 0 && other != 0`) or just throw the Percentage's ArgumentCanNotBeZero exception (currently implemented).
+ *       `this = 0 && other != 0`) or just throw the Percentage's ArgumentCanNotBeZero exception (current impl).
  */
 fun Number.relativeChange(other: Number, precision: Int): Percentage = Percentage.relativeChange(this, other, precision)
 

@@ -1,6 +1,59 @@
 package com.eriksencosta.percentage
 
 internal object Fixtures {
+    val creation = listOf(
+        Pair(100.0, 1.0),
+        Pair(50.0, 0.5),
+        Pair(25.0, 0.25),
+        Pair(0.0, 0.0),
+        Pair(0.25, 0.0025),
+        Pair(0.50, 0.005),
+        Pair(1.1, 0.011000000000000001),
+        Pair(100.0 / 3, 0.33333333333333337),
+    )
+
+    val preciseCreation = listOf(
+        Triple(1.1, 1, 0.0),
+        Triple(1.1, 2, 0.01),
+        Triple(1.1, 3, 0.011),
+        Triple(1.1, 4, 0.011),
+        Triple(11.11, 1, 0.1),
+        Triple(11.11, 2, 0.11),
+        Triple(11.11, 3, 0.111),
+        Triple(11.11, 4, 0.1111),
+        Triple(100.0 / 3, 8, 0.33333333),
+    )
+
+    val accessors = listOf(
+        AccessorsTestTable(
+            number = -1,
+            isZero = false,
+            isNotZero = true,
+            isPositive = false,
+            isPositiveOrZero = false,
+            isNegative = true,
+            isNegativeOrZero = true
+        ),
+        AccessorsTestTable(
+            number = 0,
+            isZero = true,
+            isNotZero = false,
+            isPositive = false,
+            isPositiveOrZero = true,
+            isNegative = false,
+            isNegativeOrZero = true
+        ),
+        AccessorsTestTable(
+            number = 1,
+            isZero = false,
+            isNotZero = true,
+            isPositive = true,
+            isPositiveOrZero = true,
+            isNegative = false,
+            isNegativeOrZero = false
+        )
+    )
+
     val relativeChange = listOf(
         Triple(50, -250, Percentage(-600)),
         Triple(40, -80, Percentage(-300)),
@@ -40,6 +93,7 @@ internal object Fixtures {
     )
 
     val ratioOf = listOf(
+        Triple(0, 1, Percentage(0)),
         Triple(1, 2, Percentage(50)),
         Triple(1, -2, Percentage(-50)),
         Triple(-1, -2, Percentage(50)),
@@ -96,6 +150,16 @@ internal object Fixtures {
         Triple(0, Percentage(100), 0.0),
     )
 }
+
+internal data class AccessorsTestTable(
+    val number: Number,
+    val isZero: Boolean,
+    val isNotZero: Boolean,
+    val isPositive: Boolean,
+    val isPositiveOrZero: Boolean,
+    val isNegative: Boolean,
+    val isNegativeOrZero: Boolean
+)
 
 internal data class Quadruple<out A, out B, out C, out D>(val first: A, val second: B, val third: C, val fourth: D) {
     override fun toString(): String = "($first, $second, $third, $fourth)"
