@@ -6,341 +6,318 @@ import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-internal class PercentageTest {
-    private data class AccessorsTestTable(
-        val number: Number,
-        val isZero: Boolean,
-        val isNotZero: Boolean,
-        val isPositive: Boolean,
-        val isPositiveOrZero: Boolean,
-        val isNegative: Boolean,
-        val isNegativeOrZero: Boolean
-    )
-
+class PercentageTest {
     private val zero = Percentage(0)
     private val one = Percentage(1)
     private val hundred = Percentage(100)
     private val minusOne = Percentage(-1)
-
-    private val percentageCreation = listOf(
-        Pair(100.0, 1.0),
-        Pair(50.0, 0.5),
-        Pair(25.0, 0.25),
-        Pair(0.0, 0.0),
-        Pair(0.25, 0.0025),
-        Pair(0.50, 0.005),
-        Pair(1.1, 0.011000000000000001),
-        Pair(100.0 / 3, 0.33333333333333337),
-    )
-
-    private val percentageCreationWithPrecision = listOf(
-        Triple(1.1, 1, 0.0),
-        Triple(1.1, 2, 0.01),
-        Triple(1.1, 3, 0.011),
-        Triple(1.1, 4, 0.011),
-        Triple(11.11, 1, 0.1),
-        Triple(11.11, 2, 0.11),
-        Triple(11.11, 3, 0.111),
-        Triple(11.11, 4, 0.1111),
-        Triple(100.0 / 3, 8, 0.33333333),
-    )
-
-    private val accessors = listOf(
-        AccessorsTestTable(
-            number = -1,
-            isZero = false,
-            isNotZero = true,
-            isPositive = false,
-            isPositiveOrZero = false,
-            isNegative = true,
-            isNegativeOrZero = true
-        ),
-        AccessorsTestTable(
-            number = 0,
-            isZero = true,
-            isNotZero = false,
-            isPositive = false,
-            isPositiveOrZero = true,
-            isNegative = false,
-            isNegativeOrZero = true
-        ),
-        AccessorsTestTable(
-            number = 1,
-            isZero = false,
-            isNotZero = true,
-            isPositive = true,
-            isPositiveOrZero = true,
-            isNegative = false,
-            isNegativeOrZero = false
-        )
-    )
+    private val oneThird = (1 / 3.0) * 100
 
     @TestFactory
-    fun `Given a number When a Percentage is created Then a decimal value is calculated`() =
-        percentageCreation
-            .map { (number, expected) ->
-                dynamicTest("when I pass $number then I should get $expected") {
-                    assertEquals(expected, Percentage(number).decimal)
-                }
+    fun `Calculate the decimal value of the percentage upon its creation`() = Fixtures.creation
+        .map { (number, expected) ->
+            dynamicTest("given percentage for $number then I should get $expected") {
+                assertEquals(expected, Percentage(number).decimal)
+                assertEquals(expected, number.percent().decimal)
+                assertEquals(expected, number.toPercentage().decimal)
             }
+        }
 
     @TestFactory
-    fun `Given a number and a precision When a Percentage is created Then a precise decimal value is calculated`() =
-        percentageCreationWithPrecision
-            .map { (number, precision, expected) ->
-                dynamicTest("when I pass $number and $precision then I should get $expected") {
-                    assertEquals(expected, Percentage(number, precision).decimal)
-                }
+    fun `Calculate the precise decimal value of the percentage upon its creation`() = Fixtures.preciseCreation
+        .map { (number, precision, expected) ->
+            dynamicTest("given percentage for $number and precision $precision then I should get $expected") {
+                assertEquals(expected, Percentage(number, precision).decimal)
+                assertEquals(expected, number.percent(precision).decimal)
+                assertEquals(expected, number.toPercentage(precision).decimal)
             }
+        }
 
     @TestFactory
-    fun `Given a number When a Percentage is created Then isZero is calculated`() =
-        accessors
-            .map {
-                dynamicTest("when I pass ${it.number} then I should get ${it.isZero}") {
-                    assertEquals(it.isZero, Percentage(it.number).isZero)
-                }
+    fun `Return true when the percentage is zero`() = Fixtures.accessors
+        .map {
+            dynamicTest("given percentage for ${it.number} then I should get ${it.isZero}") {
+                assertEquals(it.isZero, Percentage(it.number).isZero)
             }
+        }
 
     @TestFactory
-    fun `Given a number When a Percentage is created Then isNotZero is calculated`() =
-        accessors
-            .map {
-                dynamicTest("when I pass ${it.number} then I should get ${it.isNotZero}") {
-                    assertEquals(it.isNotZero, Percentage(it.number).isNotZero)
-                }
+    fun `Return true when the percentage is not zero`() = Fixtures.accessors
+        .map {
+            dynamicTest("given percentage for ${it.number} then I should get ${it.isNotZero}") {
+                assertEquals(it.isNotZero, Percentage(it.number).isNotZero)
             }
+        }
 
     @TestFactory
-    fun `Given a number When a Percentage is created Then isPositive is calculated`() =
-        accessors
-            .map {
-                dynamicTest("when I pass ${it.number} then I should get ${it.isPositive}") {
-                    assertEquals(it.isPositive, Percentage(it.number).isPositive)
-                }
+    fun `Return true when the percentage is positive`() = Fixtures.accessors
+        .map {
+            dynamicTest("given percentage for ${it.number} then I should get ${it.isPositive}") {
+                assertEquals(it.isPositive, Percentage(it.number).isPositive)
             }
+        }
 
     @TestFactory
-    fun `Given a number When a Percentage is created Then isPositiveOrZero is calculated`() =
-        accessors
-            .map {
-                dynamicTest("when I pass ${it.number} then I should get ${it.isPositiveOrZero}") {
-                    assertEquals(it.isPositiveOrZero, Percentage(it.number).isPositiveOrZero)
-                }
+    fun `Return true when the percentage is positive or zero`() = Fixtures.accessors
+        .map {
+            dynamicTest("given percentage for ${it.number} then I should get ${it.isPositiveOrZero}") {
+                assertEquals(it.isPositiveOrZero, Percentage(it.number).isPositiveOrZero)
             }
+        }
 
     @TestFactory
-    fun `Given a number When a Percentage is created Then isNegative is calculated`() =
-        accessors
-            .map {
-                dynamicTest("when I pass ${it.number} then I should get ${it.isNegative}") {
-                    assertEquals(it.isNegative, Percentage(it.number).isNegative)
-                }
+    fun `Return true when the percentage is negative`() = Fixtures.accessors
+        .map {
+            dynamicTest("given percentage for ${it.number} then I should get ${it.isNegative}") {
+                assertEquals(it.isNegative, Percentage(it.number).isNegative)
             }
+        }
 
     @TestFactory
-    fun `Given a number When a Percentage is created Then isNegativeOrZero is calculated`() =
-        accessors
-            .map {
-                dynamicTest("when I pass ${it.number} then I should get ${it.isNegativeOrZero}") {
-                    assertEquals(it.isNegativeOrZero, Percentage(it.number).isNegativeOrZero)
-                }
+    fun `Return true when the percentage is negative or zero`() = Fixtures.accessors
+        .map {
+            dynamicTest("given percentage for ${it.number} then I should get ${it.isNegativeOrZero}") {
+                assertEquals(it.isNegativeOrZero, Percentage(it.number).isNegativeOrZero)
             }
+        }
 
     @TestFactory
-    fun `Given two numbers When ratioOf is called Then a Percentage of them is returned`() =
-        Fixtures.ratioOf
-            .map { (number, other, expected) ->
-                dynamicTest("when I pass $number and $other then I should get $expected") {
-                    assertEquals(expected, Percentage.ratioOf(number, other))
-                }
+    fun `Calculate the percentage ratio of two numbers`() = Fixtures.ratioOf
+        .map { (number, other, expected) ->
+            dynamicTest("given numbers $number and $other then I should get $expected") {
+                assertEquals(expected, Percentage.ratioOf(number, other))
+                assertEquals(expected, number ratioOf other)
             }
+        }
 
     @TestFactory
-    fun `Given two numbers and a precision When ratioOf is called Then a precise Percentage of them is returned`() =
-        Fixtures.ratioOfWithPrecision
-            .map { (number, other, precision, expected) ->
-                dynamicTest("when I pass $number, $other, and $precision then I should get $expected") {
-                    assertEquals(expected, Percentage.ratioOf(number, other, precision))
-                }
+    fun `Calculate the precise percentage ratio of two numbers`() = Fixtures.ratioOfWithPrecision
+        .map { (number, other, precision, expected) ->
+            dynamicTest("given numbers $number and $other, and precision $precision then I should get $expected") {
+                assertEquals(expected, Percentage.ratioOf(number, other, precision))
+                assertEquals(expected, number.ratioOf(other, precision))
             }
+        }
 
     @Test
-    fun `Given two numbers with the second being zero When of is called Then an Exception is thrown`() {
-        val exception = assertThrows<IllegalArgumentException> { Percentage.ratioOf(1, 0) }
-        assertEquals("The argument \"other\" can not be zero", exception.message)
+    fun `Throw exception when calculating the percentage ratio of a number and zero`() =
+        assertThrows<IllegalArgumentException> { Percentage.ratioOf(1, 0) }.run {
+            assertEquals("The argument \"other\" can not be zero", message)
+        }
+
+    @TestFactory
+    fun `Calculate the relative change percentage of two numbers`() = Fixtures.relativeChange
+        .map { (initial, ending, expected) ->
+            dynamicTest("given $initial and $ending then I should get $expected") {
+                assertEquals(expected, Percentage.relativeChange(initial, ending))
+                assertEquals(expected, initial relativeChange ending)
+            }
+        }
+
+    @TestFactory
+    fun `Calculate the precise relative change percentage of two numbers`() = Fixtures.relativeChangeWithPrecision
+        .map { (initial, ending, precision, expected) ->
+            dynamicTest("given numbers $initial and $ending, and precision $precision then I should get $expected") {
+                assertEquals(expected, Percentage.relativeChange(initial, ending, precision))
+                assertEquals(expected, initial.relativeChange(ending, precision))
+            }
+        }
+
+    @Test
+    fun `Throw exception when calculating the relative change for an interval starting with zero`() =
+        assertThrows<IllegalArgumentException> { Percentage.relativeChange(0, 100) }.run {
+            assertEquals("The argument \"initial\" can not be zero", message)
+        }
+
+    @TestFactory
+    fun `Apply a precision to a percentage returns a precise percentage`() = listOf(
+        Triple(Percentage(100), 2, Percentage(100, 2)),
+        Triple(Percentage(100), 4, Percentage(100, 4)),
+        Triple(Percentage(100, 4), 6, Percentage(100, 6)),
+        Triple(Percentage(100, 6), 6, Percentage(100, 6))
+    )
+        .map { (percentage, precision, expected) ->
+            dynamicTest("given $percentage when I apply precision $precision then I should get $expected") {
+                assertEquals(expected, percentage.with(precision))
+            }
+        }
+
+    @TestFactory
+    fun `Calculate the base value of a percentage and its numeric value`() = Fixtures.valueWhen
+        .map { (percentage, number, expected) ->
+            dynamicTest("given $percentage when I calculate the value for $number then I should get $expected") {
+                assertEquals(expected, percentage.valueWhen(number))
+            }
+        }
+
+    @Test
+    fun `Throw exception when calculating the base value for zero percent`() =
+        assertThrows<IllegalStateException> { Percentage(0).valueWhen(5) }.run {
+            assertEquals("This operation can not execute when Percentage is zero", message)
+        }
+
+    @TestFactory
+    fun `Cast the percentage to its positive value`() = listOf(
+        Pair(minusOne, one),
+        Pair(zero, zero),
+        Pair(one, one),
+
+        // Precision case
+        Pair(Percentage(-11.11, 4), Percentage(11.11, 4))
+    )
+        .map { (percentage, expected) ->
+            dynamicTest("given $percentage when I cast it to positive then I should get $expected") {
+                assertEquals(expected, +percentage)
+            }
+        }
+
+    @TestFactory
+    fun `Negate the percentage`() = listOf(
+        Pair(one, minusOne),
+        Pair(zero, zero),
+        Pair(minusOne, one),
+
+        // Precision case
+        Pair(Percentage(11.11, 4), Percentage(-11.11, 4))
+    )
+        .map { (percentage, expected) ->
+            dynamicTest("given $percentage when I negate it then I should get $expected") {
+                assertEquals(expected, -percentage)
+            }
+        }
+
+    @TestFactory
+    fun `Multiply a percentage by a number`() = Fixtures.times
+        .map { (number, percentage, expected) ->
+            dynamicTest("given $percentage when I multiply by $number then I should get $expected") {
+                assertEquals(expected, percentage * number)
+                assertEquals(expected, number * percentage)
+            }
+        }
+
+    @TestFactory
+    fun `Increase a number by a percentage`() = Fixtures.plus
+        .map { (number, percentage, expected) ->
+            dynamicTest("given $percentage when I increase $number with it then I should get $expected") {
+                assertEquals(expected, percentage + number)
+                assertEquals(expected, number + percentage)
+            }
+        }
+
+    @TestFactory
+    fun `Decrease a number by a percentage`() = Fixtures.subtraction
+        .map { (number, percentage, expected) ->
+            dynamicTest("given $percentage when I decrease $number with it then I should get $expected") {
+                assertEquals(expected, percentage - number)
+                assertEquals(expected, number - percentage)
+            }
+        }
+
+    @TestFactory
+    fun `Compare two percentages for equality`() = listOf(
+        Triple(one, one, true),
+        Triple(one, null, false),
+        Triple(hundred, Percentage(100), true),
+        Triple(Percentage(100), Percentage(100), true),
+        Triple(Percentage(100), Percentage(50), false),
+        Triple(Percentage(12.5), 12.5 / 100, false),
+    )
+        .map { (percentage, other, expected) ->
+            dynamicTest("given $percentage when I compare against $other then I should get $expected") {
+                assertEquals(expected, percentage == other)
+            }
+        }
+
+    @TestFactory
+    fun `Compare two precise percentages for equality`() = listOf(
+        Triple(Percentage(100, 2), Percentage(100.00, 2), true),
+        Triple(Percentage(100, 2), Percentage(99.99, 2), false),
+        Triple(Percentage(100, 2), Percentage(100), false),
+    )
+        .map { (percentage, other, expected) ->
+            dynamicTest("given $percentage when I compare against $other then I should get $expected") {
+                assertEquals(expected, percentage == other)
+            }
+        }
+
+    @TestFactory
+    fun `Compare two percentages for order`() = listOf(
+        Triple(Percentage(100), Percentage(200), -1),
+        Triple(Percentage(100), Percentage(100), 0),
+        Triple(Percentage(100), Percentage(50), 1),
+
+        Triple(Percentage(100, 1), Percentage(100, 2), 0),
+        Triple(Percentage(100, 2), Percentage(100, 1), 0),
+        Triple(Percentage(100, 2), Percentage(100, 2), 0),
+        Triple(Percentage(100, 2), Percentage(100), 0),
+
+        Triple(Percentage(oneThird, 1), Percentage(oneThird, 2), -1),
+        Triple(Percentage(oneThird, 2), Percentage(oneThird, 1), 1),
+        Triple(Percentage(oneThird, 2), Percentage(oneThird, 2), 0),
+
+        // unboundless percentages are always greater than precise percentages
+        Triple(Percentage(oneThird, 3), Percentage(oneThird), -1),
+        Triple(Percentage(oneThird), Percentage(oneThird, 3), 1),
+    )
+        .map { (percentage, other, expected) ->
+            dynamicTest("given $percentage when I compare against $other then I should get $expected") {
+                assertEquals(expected, percentage.compareTo(other))
+            }
+        }
+
+    @Test
+    fun `Order a collection of percentages`() {
+        val expected = listOf(
+            Percentage(10),
+            Percentage(20),
+            Percentage(30),
+            Percentage(oneThird, 1),
+            Percentage(oneThird, 2),
+            Percentage(oneThird, 3),
+            Percentage(oneThird),
+            Percentage(40),
+            Percentage(50, 2),
+            Percentage(50),
+        )
+
+        val percentages = listOf(
+            Percentage(50, 2),
+            Percentage(20),
+            Percentage(50),
+            Percentage(oneThird, 3),
+            Percentage(40),
+            Percentage(30),
+            Percentage(10),
+            Percentage(oneThird, 2),
+            Percentage(oneThird),
+            Percentage(oneThird, 1),
+        )
+
+        assertEquals(expected, percentages.sorted())
     }
 
     @TestFactory
-    fun `Given two numbers When relativeChange is called Then a Percentage change of them is returned`() =
-        Fixtures.relativeChange
-            .map { (initial, ending, expected) ->
-                dynamicTest("when I pass $initial and $ending then I should get $expected") {
-                    assertEquals(expected, Percentage.relativeChange(initial, ending))
-                }
+    fun `Calculate the percentage hash code`() = listOf(
+        Percentage(100) to -1_106_246_719,
+        Percentage(100, 2) to -1_106_246_717,
+    )
+        .map { (percentage, expected) ->
+            dynamicTest("given $percentage when I calculate its hash code then I should get $expected") {
+                assertEquals(expected, percentage.hashCode())
             }
+        }
 
     @TestFactory
-    fun `Given two numbers and a precision When relativeChange is called Then a precise Percentage change of them is returned`() =
-        Fixtures.relativeChangeWithPrecision
-            .map { (initial, ending, precision, expected) ->
-                dynamicTest("when I pass $initial, $ending, and $precision then I should get $expected") {
-                    assertEquals(expected, Percentage.relativeChange(initial, ending, precision))
-                }
+    fun `Convert the percentage to string`() = listOf(
+        Pair(Percentage(100, -4), "100%"),
+        Pair(Percentage(100), "100%"),
+        Pair(Percentage(100, 0), "100%"),
+        Pair(Percentage(100, 2), "100.00%"),
+        Pair(Percentage(100, 4), "100.0000%"),
+    )
+        .map { (percentage, expected) ->
+            dynamicTest("given $percentage when I convert it to string then I should get $expected") {
+                assertEquals(expected, percentage.toString())
             }
-
-    @Test
-    fun `Given two numbers with the first being zero When relativeChange is called Then an Exception is thrown`() {
-        val exception = assertThrows<IllegalArgumentException> { Percentage.relativeChange(0, 100) }
-        assertEquals("The argument \"initial\" can not be zero", exception.message)
-    }
-
-    @TestFactory
-    fun `Given a Percentage and a precision When with is called Then a precise Percentage is returned`() =
-        listOf(
-            Triple(Percentage(100), 2, Percentage(100, 2)),
-            Triple(Percentage(100), 4, Percentage(100, 4)),
-            Triple(Percentage(100, 4), 6, Percentage(100, 6)),
-            Triple(Percentage(100, 6), 6, Percentage(100, 6)),
-        )
-            .map { (percentage, precision, expected) ->
-                dynamicTest("given $percentage when I pass $precision then I should get $expected") {
-                    assertEquals(expected, percentage.with(precision))
-                }
-            }
-
-    @TestFactory
-    fun `Given a Percentage and a number When valueWhen is called Then a proportional number is returned`() =
-        Fixtures.valueWhen
-            .map { (percentage, number, expected) ->
-                dynamicTest("given $percentage when I pass $number then I should get $expected") {
-                    assertEquals(expected, percentage.valueWhen(number))
-                }
-            }
-
-    @Test
-    fun `Given a Percentage for zero and a number When valueWhen is called Then an Exception is thrown`() {
-        val exception = assertThrows<IllegalStateException> { Percentage(0).valueWhen(5) }
-        assertEquals("This operation cannot execute when Percentage is zero", exception.message)
-    }
-
-    @TestFactory
-    fun `Given a Percentage When unaryPlus is called Then a positive Percentage is returned`() =
-        listOf(
-            Pair(minusOne, one),
-            Pair(zero, zero),
-            Pair(one, one),
-
-            // Precision case
-            Pair(Percentage(-11.11, 4), Percentage(11.11, 4))
-        )
-            .map { (percentage, expected) ->
-                dynamicTest("given $percentage when I switch its sign to positive then I should get $expected") {
-                    assertEquals(expected, +percentage)
-                }
-            }
-
-    @TestFactory
-    fun `Given a Percentage When unaryMinus is called Then a negated Percentage is returned`() =
-        listOf(
-            Pair(one, minusOne),
-            Pair(zero, zero),
-            Pair(minusOne, one),
-
-            // Precision case
-            Pair(Percentage(11.11, 4), Percentage(-11.11, 4))
-        )
-            .map { (percentage, expected) ->
-                dynamicTest("given $percentage when I negate it then I should get $expected") {
-                    assertEquals(expected, -percentage)
-                }
-            }
-
-    @TestFactory
-    fun `Given a Percentage and a number When times is called Then a number representing the Percentage is returned`() =
-        Fixtures.times
-            .map { (number, percentage, expected) ->
-                dynamicTest("given $percentage when I multiply by $number then I should get $expected") {
-                    assertEquals(expected, percentage * number)
-                }
-            }
-
-    @TestFactory
-    fun `Given a Percentage and a number When plus is called Then a number increased by the Percentage is returned`() =
-        Fixtures.plus
-            .map { (number, percentage, expected) ->
-                dynamicTest("given $percentage when I increase $number with it then I should get $expected") {
-                    assertEquals(expected, percentage + number)
-                }
-            }
-
-    @TestFactory
-    fun `Given a Percentage and a number When minus is called Then a number decreased by the Percentage is returned`() =
-        Fixtures.subtraction
-            .map { (number, percentage, expected) ->
-                dynamicTest("given $percentage when I decrease $number with it then I should get $expected") {
-                    assertEquals(expected, percentage - number)
-                }
-            }
-
-    @TestFactory
-    fun `Given two Percentages When equals is called Then a Boolean is returned`() =
-        listOf(
-            Triple(one, one, true),
-            Triple(one, null, false),
-            Triple(hundred, Percentage(100), true),
-            Triple(Percentage(100), Percentage(100), true),
-            Triple(Percentage(100), Percentage(50), false),
-            Triple(Percentage(12.5), 12.5 / 100, false),
-        )
-            .map { (percentage, other, expected) ->
-                dynamicTest("given $percentage when I compare against $other then I should get $expected") {
-                    assertEquals(expected, percentage == other)
-                }
-            }
-
-    @TestFactory
-    fun `Given two precise Percentages When equals is called Then a Boolean is returned`() =
-        listOf(
-            Triple(Percentage(100, 2), Percentage(100.00, 2), true),
-            Triple(Percentage(100, 2), Percentage(99.99, 2), false),
-            Triple(Percentage(100, 2), Percentage(100), false),
-        )
-            .map { (percentage, other, expected) ->
-                dynamicTest("given $percentage when I compare against $other then I should get $expected") {
-                    assertEquals(expected, percentage == other)
-                }
-            }
-
-    @TestFactory
-    fun `Given two Percentages When compareTo is called Then a comparison value is returned`() =
-        listOf(
-            Triple(Percentage(100), Percentage(200), -1),
-            Triple(Percentage(100), Percentage(100), 0),
-            Triple(Percentage(100), Percentage(50), 1),
-        )
-            .map { (percentage, other, expected) ->
-                dynamicTest("given $percentage when I compare against $other then I should get $expected") {
-                    assertEquals(expected, percentage.compareTo(other))
-                }
-            }
-
-    @Test
-    fun `Given a Percentage When hashCode is called Then a hash value is returned`() =
-        assertEquals(1_072_693_248, Percentage(100).hashCode())
-
-    @TestFactory
-    fun `Given a Percentage When toString is called Then an appropriately formatted string is returned`() =
-        listOf(
-            Pair(Percentage(100, -4), "100%"),
-            Pair(Percentage(100), "100%"),
-            Pair(Percentage(100, 0), "100%"),
-            Pair(Percentage(100, 2), "100.00%"),
-            Pair(Percentage(100, 4), "100.0000%"),
-        )
-            .map { (percentage, expected) ->
-                dynamicTest("given $percentage when I convert it to string then I should get $expected") {
-                    assertEquals(expected, percentage.toString())
-                }
-            }
+        }
 }
