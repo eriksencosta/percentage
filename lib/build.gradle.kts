@@ -48,7 +48,6 @@ tasks {
     named<Test>("test") {
         useJUnitPlatform()
         finalizedBy("jacocoTestReport")
-        dependsOn("detekt")
     }
 
     named<JacocoReport>("jacocoTestReport") {
@@ -90,7 +89,7 @@ tasks {
     }
 
     named<Task>("build") {
-        dependsOn("test", "generatePomFileForPomPublication", "generateJavadocJar")
+        dependsOn("detekt", "test", "generatePomFileForPomPublication", "generateJavadocJar")
     }
 
     register<Jar>("generateJavadocJar") {
