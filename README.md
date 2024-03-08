@@ -7,6 +7,10 @@
 
 This is WIP, published for close friends reviews only. This README is temporary.
 
+## Installation
+
+Install (for now) using Jitpack. Use the `trunk` branch: https://jitpack.io/#com.eriksencosta/percentage/trunk
+
 ## Usage
 
 Percentage is a library that introduces the `Percentage` type: a class make percentage calculations in Kotlin easier.
@@ -26,7 +30,7 @@ With `Percentage`, you just do:
 ```kotlin
 val value = 100
 val percentage = 5.percent()
-val discountedValue = value - percentage
+val discountedValue = value decrease percentage
 
 println(discountedValue) // Prints: 95.0
 ```
@@ -92,10 +96,10 @@ docker run --rm -u gradle -v "$PWD":/home/gradle/project -w /home/gradle/project
 ## TODO
 
 - [ ] Decide the library name
-- [ ] Decide if the `Number` extension methods should throw their own exceptions instead of just throwing `Percentage`'s
-  exceptions
-- [ ] Review scale and precision on `Percentage`
-- [X] Multiplatform build - not needed
+- [X] Decide if the `Number` extension methods should throw their own exceptions instead of just throwing `Percentage`'s
+  exceptions > no, they shouldn't. They're just aliases
+- [X] Review scale and precision on `Percentage` > `Rounding` added
+- [X] Multiplatform build > not needed
 - [ ] Decent README
 - [X] Configure static code analysis (Sonarcloud, Code Climate, Codacy, CodeRabbit, Snyk, detekt?)
 - [ ] OSSF scorecard - https://github.com/symfony/symfony/blob/7.1/.github/workflows/scorecards.yml
