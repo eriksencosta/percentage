@@ -109,7 +109,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          * Creates a `Percentage` based on a number and rounded according to the given `precision`.
          *
          * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
-         *   The rounding is done using [ImpreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP]
+         *   The rounding is done using [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP]
          *   policy).
          *
          * @return A [Percentage] rounded according to [precision].
@@ -153,7 +153,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          * @param[number]    The first number.
          * @param[other]     The second number.
          * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
-         *   The rounding is done using [ImpreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP]
+         *   The rounding is done using [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP]
          *   policy).
          *
          * @throws[IllegalArgumentException] When `other` is zero.
@@ -226,7 +226,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          * @param[initial]   The initial number.
          * @param[ending]    The ending number.
          * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
-         *   The rounding is done using [ImpreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP]
+         *   The rounding is done using [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP]
          *   policy).
          *
          * @throws[IllegalArgumentException] When `initial` is zero.
@@ -274,7 +274,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
      * Creates a `Percentage` based on this one with a new precision.
      *
      * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage]. The
-     *   rounding is done using [ImpreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] policy).
+     *   rounding is done using [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] policy).
      *
      * @return A [Percentage] with the precision scale.
      */

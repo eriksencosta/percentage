@@ -17,7 +17,7 @@ fun Number.percent(): Percentage = percent(Rounding.default())
  * @receiver[Number]
  *
  * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage]. The
- *   rounding is done using [ImpreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] policy).
+ *   rounding is done using [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] policy).
  *
  * @return A [Percentage] value of this number rounded according to [precision].
  */
@@ -86,7 +86,7 @@ infix fun Number.ratioOf(other: Number): Percentage = ratioOf(other, Rounding.de
  *
  * @param[other]     The other number.
  * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage]. The
- *   rounding is done using [ImpreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] policy).
+ *   rounding is done using [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] policy).
  *
  * @throws[IllegalArgumentException] When `other` is zero.
  *
@@ -169,7 +169,7 @@ infix fun Number.relativeChange(other: Number): Percentage = relativeChange(othe
  *
  * @param[other]     The other number.
  * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage]. The
- *   rounding is done using [ImpreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] policy).
+ *   rounding is done using [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] policy).
  *
  * @throws[IllegalArgumentException] When this number is zero.
  *
