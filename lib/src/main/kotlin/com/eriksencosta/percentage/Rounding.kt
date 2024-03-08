@@ -35,10 +35,6 @@ sealed class Rounding {
          * @param[mode]      The rounding mode policy to round the number.
          *
          * @return An [ImpreciseRounding] object.
-         *
-         * FIXME: rename method? off() / with() / to()
-         *
-         *     10.percent(Rounding.tof(2))
          */
         fun to(precision: Int, mode: RoundingMode = RoundingMode.HALF_UP) = PreciseRounding(precision, mode)
     }
