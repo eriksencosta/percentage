@@ -46,7 +46,7 @@ sealed class Rounding {
      *
      * @return A [Rounding] object.
      */
-    fun with(precision: Int): Rounding = if (this.precision == precision) this else to(precision, mode)
+    infix fun with(precision: Int): Rounding = if (this.precision == precision) this else to(precision, mode)
 
     /**
      * Rounds the given value.
