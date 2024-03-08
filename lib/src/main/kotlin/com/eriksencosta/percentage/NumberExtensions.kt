@@ -3,7 +3,7 @@
 package com.eriksencosta.percentage
 
 /**
- * Returns the value of this number as a `Percentage`.
+ * Creates a `Percentage` based on this number.
  *
  * @receiver[Number]
  *
@@ -12,38 +12,41 @@ package com.eriksencosta.percentage
 fun Number.percent(): Percentage = percent(Rounding.default())
 
 /**
- * Returns the value of this number as a `Percentage`.
+ * Creates a `Percentage` based on this number and rounded according to the given `precision`.
  *
  * @receiver[Number]
  *
- * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
+ * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage]. The
+ *   rounding is done using [ImpreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] policy).
  *
- * @return The [Percentage] value of this number.
+ * @return A [Percentage] value of this number rounded according to [precision].
  */
 infix fun Number.percent(precision: Int): Percentage = percent(Rounding.of(precision))
 
-infix fun Number.percent(rounding: Rounding): Percentage = Percentage.of(this, rounding)
-
 /**
- * Returns the value of this number as a `Percentage`.
+ * Creates a `Percentage` based on this number and rounded according to the given `rounding` strategy.
  *
  * @receiver[Number]
  *
- * @return The [Percentage] value of this number.
+ * @param[rounding] The [Rounding] strategy to round the decimal representation of the [Percentage].
+ *
+ * @return A [Percentage] value of this number rounded according to [rounding].
+ */
+infix fun Number.percent(rounding: Rounding): Percentage = Percentage.of(this, rounding)
+
+/**
+ * Alias to [Number.percent].
  */
 fun Number.toPercentage(): Percentage = percent()
 
 /**
- * Returns the value of this number as a `Percentage`.
- *
- * @receiver[Number]
- *
- * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
- *
- * @return The [Percentage] value of this number.
+ * Alias to [Number.percent].
  */
 infix fun Number.toPercentage(precision: Int): Percentage = percent(precision)
 
+/**
+ * Alias to [Number.percent].
+ */
 infix fun Number.toPercentage(rounding: Rounding): Percentage = percent(rounding)
 
 /**
@@ -52,7 +55,7 @@ infix fun Number.toPercentage(rounding: Rounding): Percentage = percent(rounding
  * Example:
  *
  *     val x = 1.ratioOf(5)
- *     println(x)           // Prints: 20%
+ *     println(x) // Prints: 20.000000%
  *
  * Or using the infix notation:
  *
@@ -62,7 +65,7 @@ infix fun Number.toPercentage(rounding: Rounding): Percentage = percent(rounding
  *
  * @param[other] The other number.
  *
- * @throws[IllegalArgumentException] When the `other` number is zero.
+ * @throws[IllegalArgumentException] When `other` is zero.
  *
  * @return A [Percentage] that represents the ratio of this number and the `other` number.
  *
@@ -71,39 +74,59 @@ infix fun Number.toPercentage(rounding: Rounding): Percentage = percent(rounding
 infix fun Number.ratioOf(other: Number): Percentage = ratioOf(other, Rounding.default())
 
 /**
- * Creates a `Percentage` based on the ratio of this number and other number.
+ * Creates a `Percentage` based on the ratio of this number and other number. The `Percentage` is rounded according to
+ * the given `precision`.
  *
  * Example:
  *
- *     val x = 1.ratioOf(5)
- *     println(x)           // Prints: 20%
- *
- * Or using the infix notation:
- *
- *     1 ratioOf 5
+ *     val x = 1.ratioOf(5, 2)
+ *     println(x) // Prints: 20.00%
  *
  * @receiver[Number]
  *
  * @param[other]     The other number.
- * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
+ * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage]. The
+ *   rounding is done using [ImpreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] policy).
  *
- * @throws[IllegalArgumentException] When the other number is zero.
+ * @throws[IllegalArgumentException] When `other` is zero.
  *
- * @return A [Percentage] that represents the ratio of this number and the `other` number.
+ * @return A [Percentage] that represents the ratio of this number and the `other` number, and rounded according to
+ *   [precision].
  *
  * @see Percentage.ratioOf
  */
 fun Number.ratioOf(other: Number, precision: Int): Percentage = ratioOf(other, Rounding.of(precision))
 
+/**
+ * Creates a `Percentage` based on the ratio of this number and other number. The `Percentage` is rounded according to
+ * the given `rounding`.
+ *
+ * Example:
+ *
+ *     val x = 1.ratioOf(5, Rounding.of(2, RoundingMode.HALF_DOWN))
+ *     println(x) // Prints: 20.00%
+ *
+ * @receiver[Number]
+ *
+ * @param[other]    The other number.
+ * @param[rounding] The [Rounding] strategy to round the decimal representation of the [Percentage].
+ *
+ * @throws[IllegalArgumentException] When `other` is zero.
+ *
+ * @return A [Percentage] that represents the ratio of this number and the `other` number, and rounded according to
+ *   [rounding].
+ *
+ * @see Percentage.ratioOf
+ */
 fun Number.ratioOf(other: Number, rounding: Rounding): Percentage = Percentage.ratioOf(this, other, rounding)
 
 /**
- * Creates a `Percentage` which represents the percentage change of this number and other number.
+ * Creates a `Percentage` which represents the relative change of this number to another number.
  *
  * Example:
  *
  *     val x = 1.changeOf(5)
- *     println(x)            // Prints: 400%
+ *     println(x) // Prints: 400.000000%
  *
  * Or using the infix notation:
  *
@@ -130,16 +153,13 @@ fun Number.ratioOf(other: Number, rounding: Rounding): Percentage = Percentage.r
 infix fun Number.relativeChange(other: Number): Percentage = relativeChange(other, Rounding.default())
 
 /**
- * Creates a `Percentage` which represents the percentage change of this number and other number.
+ * Creates a `Percentage` which represents the relative change of this number to another number. The `Percentage` is
+ * rounded according to the given `precision`.
  *
  * Example:
  *
- *     val x = 1.changeOf(5)
- *     println(x)            // Prints: 400%
- *
- * Or using the infix notation:
- *
- *     1 changeOf 5
+ *     val x = 1.changeOf(5, 2)
+ *     println(x) // Prints: 400.00%
  *
  * When this Number is zero, an `ArgumentCanNotBeZero` exception is thrown as the relative change for this case
  * [is not defined](https://en.wikipedia.org/wiki/Relative_change).
@@ -151,26 +171,53 @@ infix fun Number.relativeChange(other: Number): Percentage = relativeChange(othe
  * @receiver[Number]
  *
  * @param[other]     The other number.
- * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
+ * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage]. The
+ *   rounding is done using [ImpreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] policy).
  *
  * @throws[IllegalArgumentException] When this number is zero.
  *
- * @return A [Percentage] that represents the percentage change of this number and the other number.
- *
- * TODO: I'm undecided if this should throw the OperationUndefinedForZero exception (invariant unsatisfied when
- *       `this = 0 && other != 0`) or just throw the Percentage's ArgumentCanNotBeZero exception (current impl).
+ * @return A [Percentage] that represents the percentage change of this number and the other number,  and rounded
+ * according to [precision].
  */
 fun Number.relativeChange(other: Number, precision: Int): Percentage = relativeChange(other, Rounding.of(precision))
 
-fun Number.relativeChange(other: Number, rounding: Rounding): Percentage = Percentage.relativeChange(this, other, rounding)
+/**
+ * Creates a `Percentage` which represents the relative change of this number to another number. The `Percentage` is
+ * rounded according to the given `precision`.
+ *
+ * Example:
+ *
+ *     val x = 1.changeOf(5, Rounding.of(2, RoundingMode.HALF_DOWN))
+ *     println(x) // Prints: 400.00%
+ *
+ * When this Number is zero, an `ArgumentCanNotBeZero` exception is thrown as the relative change for this case
+ * [is not defined](https://en.wikipedia.org/wiki/Relative_change).
+ *
+ * When both numbers are zero, a `Percentage(0)` is returned meaning no change happened instead of returning a
+ * `Percentage(NaN)` (which would happen as a result o dividing 0 by 0, both computationally and
+ * [mathematically](https://www.math.utah.edu/~pa/math/0by0.html)).
+ *
+ * @receiver[Number]
+ *
+ * @param[other]    The other number.
+ * @param[rounding] The [Rounding] strategy to round the decimal representation of the [Percentage].
+ *
+ * @throws[IllegalArgumentException] When this number is zero.
+ *
+ * @return A [Percentage] that represents the percentage change of this number and the other number,  and rounded
+ * according to [rounding].
+ */
+fun Number.relativeChange(other: Number, rounding: Rounding): Percentage = Percentage
+    .relativeChange(this, other, rounding)
 
 /**
- * Calculates the number that this number represents as the given `Percentage`.
+ * Calculates the base value of this number for the given `Percentage`. This method helps to answer the question:
+ * "5 is 20% of what number?" Example:
  *
  * Example:
  *
  *     val x = 5
- *     x.of(Percentage(20)) // Results: 25 as 5 is 20% of 25
+ *     x.of(Percentage(20)) // Results: 25.0 as 5 is 20% of 25
  *
  * Or using the infix notation:
  *
@@ -178,51 +225,48 @@ fun Number.relativeChange(other: Number, rounding: Rounding): Percentage = Perce
  *
  * @receiver[Number]
  *
- * @param[percentage] The [Percentage] value of this number.
+ * @param[percentage] The [Percentage] value of that this number represents.
  *
  * @throws[IllegalStateException] When the [Percentage] value is zero.
  *
- * @return The number that represents the [Percentage] of this number.
- *
- * TODO: I'm undecided if this should throw the ArgumentCanNotBeZero exception (invariant unsatisfied when
- *       `percentage = 0`) or just throw the Percentage's OperationUndefinedForZero exception (currently implemented).
+ * @return The number that this number represents as the given [Percentage].
  */
 infix fun Number.valueWhen(percentage: Percentage): Double = percentage.valueWhen(this)
 
 /**
- * Calculates the proportional part of this number according to a `Percentage`.
+ * Multiplies this number by the given `Percentage`.
  *
  * @receiver[Number]
  *
- * @param[percentage] The [Percentage] to calculate the proportional part of this number.
+ * @param[percentage] The [Percentage] to multiply this number by.
  *
- * @return The proportional part of this number.
+ * @return The resulting value.
  *
  * @see Percentage.times
  */
 operator fun Number.times(percentage: Percentage): Double = percentage * this
 
 /**
- * Sums this number with the calculated proportional part according to a `Percentage`.
+ * Increases this number by the given `Percentage`.
  *
  * @receiver[Number]
  *
- * @param[percentage] The [Percentage] to calculate the proportional part of this number.
+ * @param[percentage] The [Percentage] to increase this number by.
  *
- * @return The sum of this number with its calculated proportional part.
+ * @return The resulting value.
  *
  * @see Percentage.plus
  */
 operator fun Number.plus(percentage: Percentage): Number = percentage + this
 
 /**
- * Subtracts this number with the calculated proportional part according to a `Percentage`.
+ * Decreases this number by the given `Percentage`.
  *
  * @receiver[Number]
  *
- * @param[percentage] The [Percentage] to calculate the proportional part of this number.
+ * @param[percentage] The [Percentage] to decrease this number by.
  *
- * @return The subtraction of this number with its calculated proportional part.
+ * @return The resulting value.
  *
  * @see Percentage.minus
  */
