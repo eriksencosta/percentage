@@ -266,8 +266,8 @@ class PercentageTest {
     fun `Increase a number by a percentage`() = Fixtures.plus
         .map { (number, percentage, expected) ->
             dynamicTest("given $percentage when I increase $number with it then I should get $expected") {
-                assertEquals(expected, percentage + number)
-                assertEquals(expected, number + percentage)
+                assertEquals(expected, percentage.increase(number))
+                assertEquals(expected, number.increase(percentage))
             }
         }
 
@@ -275,8 +275,8 @@ class PercentageTest {
     fun `Decrease a number by a percentage`() = Fixtures.subtraction
         .map { (number, percentage, expected) ->
             dynamicTest("given $percentage when I decrease $number with it then I should get $expected") {
-                assertEquals(expected, percentage - number)
-                assertEquals(expected, number - percentage)
+                assertEquals(expected, percentage.decrease(number))
+                assertEquals(expected, number.decrease(percentage))
             }
         }
 

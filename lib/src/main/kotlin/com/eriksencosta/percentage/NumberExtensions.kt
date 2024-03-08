@@ -255,9 +255,9 @@ operator fun Number.times(percentage: Percentage): Double = percentage * this
  *
  * @return The resulting value.
  *
- * @see Percentage.plus
+ * @see Percentage.increase
  */
-operator fun Number.plus(percentage: Percentage): Number = percentage + this
+infix fun Number.increase(percentage: Percentage): Number = percentage.increase(this)
 
 /**
  * Decreases this number by the given `Percentage`.
@@ -268,6 +268,6 @@ operator fun Number.plus(percentage: Percentage): Number = percentage + this
  *
  * @return The resulting value.
  *
- * @see Percentage.minus
+ * @see Percentage.decrease
  */
-operator fun Number.minus(percentage: Percentage): Number = percentage - this
+infix fun Number.decrease(percentage: Percentage): Number = percentage.decrease(this)
