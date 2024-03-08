@@ -63,7 +63,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
     /**
      * The percentage value divided by 100 and rounded using [rounding].
      */
-    val decimal: Double = rounding.round(this.value / PERCENT)
+    val decimal: Double = round(this.value / PERCENT)
 
     /**
      * true if the `Percentage` is zero.
@@ -303,7 +303,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
      */
     infix fun valueWhen(number: Number): Double =
         check(0.0 != decimal) { "This operation can not execute when Percentage is zero" }.run {
-            number.toDouble() / decimal
+            round(number.toDouble() / decimal)
         }
 
     /**
@@ -327,7 +327,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
      *
      * @return The resulting value.
      */
-    operator fun times(number: Number): Double = number.toDouble() * decimal
+    operator fun times(number: Number): Double = round(number.toDouble() * decimal)
 
     /**
      * Increases a number by this `Percentage`.
@@ -337,7 +337,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
      * @return The resulting value.
      */
     infix fun increase(number: Number): Double = number.toDouble().let { whole ->
-        whole + whole * decimal
+        round(whole + whole * decimal)
     }
 
     /**
@@ -348,7 +348,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
      * @return The resulting value.
      */
     infix fun decrease(number: Number): Double = number.toDouble().let { whole ->
-        whole - whole * decimal
+        round(whole - whole * decimal)
     }
 
     override fun compareTo(other: Percentage): Int = decimal.compareTo(other.decimal) // we disregard the precision
@@ -359,4 +359,6 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
     override fun hashCode(): Int = Objects.hash(decimal, rounding)
 
     override fun toString(): String = "${rounding.roundingFormat()}%%".format(value)
+
+    private fun round(value: Double): Double = rounding.round(value)
 }

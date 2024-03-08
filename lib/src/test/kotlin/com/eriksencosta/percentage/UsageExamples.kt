@@ -66,7 +66,7 @@ internal class UsageExamples {
             "33 increase by 5[.3]% then decrease by 5[.1]%",
             { Percentage.of(5, 1) decrease (Percentage.of(5, 3) increase 33) },
             { 33 increase 5.percent(3) decrease 5.percent(1) },
-            31.185
+            31.2
         ),
         Quadruple(
             "(33 increase by 5% decrease by 5%) * 10%",
@@ -90,13 +90,13 @@ internal class UsageExamples {
             "(100 increase by relative change from 33 to 77) * 10[.2]%",
             { Percentage.of(10, 2) * (Percentage.relativeChange(33, 77) increase 100) },
             { (100 increase (33 relativeChange 77)) * 10.percent(2) },
-            23.333333333333332
+            23.33
         ),
         Quadruple(
             "(100 increase by relative change[.4] from 33 to 77) * 10[.2]%",
             { Percentage.of(10, 2) * (Percentage.relativeChange(33, 77, 4) increase 100) },
             { (100 increase (33.relativeChange(77, 4))) * 10.percent(2) },
-            23.333
+            23.33
         )
     )
         .map { (case, regularMethods, extensionFunctions, expected) ->

@@ -235,8 +235,8 @@ internal object Fixtures {
 
         // Precision and rounding cases
         Triple(Percentage.of((77 / 3.0 * 100)), 33, 1.2857142857142856),
-        Triple(Percentage.of((77 / 3.0 * 100), Rounding.to(2)), 33, 1.2855473315153876),
-        Triple(Percentage.of((77 / 3.0 * 100), Rounding.to(2, down)), 33, 1.2860483242400624),
+        Triple(Percentage.of((77 / 3.0 * 100), Rounding.to(2)), 33, 1.29), // w/o rounding: 1.2855473315153876
+        Triple(Percentage.of((77 / 3.0 * 100), Rounding.to(2, down)), 33, 1.28), // w/o rounding: 1.2860483242400624
     )
 
     val times = listOf(
