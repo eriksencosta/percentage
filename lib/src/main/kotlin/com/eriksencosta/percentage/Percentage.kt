@@ -97,7 +97,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
 
     companion object {
         private const val PERCENT: Double = 100.0
-        private val noRounding: ImpreciseRounding = Rounding.default()
+        private val noRounding: NoRounding = Rounding.default()
 
         /**
          * Creates a `Percentage` based on a number.
