@@ -22,9 +22,9 @@ sealed class Rounding {
         /**
          * Returns an `ImpreciseRounding`.
          *
-         * @return An [ImpreciseRounding] object.
+         * @return A [NoRounding] object.
          */
-        fun default(): ImpreciseRounding = ImpreciseRounding()
+        fun default(): NoRounding = NoRounding()
 
         /**
          * Returns a [PreciseRounding].
@@ -32,7 +32,7 @@ sealed class Rounding {
          * @param[precision] The precision scale to round a value.
          * @param[mode]      The rounding mode policy to round the number.
          *
-         * @return An [ImpreciseRounding] object.
+         * @return A [PreciseRounding] object.
          */
         fun to(precision: Int, mode: RoundingMode = RoundingMode.HALF_UP): PreciseRounding =
             PreciseRounding(precision, mode)
@@ -73,9 +73,9 @@ sealed class Rounding {
 }
 
 /**
- * Strategy that does not round a value, keeping it imprecise.
+ * Strategy that does not round a value.
  */
-class ImpreciseRounding internal constructor() : Rounding() {
+class NoRounding internal constructor() : Rounding() {
     override val precision: Int = 0
     override val mode: RoundingMode = RoundingMode.HALF_UP
 
