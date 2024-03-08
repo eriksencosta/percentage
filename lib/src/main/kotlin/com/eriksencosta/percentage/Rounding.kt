@@ -22,11 +22,9 @@ sealed class Rounding {
         /**
          * Returns an `ImpreciseRounding`.
          *
-         * @param[mode] The rounding mode policy to round the number.
-         *
          * @return An [ImpreciseRounding] object.
          */
-        fun default(mode: RoundingMode = RoundingMode.HALF_UP) = ImpreciseRounding(mode)
+        fun default(): ImpreciseRounding = ImpreciseRounding()
 
         /**
          * Returns a [PreciseRounding].
@@ -36,7 +34,8 @@ sealed class Rounding {
          *
          * @return An [ImpreciseRounding] object.
          */
-        fun to(precision: Int, mode: RoundingMode = RoundingMode.HALF_UP) = PreciseRounding(precision, mode)
+        fun to(precision: Int, mode: RoundingMode = RoundingMode.HALF_UP): PreciseRounding =
+            PreciseRounding(precision, mode)
     }
 
     /**
@@ -76,8 +75,9 @@ sealed class Rounding {
 /**
  * Strategy that does not round a value, keeping it imprecise.
  */
-class ImpreciseRounding(override val mode: RoundingMode) : Rounding() {
+class ImpreciseRounding internal constructor() : Rounding() {
     override val precision: Int = 0
+    override val mode: RoundingMode = RoundingMode.HALF_UP
 
     override fun round(value: Double): Double = value
 
@@ -89,7 +89,7 @@ class ImpreciseRounding(override val mode: RoundingMode) : Rounding() {
 /**
  * Strategy to round a value precisely.
  */
-class PreciseRounding(override val precision: Int, override val mode: RoundingMode) : Rounding() {
+class PreciseRounding internal constructor(override val precision: Int, override val mode: RoundingMode) : Rounding() {
     override fun round(value: Double): Double = value.toBigDecimal().setScale(precision, mode).toDouble()
 
     override fun roundingFormat(): String = if (0 >= precision) "%.0f" else "%.${precision}f"
