@@ -278,7 +278,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
      *
      * @return A [Percentage] with the precision scale.
      */
-    infix fun with(precision: Int): Percentage = with(rounding.with(precision))
+    infix fun with(precision: Int): Percentage = with(rounding with precision)
 
     /**
      * Creates a `Percentage` based on this one with a new rounding strategy.
