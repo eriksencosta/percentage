@@ -101,7 +101,9 @@ tasks {
     }
 
     register<Task>("generateDocs") {
-        // TODO: description and group
+        description = "Generate the project documentation (HTML, Markdown, and Javadoc)."
+        group = "Documentation"
+
         dependsOn("dokkaHtml", "dokkaGfm", "dokkaJavadoc")
     }
 
