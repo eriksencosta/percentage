@@ -336,7 +336,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
      *
      * @return The resulting value.
      */
-    operator fun plus(number: Number): Double = number.toDouble().let { whole ->
+    infix fun increase(number: Number): Double = number.toDouble().let { whole ->
         whole + whole * decimal
     }
 
@@ -347,7 +347,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
      *
      * @return The resulting value.
      */
-    operator fun minus(number: Number): Double = number.toDouble().let { whole ->
+    infix fun decrease(number: Number): Double = number.toDouble().let { whole ->
         whole - whole * decimal
     }
 
