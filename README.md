@@ -101,6 +101,7 @@ docker run --rm -u gradle -v "$PWD":/home/gradle/project -w /home/gradle/project
 - [X] Review scale and precision on `Percentage` > `Rounding` added
 - [X] Multiplatform build > not needed
 - [ ] Decent README
+- [ ] Explicit Library API mode in Gradle
 - [X] Configure static code analysis (Sonarcloud, Code Climate, Codacy, CodeRabbit, Snyk, detekt?)
 - [ ] OSSF scorecard - https://github.com/symfony/symfony/blob/7.1/.github/workflows/scorecards.yml
 - [ ] Squash all commits
