@@ -20,14 +20,14 @@ sealed class Rounding {
 
     companion object {
         /**
-         * Returns an `ImpreciseRounding`.
+         * Returns an `NoRounding`.
          *
          * @return A [NoRounding] object.
          */
         fun default(): NoRounding = NoRounding()
 
         /**
-         * Returns a [PreciseRounding].
+         * Returns a `PreciseRounding`.
          *
          * @param[precision] The precision scale to round a value.
          * @param[mode]      The rounding mode policy to round the number.
