@@ -267,7 +267,7 @@ class PercentageTest {
         .map { (number, percentage, expected) ->
             dynamicTest("given $percentage when I increase $number with it then I should get $expected") {
                 assertEquals(expected, percentage increase number)
-                assertEquals(expected, number increase percentage)
+                assertEquals(expected, number increaseBy percentage)
             }
         }
 
@@ -276,7 +276,7 @@ class PercentageTest {
         .map { (number, percentage, expected) ->
             dynamicTest("given $percentage when I decrease $number with it then I should get $expected") {
                 assertEquals(expected, percentage decrease number)
-                assertEquals(expected, number decrease percentage)
+                assertEquals(expected, number decreaseBy percentage)
             }
         }
 

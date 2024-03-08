@@ -30,7 +30,7 @@ With `Percentage`, you just do:
 ```kotlin
 val value = 100
 val percentage = 5.percent()
-val discountedValue = value decrease percentage
+val discountedValue = value decreaseBy percentage
 
 println(discountedValue) // Prints: 95.0
 ```
