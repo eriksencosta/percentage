@@ -351,7 +351,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
         round(whole - whole * decimal)
     }
 
-    override fun compareTo(other: Percentage): Int = decimal.compareTo(other.decimal) // we disregard the precision
+    override fun compareTo(other: Percentage): Int = decimal.compareTo(other.decimal)
 
     override fun equals(other: Any?): Boolean = this === other ||
         (other is Percentage && value == other.value && decimal == other.decimal && rounding == other.rounding)
