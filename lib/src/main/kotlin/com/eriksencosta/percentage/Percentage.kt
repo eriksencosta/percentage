@@ -46,7 +46,7 @@ import kotlin.math.abs
  * By default, the rounding mode used to round the value is [java.math.RoundingMode.HALF_UP]. If you need to use
  * another mode, use the factory method which receives [Rounding] as an argument:
  *
- *     val percentage = Percentage.of(50, Rounding.of(2, RoundingMode.HALF_DOWN))
+ *     val percentage = Percentage.of(50, Rounding.to(2, RoundingMode.HALF_DOWN))
  *
  * The `Percentage` class is immutable and thread-safe.
  *
@@ -114,7 +114,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          *
          * @return A [Percentage] rounded according to [precision].
          */
-        fun of(value: Number, precision: Int): Percentage = of(value, Rounding.of(precision))
+        fun of(value: Number, precision: Int): Percentage = of(value, Rounding.to(precision))
 
         /**
          * Creates a `Percentage` based on a number and rounded according to the given `rounding` strategy.
@@ -161,7 +161,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          * @return A [Percentage] that represents the ratio of [number] and [other].
          */
         fun ratioOf(number: Number, other: Number, precision: Int): Percentage =
-            ratioOf(number, other, Rounding.of(precision))
+            ratioOf(number, other, Rounding.to(precision))
 
         /**
          * Creates a `Percentage` based on the ratio of two numbers and rounded according to the given `rounding`
@@ -169,7 +169,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          *
          * Example:
          *
-         *     val x = Percentage.ratioOf(1, 5, Rounding.of(2, RoundingMode.HALF_DOWN))
+         *     val x = Percentage.ratioOf(1, 5, Rounding.to(2, RoundingMode.HALF_DOWN))
          *     println(x) // Prints: 20.00%
          *
          * @param[number]   The first number.
@@ -234,14 +234,14 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          * @return A [Percentage] that represents the percentage change of an initial and ending numbers.
          */
         fun relativeChange(initial: Number, ending: Number, precision: Int): Percentage =
-            relativeChange(initial, ending, Rounding.of(precision))
+            relativeChange(initial, ending, Rounding.to(precision))
 
         /**
          * Creates a `Percentage` which represents the relative change of an initial and ending numbers.
          *
          * Example:
          *
-         *     val x = Percentage.relativeChange(1, 5, Rounding.of(2, RoundingMode.HALF_DOWN))
+         *     val x = Percentage.relativeChange(1, 5, Rounding.to(2, RoundingMode.HALF_DOWN))
          *     println(x) // Prints: 400.00%
          *
          * When the initial number is zero, an `ArgumentCanNotBeZero` exception is thrown as the relative change for

@@ -36,11 +36,11 @@ sealed class Rounding {
          *
          * @return An [ImpreciseRounding] object.
          *
-         * FIXME: rename method? off() / with()
+         * FIXME: rename method? off() / with() / to()
          *
-         *     10.percent(Rounding.off(2))
+         *     10.percent(Rounding.tof(2))
          */
-        fun of(precision: Int, mode: RoundingMode = RoundingMode.HALF_UP) = PreciseRounding(precision, mode)
+        fun to(precision: Int, mode: RoundingMode = RoundingMode.HALF_UP) = PreciseRounding(precision, mode)
     }
 
     /**
@@ -50,7 +50,7 @@ sealed class Rounding {
      *
      * @return A [Rounding] object.
      */
-    fun with(precision: Int): Rounding = if (this.precision == precision) this else of(precision, mode)
+    fun with(precision: Int): Rounding = if (this.precision == precision) this else to(precision, mode)
 
     /**
      * Rounds the given value.

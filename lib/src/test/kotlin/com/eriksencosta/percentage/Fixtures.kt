@@ -38,21 +38,21 @@ internal object Fixtures {
 
     val roundedCreation = listOf(
         Triple(PI_ROUNDING, Rounding.default(), Math.PI),
-        Triple(PI_ROUNDING, Rounding.of(1), 3.1),
-        Triple(PI_ROUNDING, Rounding.of(2), 3.14),
-        Triple(PI_ROUNDING, Rounding.of(2, RoundingMode.CEILING), 3.15),
-        Triple(PI_ROUNDING, Rounding.of(2, RoundingMode.UP), 3.15),
-        Triple(PI_ROUNDING, Rounding.of(2, RoundingMode.DOWN), 3.14),
-        Triple(PI_ROUNDING, Rounding.of(2, RoundingMode.FLOOR), 3.14),
-        Triple(PI_ROUNDING, Rounding.of(2, RoundingMode.HALF_DOWN), 3.14),
-        Triple(PI_ROUNDING, Rounding.of(2, RoundingMode.HALF_EVEN), 3.14),
-        Triple(PI_ROUNDING, Rounding.of(3), 3.142),
-        Triple(PI_ROUNDING, Rounding.of(3, RoundingMode.CEILING), 3.142),
-        Triple(PI_ROUNDING, Rounding.of(3, RoundingMode.UP), 3.142),
-        Triple(PI_ROUNDING, Rounding.of(3, RoundingMode.DOWN), 3.141),
-        Triple(PI_ROUNDING, Rounding.of(3, RoundingMode.FLOOR), 3.141),
-        Triple(PI_ROUNDING, Rounding.of(3, RoundingMode.HALF_DOWN), 3.142),
-        Triple(PI_ROUNDING, Rounding.of(3, RoundingMode.HALF_EVEN), 3.142),
+        Triple(PI_ROUNDING, Rounding.to(1), 3.1),
+        Triple(PI_ROUNDING, Rounding.to(2), 3.14),
+        Triple(PI_ROUNDING, Rounding.to(2, RoundingMode.CEILING), 3.15),
+        Triple(PI_ROUNDING, Rounding.to(2, RoundingMode.UP), 3.15),
+        Triple(PI_ROUNDING, Rounding.to(2, RoundingMode.DOWN), 3.14),
+        Triple(PI_ROUNDING, Rounding.to(2, RoundingMode.FLOOR), 3.14),
+        Triple(PI_ROUNDING, Rounding.to(2, RoundingMode.HALF_DOWN), 3.14),
+        Triple(PI_ROUNDING, Rounding.to(2, RoundingMode.HALF_EVEN), 3.14),
+        Triple(PI_ROUNDING, Rounding.to(3), 3.142),
+        Triple(PI_ROUNDING, Rounding.to(3, RoundingMode.CEILING), 3.142),
+        Triple(PI_ROUNDING, Rounding.to(3, RoundingMode.UP), 3.142),
+        Triple(PI_ROUNDING, Rounding.to(3, RoundingMode.DOWN), 3.141),
+        Triple(PI_ROUNDING, Rounding.to(3, RoundingMode.FLOOR), 3.141),
+        Triple(PI_ROUNDING, Rounding.to(3, RoundingMode.HALF_DOWN), 3.142),
+        Triple(PI_ROUNDING, Rounding.to(3, RoundingMode.HALF_EVEN), 3.142),
     )
 
     val accessors = listOf(
@@ -127,70 +127,70 @@ internal object Fixtures {
         Quadruple(
             50,
             -250,
-            Rounding.of(1),
-            Percentage.of(-600, Rounding.of(1))
+            Rounding.to(1),
+            Percentage.of(-600, Rounding.to(1))
         ),
         Quadruple(
             40,
             -80,
-            Rounding.of(2, ceiling),
-            Percentage.of(-300, Rounding.of(2, ceiling))
+            Rounding.to(2, ceiling),
+            Percentage.of(-300, Rounding.to(2, ceiling))
         ),
         Quadruple(
             10,
             -10,
-            Rounding.of(3, up),
-            Percentage.of(-200, Rounding.of(3, up))
+            Rounding.to(3, up),
+            Percentage.of(-200, Rounding.to(3, up))
         ),
         Quadruple(
             -20,
             -40,
-            Rounding.of(4, down),
-            Percentage.of(-100, Rounding.of(4, down))
+            Rounding.to(4, down),
+            Percentage.of(-100, Rounding.to(4, down))
         ),
         Quadruple(
             20,
             10,
-            Rounding.of(5, floor),
-            Percentage.of(-50, Rounding.of(5, floor))
+            Rounding.to(5, floor),
+            Percentage.of(-50, Rounding.to(5, floor))
         ),
         Quadruple(
             -10,
             -10,
-            Rounding.of(6, halfUp),
-            Percentage.of(0, Rounding.of(6, halfUp))
+            Rounding.to(6, halfUp),
+            Percentage.of(0, Rounding.to(6, halfUp))
         ),
         Quadruple(
             10,
             15,
-            Rounding.of(7, halfDown),
-            Percentage.of(50, Rounding.of(7, halfDown))
+            Rounding.to(7, halfDown),
+            Percentage.of(50, Rounding.to(7, halfDown))
         ),
         Quadruple(
             10,
             20,
-            Rounding.of(8, halfEven),
-            Percentage.of(100, Rounding.of(8, halfEven))
+            Rounding.to(8, halfEven),
+            Percentage.of(100, Rounding.to(8, halfEven))
         ),
 
         // Zero cases
         Quadruple(
             -10,
             0,
-            Rounding.of(12, halfUp),
-            Percentage.of(100, Rounding.of(12, halfUp))
+            Rounding.to(12, halfUp),
+            Percentage.of(100, Rounding.to(12, halfUp))
         ),
         Quadruple(
             10,
             0,
-            Rounding.of(13, halfDown),
-            Percentage.of(-100, Rounding.of(13, halfDown))
+            Rounding.to(13, halfDown),
+            Percentage.of(-100, Rounding.to(13, halfDown))
         ),
         Quadruple(
             0,
             0,
-            Rounding.of(14, halfEven),
-            Percentage.of(0, Rounding.of(14, halfEven))
+            Rounding.to(14, halfEven),
+            Percentage.of(0, Rounding.to(14, halfEven))
         ),
     )
 
@@ -209,8 +209,8 @@ internal object Fixtures {
 
     val ratioOfWithRounding = listOf(
         Quadruple(1, 2, Rounding.default(), Percentage.of(50, Rounding.default())),
-        Quadruple(1, -2, Rounding.of(2, up), Percentage.of(-50, Rounding.of(2, up))),
-        Quadruple(-1, -2, Rounding.of(3, down), Percentage.of(50, Rounding.of(3, down))),
+        Quadruple(1, -2, Rounding.to(2, up), Percentage.of(-50, Rounding.to(2, up))),
+        Quadruple(-1, -2, Rounding.to(3, down), Percentage.of(50, Rounding.to(3, down))),
     )
 
     val valueWhen = listOf(
@@ -235,8 +235,8 @@ internal object Fixtures {
 
         // Precision and rounding cases
         Triple(Percentage.of((77 / 3.0 * 100)), 33, 1.2857142857142856),
-        Triple(Percentage.of((77 / 3.0 * 100), Rounding.of(2)), 33, 1.2855473315153876),
-        Triple(Percentage.of((77 / 3.0 * 100), Rounding.of(2, down)), 33, 1.2860483242400624),
+        Triple(Percentage.of((77 / 3.0 * 100), Rounding.to(2)), 33, 1.2855473315153876),
+        Triple(Percentage.of((77 / 3.0 * 100), Rounding.to(2, down)), 33, 1.2860483242400624),
     )
 
     val times = listOf(
@@ -248,8 +248,8 @@ internal object Fixtures {
 
         // Precision and rounding cases
         Triple(33, Percentage.of((77 / 3.0 * 100)), 847.0000000000001),
-        Triple(33, Percentage.of((77 / 3.0 * 100), Rounding.of(2)), 847.11),
-        Triple(33, Percentage.of((77 / 3.0 * 100), Rounding.of(2, down)), 846.78),
+        Triple(33, Percentage.of((77 / 3.0 * 100), Rounding.to(2)), 847.11),
+        Triple(33, Percentage.of((77 / 3.0 * 100), Rounding.to(2, down)), 846.78),
     )
 
     val plus = listOf(
@@ -261,8 +261,8 @@ internal object Fixtures {
 
         // Precision and rounding cases
         Triple(33, Percentage.of((77 / 3.0 * 100)), 880.0000000000001),
-        Triple(33, Percentage.of((77 / 3.0 * 100), Rounding.of(2)), 880.11),
-        Triple(33, Percentage.of((77 / 3.0 * 100), Rounding.of(2, down)), 879.78),
+        Triple(33, Percentage.of((77 / 3.0 * 100), Rounding.to(2)), 880.11),
+        Triple(33, Percentage.of((77 / 3.0 * 100), Rounding.to(2, down)), 879.78),
     )
 
     val subtraction = listOf(
@@ -274,8 +274,8 @@ internal object Fixtures {
 
         // Precision and rounding cases
         Triple(33, Percentage.of((77 / 3.0 * 100)), -814.0000000000001),
-        Triple(33, Percentage.of((77 / 3.0 * 100), Rounding.of(2)), -814.11),
-        Triple(33, Percentage.of((77 / 3.0 * 100), Rounding.of(2, down)), -813.78),
+        Triple(33, Percentage.of((77 / 3.0 * 100), Rounding.to(2)), -814.11),
+        Triple(33, Percentage.of((77 / 3.0 * 100), Rounding.to(2, down)), -813.78),
     )
 }
 
