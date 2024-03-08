@@ -206,8 +206,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          *
          * @return A [Percentage] that represents the percentage change of an initial and ending numbers.
          */
-        fun relativeChange(initial: Number, ending: Number): Percentage =
-            relativeChange(initial, ending, noRounding)
+        fun relativeChange(initial: Number, ending: Number): Percentage = relativeChange(initial, ending, noRounding)
 
         /**
          * Creates a `Percentage` which represents the relative change of an initial and ending numbers.
