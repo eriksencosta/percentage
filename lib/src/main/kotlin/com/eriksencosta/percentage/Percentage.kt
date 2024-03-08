@@ -97,13 +97,14 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
 
     companion object {
         private const val PERCENT: Double = 100.0
+        private val noRounding: ImpreciseRounding = Rounding.default()
 
         /**
          * Creates a `Percentage` based on a number.
          *
          * @return A [Percentage].
          */
-        fun of(value: Number): Percentage = of(value, Rounding.default())
+        fun of(value: Number): Percentage = of(value, noRounding)
 
         /**
          * Creates a `Percentage` based on a number and rounded according to the given `precision`.
@@ -140,7 +141,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          *
          * @return A [Percentage] that represents the ratio of [number] and [other].
          */
-        fun ratioOf(number: Number, other: Number): Percentage = ratioOf(number, other, Rounding.default())
+        fun ratioOf(number: Number, other: Number): Percentage = ratioOf(number, other, noRounding)
 
         /**
          * Creates a `Percentage` based on the ratio of two numbers and rounded according to the given `precision`.
@@ -206,7 +207,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          * @return A [Percentage] that represents the percentage change of an initial and ending numbers.
          */
         fun relativeChange(initial: Number, ending: Number): Percentage =
-            relativeChange(initial, ending, Rounding.default())
+            relativeChange(initial, ending, noRounding)
 
         /**
          * Creates a `Percentage` which represents the relative change of an initial and ending numbers.
