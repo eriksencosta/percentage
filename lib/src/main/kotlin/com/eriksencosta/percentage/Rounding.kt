@@ -87,7 +87,7 @@ class ImpreciseRounding(override val mode: RoundingMode) : Rounding() {
 }
 
 /**
- * Strategy to round a value with precision.
+ * Strategy to round a value precisely.
  */
 class PreciseRounding(override val precision: Int, override val mode: RoundingMode) : Rounding() {
     override fun round(value: Double): Double = value.toBigDecimal().setScale(precision, mode).toDouble()
