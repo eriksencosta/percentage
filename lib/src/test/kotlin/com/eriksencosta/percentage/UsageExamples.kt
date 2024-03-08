@@ -7,7 +7,7 @@ import kotlin.test.assertEquals
 internal class UsageExamples {
     @Suppress("LongMethod")
     @TestFactory
-    fun `Run expression using regular methods or extensions functions`() = listOf(
+    fun `Run expressions using regular methods or extensions functions`() = listOf(
         Quadruple(
             "100 * 50%",
             { Percentage.of(50) * 100 },
@@ -99,9 +99,9 @@ internal class UsageExamples {
             23.333
         )
     )
-        .map { (formula, regularMethods, extensionFunctions, expected) ->
+        .map { (case, regularMethods, extensionFunctions, expected) ->
             DynamicTest.dynamicTest(
-                "given an expression for the formula $formula when I run it then I should get $expected"
+                "$case = $expected"
             ) {
                 assertEquals(expected, regularMethods())
                 assertEquals(expected, extensionFunctions())
