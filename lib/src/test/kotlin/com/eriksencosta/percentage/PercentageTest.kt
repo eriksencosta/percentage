@@ -181,11 +181,11 @@ class PercentageTest {
         ),
         Triple(
             Percentage.of(100),
-            Rounding.of(2, RoundingMode.HALF_DOWN),
-            Percentage.of(100, Rounding.of(2, RoundingMode.HALF_DOWN))
+            Rounding.to(2, RoundingMode.HALF_DOWN),
+            Percentage.of(100, Rounding.to(2, RoundingMode.HALF_DOWN))
         ),
         Triple(
-            Percentage.of(100, Rounding.of(2, RoundingMode.UP)),
+            Percentage.of(100, Rounding.to(2, RoundingMode.UP)),
             Rounding.default(),
             Percentage.of(100, Rounding.default())
         ),
@@ -222,8 +222,8 @@ class PercentageTest {
 
         // Rounding case
         Pair(
-            Percentage.of(-11.11, Rounding.of(2, RoundingMode.HALF_DOWN)),
-            Percentage.of(11.11, Rounding.of(2, RoundingMode.HALF_DOWN))
+            Percentage.of(-11.11, Rounding.to(2, RoundingMode.HALF_DOWN)),
+            Percentage.of(11.11, Rounding.to(2, RoundingMode.HALF_DOWN))
         ),
     )
         .map { (percentage, expected) ->
@@ -243,8 +243,8 @@ class PercentageTest {
 
         // Rounding case
         Pair(
-            Percentage.of(11.11, Rounding.of(2, RoundingMode.HALF_DOWN)),
-            Percentage.of(-11.11, Rounding.of(2, RoundingMode.HALF_DOWN))
+            Percentage.of(11.11, Rounding.to(2, RoundingMode.HALF_DOWN)),
+            Percentage.of(-11.11, Rounding.to(2, RoundingMode.HALF_DOWN))
         ),
     )
         .map { (percentage, expected) ->
@@ -301,8 +301,8 @@ class PercentageTest {
         Triple(Percentage.of(100, 2), Percentage.of(99.99, 2), false),
         Triple(Percentage.of(100, 2), Percentage.of(100), false),
         Triple(
-            Percentage.of(100, Rounding.of(2, RoundingMode.HALF_DOWN)),
-            Percentage.of(100, Rounding.of(2)),
+            Percentage.of(100, Rounding.to(2, RoundingMode.HALF_DOWN)),
+            Percentage.of(100, Rounding.to(2)),
             false
         ),
     )

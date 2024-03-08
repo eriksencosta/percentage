@@ -21,7 +21,7 @@ fun Number.percent(): Percentage = percent(Rounding.default())
  *
  * @return A [Percentage] value of this number rounded according to [precision].
  */
-infix fun Number.percent(precision: Int): Percentage = percent(Rounding.of(precision))
+infix fun Number.percent(precision: Int): Percentage = percent(Rounding.to(precision))
 
 /**
  * Creates a `Percentage` based on this number and rounded according to the given `rounding` strategy.
@@ -95,7 +95,7 @@ infix fun Number.ratioOf(other: Number): Percentage = ratioOf(other, Rounding.de
  *
  * @see Percentage.ratioOf
  */
-fun Number.ratioOf(other: Number, precision: Int): Percentage = ratioOf(other, Rounding.of(precision))
+fun Number.ratioOf(other: Number, precision: Int): Percentage = ratioOf(other, Rounding.to(precision))
 
 /**
  * Creates a `Percentage` based on the ratio of this number and other number. The `Percentage` is rounded according to
@@ -103,7 +103,7 @@ fun Number.ratioOf(other: Number, precision: Int): Percentage = ratioOf(other, R
  *
  * Example:
  *
- *     val x = 1.ratioOf(5, Rounding.of(2, RoundingMode.HALF_DOWN))
+ *     val x = 1.ratioOf(5, Rounding.to(2, RoundingMode.HALF_DOWN))
  *     println(x) // Prints: 20.00%
  *
  * @receiver[Number]
@@ -179,7 +179,7 @@ infix fun Number.relativeChange(other: Number): Percentage = relativeChange(othe
  * @return A [Percentage] that represents the percentage change of this number and the other number,  and rounded
  * according to [precision].
  */
-fun Number.relativeChange(other: Number, precision: Int): Percentage = relativeChange(other, Rounding.of(precision))
+fun Number.relativeChange(other: Number, precision: Int): Percentage = relativeChange(other, Rounding.to(precision))
 
 /**
  * Creates a `Percentage` which represents the relative change of this number to another number. The `Percentage` is
@@ -187,7 +187,7 @@ fun Number.relativeChange(other: Number, precision: Int): Percentage = relativeC
  *
  * Example:
  *
- *     val x = 1.changeOf(5, Rounding.of(2, RoundingMode.HALF_DOWN))
+ *     val x = 1.changeOf(5, Rounding.to(2, RoundingMode.HALF_DOWN))
  *     println(x) // Prints: 400.00%
  *
  * When this Number is zero, an `ArgumentCanNotBeZero` exception is thrown as the relative change for this case
