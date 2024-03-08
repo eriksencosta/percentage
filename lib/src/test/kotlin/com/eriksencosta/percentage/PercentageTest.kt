@@ -168,7 +168,7 @@ class PercentageTest {
     )
         .map { (percentage, precision, expected) ->
             dynamicTest("given $percentage when I apply precision $precision then I should get $expected") {
-                assertEquals(expected, percentage.with(precision))
+                assertEquals(expected, percentage with precision)
             }
         }
 
@@ -192,7 +192,7 @@ class PercentageTest {
     )
         .map { (percentage, rounding, expected) ->
             dynamicTest("given $percentage when I apply rounding $rounding then I should get $expected") {
-                assertEquals(expected, percentage.with(rounding))
+                assertEquals(expected, percentage with rounding)
             }
         }
 
@@ -200,14 +200,14 @@ class PercentageTest {
     fun `Calculate the base value of a percentage and its numeric value`() = Fixtures.valueWhen
         .map { (percentage, number, expected) ->
             dynamicTest("given $percentage when I calculate the value for $number then I should get $expected") {
-                assertEquals(expected, percentage.valueWhen(number))
+                assertEquals(expected, percentage valueWhen number)
                 assertEquals(expected, number valueWhen percentage)
             }
         }
 
     @Test
     fun `Throw exception when calculating the base value for zero percent`() =
-        assertThrows<IllegalStateException> { Percentage.of(0).valueWhen(5) }.run {
+        assertThrows<IllegalStateException> { Percentage.of(0) valueWhen 5 }.run {
             assertEquals("This operation can not execute when Percentage is zero", message)
         }
 
@@ -266,8 +266,8 @@ class PercentageTest {
     fun `Increase a number by a percentage`() = Fixtures.plus
         .map { (number, percentage, expected) ->
             dynamicTest("given $percentage when I increase $number with it then I should get $expected") {
-                assertEquals(expected, percentage.increase(number))
-                assertEquals(expected, number.increase(percentage))
+                assertEquals(expected, percentage increase number)
+                assertEquals(expected, number increase percentage)
             }
         }
 
@@ -275,8 +275,8 @@ class PercentageTest {
     fun `Decrease a number by a percentage`() = Fixtures.subtraction
         .map { (number, percentage, expected) ->
             dynamicTest("given $percentage when I decrease $number with it then I should get $expected") {
-                assertEquals(expected, percentage.decrease(number))
-                assertEquals(expected, number.decrease(percentage))
+                assertEquals(expected, percentage decrease number)
+                assertEquals(expected, number decrease percentage)
             }
         }
 
