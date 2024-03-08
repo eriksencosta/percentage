@@ -382,7 +382,7 @@ class PercentageTest {
     @TestFactory
     fun `Convert the percentage to string`() = listOf(
         Pair(Percentage.of(100, -4), "100%"),
-        Pair(Percentage.of(100), "100%"),
+        Pair(Percentage.of(100), "100.000000%"),
         Pair(Percentage.of(100, 0), "100%"),
         Pair(Percentage.of(100, 2), "100.00%"),
         Pair(Percentage.of(100, 4), "100.0000%"),
