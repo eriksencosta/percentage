@@ -1,4 +1,6 @@
 import cl.franciscosolis.sonatypecentralupload.SonatypeCentralUploadTask
+import org.jetbrains.dokka.gradle.DokkaTask
+import java.net.URL
 import java.util.Locale
 
 // TODO: this is reserved for automating snapshot builds. Create a snapshot release by default.
@@ -90,6 +92,21 @@ tasks {
 
     named<Task>("build") {
         dependsOn("detekt", "test", "generatePomFileForPomPublication", "generateJavadocJar")
+    }
+
+    withType<DokkaTask>().configureEach {
+        dokkaSourceSets {
+            named("main") {
+                moduleName = "Percentage"
+                includes.from("dokka.md")
+
+                sourceLink {
+                    localDirectory.set(file("src/main/kotlin"))
+                    remoteUrl.set(URL("https://github.com/eriksencosta/percentage/tree/trunk/lib/src/main/kotlin"))
+                    remoteLineSuffix.set("#L")
+                }
+            }
+        }
     }
 
     register<Jar>("generateJavadocJar") {
