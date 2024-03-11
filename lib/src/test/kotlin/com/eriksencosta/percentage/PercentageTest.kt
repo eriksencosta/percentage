@@ -164,7 +164,12 @@ class PercentageTest {
         Triple(Percentage.of(100), 4, Percentage.of(100, 4)),
         Triple(Percentage.of(100, 4), 4, Percentage.of(100, 4)),
         Triple(Percentage.of(100, 4), 6, Percentage.of(100, 6)),
-        Triple(Percentage.of(100, 6), 6, Percentage.of(100, 6))
+        Triple(Percentage.of(100, 6), 6, Percentage.of(100, 6)),
+        Triple(
+            Percentage.of(100, Rounding.to(6, RoundingMode.HALF_DOWN)),
+            6,
+            Percentage.of(100, Rounding.to(6, RoundingMode.HALF_DOWN))
+        ),
     )
         .map { (percentage, precision, expected) ->
             dynamicTest("given $percentage when I apply precision $precision then I should get $expected") {

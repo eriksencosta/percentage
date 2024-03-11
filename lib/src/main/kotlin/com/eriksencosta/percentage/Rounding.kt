@@ -21,12 +21,12 @@ sealed class Rounding {
     /**
      * The precision to round the decimal value (i.e., number of decimal places to keep).
      */
-    abstract val precision: Int
+    open val precision: Int = 0
 
     /**
      * The rounding mode used to round the decimal value.
      */
-    abstract val mode: RoundingMode
+    open val mode: RoundingMode = RoundingMode.HALF_UP
 
     companion object {
         /**
@@ -55,7 +55,8 @@ sealed class Rounding {
      *
      * @return A [Rounding] object.
      */
-    infix fun with(precision: Int): Rounding = if (this.precision == precision) this else to(precision, mode)
+    infix fun with(precision: Int): Rounding = if (this.precision == precision && this.mode == RoundingMode.HALF_UP)
+        this else to(precision, mode)
 
     /**
      * Rounds the given value.
@@ -86,9 +87,6 @@ sealed class Rounding {
  * Strategy that does not round a value.
  */
 class NoRounding internal constructor() : Rounding() {
-    override val precision: Int = 0
-    override val mode: RoundingMode = RoundingMode.HALF_UP
-
     override fun round(value: Double): Double = value
 
     override fun roundingFormat(): String = "%f"
