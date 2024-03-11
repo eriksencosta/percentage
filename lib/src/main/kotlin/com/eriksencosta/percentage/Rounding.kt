@@ -4,7 +4,17 @@ import java.math.RoundingMode
 
 /**
  * Strategy to round a `Percentage` decimal value to a given precision using a specified [java.math.RoundingMode]
- * policy. See [significant figures](https://en.wikipedia.org/wiki/Significant_figures) on Wikipedia for an arithmetic
+ * policy. The companion object exposes two factory methods to create the appropriate strategy:
+ *
+ * * [to]: creates a [PreciseRounding] object, which rounds a value to a specific precision scale and by
+ *   a specific rounding mode
+ * * [default]: creates a [NoRounding] object, which doesn't round a value
+ *
+ * If you need to round a value, call the [to] factory method as pass its returned object to [Percentage]:
+ *
+ *     Percentage.of(5.55, Rounding.to(1, RoundingMode.UP))
+ *
+ * See [significant figures](https://en.wikipedia.org/wiki/Significant_figures) on Wikipedia for an arithmetic
  * background.
  */
 sealed class Rounding {
@@ -20,14 +30,14 @@ sealed class Rounding {
 
     companion object {
         /**
-         * Returns an `NoRounding`.
+         * Creates a `NoRounding` instance.
          *
          * @return A [NoRounding] object.
          */
         fun default(): NoRounding = NoRounding()
 
         /**
-         * Returns a `PreciseRounding`.
+         * Creates a `PreciseRounding` instance.
          *
          * @param[precision] The precision scale to round a value.
          * @param[mode]      The rounding mode policy to round the number.
