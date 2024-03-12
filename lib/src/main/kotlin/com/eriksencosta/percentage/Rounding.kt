@@ -17,11 +17,11 @@ import java.math.RoundingMode
  * See [significant figures](https://en.wikipedia.org/wiki/Significant_figures) on Wikipedia for an arithmetic
  * background.
  */
-sealed class Rounding {
+sealed class Rounding : Comparable<Rounding> {
     /**
      * The precision to round the decimal value (i.e., number of decimal places to keep).
      */
-    open val precision: Int = 0
+    open val precision: Int = Int.MAX_VALUE
 
     /**
      * The rounding mode used to round the decimal value.
@@ -74,6 +74,8 @@ sealed class Rounding {
      * @return A template string compatible with the [String.format] syntax.
      */
     internal abstract fun roundingFormat(): String
+
+    override fun compareTo(other: Rounding): Int = precision.compareTo(other.precision)
 
     override fun equals(other: Any?): Boolean = this === other ||
         other is Rounding && precision == other.precision && mode == other.mode

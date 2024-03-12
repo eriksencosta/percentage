@@ -323,10 +323,10 @@ class PercentageTest {
         Triple(Percentage.of(100), Percentage.of(100), 0),
         Triple(Percentage.of(100), Percentage.of(50), 1),
 
-        Triple(Percentage.of(100, 1), Percentage.of(100, 2), 0),
-        Triple(Percentage.of(100, 2), Percentage.of(100, 1), 0),
+        Triple(Percentage.of(100, 1), Percentage.of(100, 2), -1),
+        Triple(Percentage.of(100, 2), Percentage.of(100, 1), 1),
         Triple(Percentage.of(100, 2), Percentage.of(100, 2), 0),
-        Triple(Percentage.of(100, 2), Percentage.of(100), 0),
+        Triple(Percentage.of(100, 2), Percentage.of(100), -1),
 
         Triple(Percentage.of(oneThird, 1), Percentage.of(oneThird, 2), -1),
         Triple(Percentage.of(oneThird, 2), Percentage.of(oneThird, 1), 1),
