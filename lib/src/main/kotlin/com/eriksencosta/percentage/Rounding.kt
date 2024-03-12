@@ -73,8 +73,6 @@ sealed class Rounding : Comparable<Rounding> {
         other is Rounding && precision == other.precision && mode == other.mode
 
     override fun hashCode(): Int = precision.hashCode()
-
-
 }
 
 /**
