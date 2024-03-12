@@ -1,3 +1,4 @@
+@file:JvmName("NumberPercentage")
 @file:Suppress("TooManyFunctions")
 
 package com.eriksencosta.percentage
