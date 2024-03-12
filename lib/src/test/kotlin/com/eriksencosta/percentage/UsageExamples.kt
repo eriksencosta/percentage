@@ -66,7 +66,7 @@ internal class UsageExamples {
             "33 increase by 5[.3]% then decrease by 5[.1]%",
             { Percentage.of(5, 1) decrease (Percentage.of(5, 3) increase 33) },
             { 33 increaseBy 5.percent(3) decreaseBy 5.percent(1) },
-            31.2
+            32.9
         ),
         Quadruple(
             "(33 increase by 5% decrease by 5%) * 10%",
@@ -84,7 +84,7 @@ internal class UsageExamples {
             "100 * (base value when 80% is 7) increase by 1/4[.1] (30%)", // 7 is 80% of 8.75
             { (Percentage.ratioOf(1, 4, 1)) increase ((Percentage.of(80) valueWhen 7) * 100) },
             { (100 * (7 valueWhen 80.percent())) increaseBy (1.ratioOf(4, 1)) },
-            1137.5
+            1093.8
         ),
         Quadruple(
             "(100 increase by relative change from 33 to 77) * 10[.2]%",

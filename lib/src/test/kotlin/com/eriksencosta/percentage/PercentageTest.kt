@@ -15,32 +15,39 @@ class PercentageTest {
     private val oneThird = (1 / 3.0) * 100
 
     @TestFactory
-    fun `Calculate the decimal value of the percentage upon its creation`() = Fixtures.creation
+    fun `Create a Percentage`() = listOf(
+        Pair(50, Percentage.of(50)),
+        Pair(100, Percentage.of(100)),
+    )
         .map { (number, expected) ->
-            dynamicTest("given percentage for $number then I should get $expected") {
-                assertEquals(expected, Percentage.of(number).decimal)
-                assertEquals(expected, number.percent().decimal)
-                assertEquals(expected, number.toPercentage().decimal)
+            dynamicTest("given $number when I create a Percentage then I should get $expected") {
+                assertEquals(expected, number.percent())
+                assertEquals(expected, number.toPercentage())
             }
         }
 
     @TestFactory
-    fun `Calculate the decimal value of the precise percentage upon its creation`() = Fixtures.preciseCreation
+    fun `Create a Percentage with PreciseRounding when given a precision`() = listOf(
+        Triple(50, 2, Percentage.of(50, 2)),
+        Triple(50, 4, Percentage.of(50, 4)),
+    )
         .map { (number, precision, expected) ->
-            dynamicTest("given percentage for $number and precision $precision then I should get $expected") {
-                assertEquals(expected, Percentage.of(number, precision).decimal)
-                assertEquals(expected, number.percent(precision).decimal)
-                assertEquals(expected, number.toPercentage(precision).decimal)
+            dynamicTest("given $number and $precision when I create a Percentage then I should get $expected") {
+                assertEquals(expected, number.percent(precision))
+                assertEquals(expected, number.toPercentage(precision))
             }
         }
 
     @TestFactory
-    fun `Calculate the decimal value of the rounded percentage upon its creation`() = Fixtures.roundedCreation
+    fun `Create a Percentage with a Rounding strategy`() = listOf(
+        Triple(50, Rounding.default(), Percentage.of(50, Rounding.default())),
+        Triple(50, Rounding.to(2), Percentage.of(50, Rounding.to(2))),
+        Triple(50, Rounding.to(4, RoundingMode.HALF_DOWN), Percentage.of(50, Rounding.to(4, RoundingMode.HALF_DOWN))),
+    )
         .map { (number, rounding, expected) ->
-            dynamicTest("given percentage for $number and rounding $rounding then I should get $expected") {
-                assertEquals(expected, Percentage.of(number, rounding).decimal)
-                assertEquals(expected, number.percent(rounding).decimal)
-                assertEquals(expected, number.toPercentage(rounding).decimal)
+            dynamicTest("given $number and $rounding when I create a Percentage then I should get $expected") {
+                assertEquals(expected, number.percent(rounding))
+                assertEquals(expected, number.toPercentage(rounding))
             }
         }
 
@@ -268,7 +275,7 @@ class PercentageTest {
         }
 
     @TestFactory
-    fun `Increase a number by a percentage`() = Fixtures.plus
+    fun `Increase a number by a percentage`() = Fixtures.increase
         .map { (number, percentage, expected) ->
             dynamicTest("given $percentage when I increase $number with it then I should get $expected") {
                 assertEquals(expected, percentage increase number)
@@ -277,7 +284,7 @@ class PercentageTest {
         }
 
     @TestFactory
-    fun `Decrease a number by a percentage`() = Fixtures.subtraction
+    fun `Decrease a number by a percentage`() = Fixtures.decrease
         .map { (number, percentage, expected) ->
             dynamicTest("given $percentage when I decrease $number with it then I should get $expected") {
                 assertEquals(expected, percentage decrease number)
@@ -375,7 +382,7 @@ class PercentageTest {
 
     @TestFactory
     fun `Calculate the percentage hash code`() = listOf(
-        Percentage.of(100) to -1_106_246_719,
+        Percentage.of(100) to 1_041_236_928,
         Percentage.of(100, 2) to -1_106_246_717,
     )
         .map { (percentage, expected) ->
@@ -386,11 +393,14 @@ class PercentageTest {
 
     @TestFactory
     fun `Convert the percentage to string`() = listOf(
-        Pair(Percentage.of(100, -4), "100%"),
-        Pair(Percentage.of(100), "100.000000%"),
-        Pair(Percentage.of(100, 0), "100%"),
-        Pair(Percentage.of(100, 2), "100.00%"),
-        Pair(Percentage.of(100, 4), "100.0000%"),
+        Pair(Percentage.of(-10), "-10%"),
+        Pair(Percentage.of(1), "1%"),
+        Pair(Percentage.of(100), "100%"),
+        Pair(Percentage.of(oneThird), "33.33%"),
+        Pair(Percentage.of(-100.0 / 3.0), "-33.33%"),
+        Pair(Percentage.of(-100.0 / 3.0, 2), "-33.33%"),
+        Pair(Percentage.of(513.0 / 53.0), "9.68%"),
+
     )
         .map { (percentage, expected) ->
             dynamicTest("given $percentage when I convert it to string then I should get $expected") {

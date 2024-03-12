@@ -19,28 +19,20 @@ and it's decimal representation (i.e., its value divided by 100):
 If you need to round your percentage value and its calculations, just pass an instance of the
 [Rounding][com.eriksencosta.percentage.Rounding] class to the [percent][com.eriksencosta.percentage.Number.percent]
 method. Use the [Rounding.to][com.eriksencosta.percentage.Rounding.to] factory method to create the object, passing the
-number of decimal places and the rounding mode desired to round for:
+number of decimal places and the desired rounding mode:
 
     val percentage = (615.0 / 53.0).percent()
-    percentage.decimal // 0.1160377358490566
-    percentage.value   // 11.60377358490566
-
     val roundedOff = (615.0 / 53.0).percent(Rounding.to(2, RoundingMode.FLOOR))
-    roundedOff.decimal // 0.11
-    roundedOff.value   // 11.60377358490566
 
     val value = 127
     value * percentage // 14.736792452830189
-    value * roundedOff // 13.97
+    value * roundedOff // 14.73
 
 The rounding mode to use is defined by one of [RoundingMode][java.math.RoundingMode] enum values. If you need to use
 [HALF_UP][java.math.RoundingMode], just pass the number of desired decimal places:
 
     val roundedUp = (615.0 / 53.0).percent(2)
-    roundedUp.decimal  // 0.12
-    roundedUp.value    // 11.60377358490566
-
-    value * roundedUp  // 15.24
+    value * roundedUp  // 14.74
 
 Note that [Percentage.value][com.eriksencosta.percentage.Percentage.value] is never rounded. This way you can query the
 original value of the percentage.
@@ -53,15 +45,16 @@ To create a [Percentage][com.eriksencosta.percentage.Percentage] based on a rati
 the [percent][com.eriksencosta.percentage.Number.ratioOf] function:
 
     1 ratioOf 4 // 25%
-    1 ratioOf 3 // 33.333333%
+    1 ratioOf 3 // 33.33%
 
-The function also has overloaded versions to control the rounding strategy:
+The function also has overloaded versions to control the rounding strategy of the returned
+[Percentage][com.eriksencosta.percentage.Percentage] object:
 
-    // rounds using 2 decimal places
-    1.ratioOf(3, 2) // 33.00%
+    // rounds using 2 decimal places and with RoundingMode.HALF_UP
+    1.ratioOf(3, 2)
 
-    // rounds using 2 decimal places and away from zero (UP)
-    1.ratioOf(3, Rounding.to(2, RoundingMode.UP)) // 34.00%
+    // rounds using 2 decimal places and with RoundingMode.UP
+    1.ratioOf(3, Rounding.to(2, RoundingMode.UP))
 
 ### Calculate the relative change as a Percentage for two numbers
 
@@ -69,15 +62,16 @@ To calculate the relative change between two numbers, use the
 [relativeChange][com.eriksencosta.percentage.Number.relativeChange] function:
 
     1 relativeChange 3 // 200%
-    3 relativeChange 1 // -66.666667%
+    3 relativeChange 1 // -66.67%
 
-The function also has overloaded versions to control the rounding strategy:
+The function also has overloaded versions to control the rounding strategy of the returned
+[Percentage][com.eriksencosta.percentage.Percentage] object:
 
-    // rounds using 2 decimal places
-    3.relativeChange(1, 2) // -67.00%
+    // rounds using 2 decimal places and with RoundingMode.HALF_UP
+    3.relativeChange(1, 2)
 
-    // rounds using 2 decimal places and away from zero (UP)
-    3.relativeChange(1, Rounding.to(2, RoundingMode.UP)) // -67.00%
+    // rounds using 2 decimal places and with RoundingMode.UP
+    3.relativeChange(1, Rounding.to(2, RoundingMode.UP))
 
 ### Calculate the base value of a number when it's a given Percentage
 

@@ -2,6 +2,7 @@ package com.eriksencosta.percentage
 
 import java.util.Objects
 import kotlin.math.abs
+import kotlin.math.round
 
 /**
  * Represents a [percentage](https://en.wikipedia.org/wiki/Percentage) number, a numerical value divided by 100.
@@ -9,7 +10,7 @@ import kotlin.math.abs
  * To create a `Percentage`, just pass the desired percentage value to its factory method. For example, to create a
  * `Percentage` for 25%, do:
  *
- *     val percentage = Percentage.of(25) // That's 25%
+ *     val percentage = Percentage.of(25)
  *
  * Then you can do percentage calculations like multiplication, increase, and decrease:
  *
@@ -18,35 +19,26 @@ import kotlin.math.abs
  *     percentage increase number // Results: 125.0
  *     percentage decrease number // Results: 75.0
  *
- * Extension functions make the `Percentage` class easier to use:
- *
- *     val number = 100
- *     number * 10.percent()        // Results: 10.0
- *     number increase 25.percent() // Results: 110.0
- *
  * You can also query the `Percentage` value (the original number you passed to the factory method) and its decimal
  * value (the value used for the calculations):
  *
  *     percentage.value   // Results: 50.0
  *     percentage.decimal // Results: 0.5
  *
- * You can also determine the precision used to round the `Percentage`. This way, you can make percentage calculations
- * in accordance to your needs/policies:
+ * You can also determine the precision used to round the percentage calculations to your needs/policies. Just pass the
+ * number of desired decimal places as the `precision` argument:
  *
- *     val imprecise = Percentage.of(100.0 / 3)
- *     val precise = Percentage.of(100.0 / 3, 2)
+ *     val imprecise = Percentage.of(23)
+ *     val precise = Percentage.of(23, 2)
  *
- *     println(imprecise)           // Prints: 33.333333%
- *     println(precise)             // Prints: 33.33%
- *
- *     val number = 27
- *     println(imprecise * number)  // Prints: 9.000000000000002
- *     println(precise * number)    // Prints: 8.91
+ *     val number = 57
+ *     println(imprecise * number)  // Prints: 13.110000000000001
+ *     println(precise * number)    // Prints: 13.11
  *
  * By default, the rounding mode used to round the value is [java.math.RoundingMode.HALF_UP]. If you need to use
- * another mode, use the factory method which receives [Rounding] as an argument:
+ * another mode, use the factory method which receives a [Rounding] as an argument:
  *
- *     val percentage = Percentage.of(50, Rounding.to(2, RoundingMode.HALF_DOWN))
+ *     Percentage.of(50, Rounding.to(2, RoundingMode.HALF_DOWN))
  *
  * The `Percentage` class is immutable and thread-safe.
  *
@@ -61,9 +53,9 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
     val value: Double = value.toDouble()
 
     /**
-     * The percentage value divided by 100 and rounded using [rounding].
+     * The percentage decimal value.
      */
-    val decimal: Double = round { this.value / PERCENT }
+    val decimal: Double = this.value / PERCENT
 
     /**
      * true if the `Percentage` is zero.
@@ -100,39 +92,38 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
         private val noRounding: NoRounding = Rounding.default()
 
         /**
-         * Creates a `Percentage` based on a number.
+         * Creates a `Percentage` based on a number. Calculations using it won't be rounded.
          *
          * @return A [Percentage].
          */
         fun of(value: Number): Percentage = of(value, noRounding)
 
         /**
-         * Creates a `Percentage` based on a number and rounded according to the given `precision`.
+         * Creates a `Percentage` based on a number. Calculations using it will be rounded.
          *
-         * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
-         *   The rounding is done using [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP]
-         *   policy).
+         * @param[precision] The precision scale to round percentage calculations. The rounding is done using
+         *   the [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] mode).
          *
-         * @return A [Percentage] rounded according to [precision].
+         * @return A [Percentage].
          */
         fun of(value: Number, precision: Int): Percentage = of(value, Rounding.to(precision))
 
         /**
-         * Creates a `Percentage` based on a number and rounded according to the given `rounding` strategy.
+         * Creates a `Percentage` based on a number. Calculations using it will be rounded.
          *
-         * @param[rounding] The [Rounding] strategy to round the decimal representation of the [Percentage].
+         * @param[rounding] The [Rounding] strategy to round the percentage calculations.
          *
-         * @return A [Percentage] rounded according to [rounding].
+         * @return A [Percentage].
          */
         fun of(value: Number, rounding: Rounding): Percentage = Percentage(value, rounding)
 
         /**
-         * Creates a `Percentage` based on the ratio of two numbers.
+         * Creates a `Percentage` based on the ratio of two numbers. Calculations using it won't be rounded.
          *
          * Example:
          *
          *     val x = Percentage.ratioOf(1, 5)
-         *     println(x) // Prints: 20.000000%
+         *     println(x) // Prints: 20%
          *
          * @param[number] The first number.
          * @param[other]  The second number.
@@ -144,18 +135,17 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
         fun ratioOf(number: Number, other: Number): Percentage = ratioOf(number, other, noRounding)
 
         /**
-         * Creates a `Percentage` based on the ratio of two numbers and rounded according to the given `precision`.
+         * Creates a `Percentage` based on the ratio of two numbers. Calculations using it will be rounded.
          *
          * Example:
          *
          *     val x = Percentage.ratioOf(1, 5, 2)
-         *     println(x) // Prints: 20.00%
+         *     println(x) // Prints: 20%
          *
          * @param[number]    The first number.
          * @param[other]     The second number.
-         * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
-         *   The rounding is done using [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP]
-         *   policy).
+         * @param[precision] The precision scale to round percentage calculations. The rounding is done using
+         *   the [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] mode).
          *
          * @throws[IllegalArgumentException] When `other` is zero.
          *
@@ -165,17 +155,16 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
             ratioOf(number, other, Rounding.to(precision))
 
         /**
-         * Creates a `Percentage` based on the ratio of two numbers and rounded according to the given `rounding`
-         * strategy.
+         * Creates a `Percentage` based on the ratio of two numbers. Calculations using it will be rounded.
          *
          * Example:
          *
          *     val x = Percentage.ratioOf(1, 5, Rounding.to(2, RoundingMode.HALF_DOWN))
-         *     println(x) // Prints: 20.00%
+         *     println(x) // Prints: 20%
          *
          * @param[number]   The first number.
          * @param[other]    The second number.
-         * @param[rounding] The [Rounding] strategy to round the decimal representation of the [Percentage].
+         * @param[rounding] The [Rounding] strategy to round the percentage calculations.
          *
          * @return A [Percentage] that represents the ratio of [number] and [other].
          */
@@ -185,12 +174,13 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
             }
 
         /**
-         * Creates a `Percentage` which represents the relative change of an initial and ending numbers.
+         * Creates a `Percentage` which represents the relative change of an initial and ending numbers. Calculations
+         * using it won't be rounded.
          *
          * Example:
          *
          *     val x = Percentage.relativeChange(1, 5)
-         *     println(x) // Prints: 400.000000%
+         *     println(x) // Prints: 400%
          *
          * When the initial number is zero, an `ArgumentCanNotBeZero` exception is thrown as the relative change for
          * this case [is not defined](https://en.wikipedia.org/wiki/Relative_change).
@@ -209,12 +199,13 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
         fun relativeChange(initial: Number, ending: Number): Percentage = relativeChange(initial, ending, noRounding)
 
         /**
-         * Creates a `Percentage` which represents the relative change of an initial and ending numbers.
+         * Creates a `Percentage` which represents the relative change of an initial and ending numbers. Calculations
+         * using it will be rounded.
          *
          * Example:
          *
          *     val x = Percentage.relativeChange(1, 5, 2)
-         *     println(x) // Prints: 400.00%
+         *     println(x) // Prints: 400%
          *
          * When the initial number is zero, an `ArgumentCanNotBeZero` exception is thrown as the relative change for
          * this case [is not defined](https://en.wikipedia.org/wiki/Relative_change).
@@ -225,9 +216,8 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          *
          * @param[initial]   The initial number.
          * @param[ending]    The ending number.
-         * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage].
-         *   The rounding is done using [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP]
-         *   policy).
+         * @param[precision] The precision scale to round percentage calculations. The rounding is done using
+         *   the [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] mode).
          *
          * @throws[IllegalArgumentException] When `initial` is zero.
          *
@@ -237,12 +227,13 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
             relativeChange(initial, ending, Rounding.to(precision))
 
         /**
-         * Creates a `Percentage` which represents the relative change of an initial and ending numbers.
+         * Creates a `Percentage` which represents the relative change of an initial and ending numbers. Calculations
+         * using it will be rounded.
          *
          * Example:
          *
          *     val x = Percentage.relativeChange(1, 5, Rounding.to(2, RoundingMode.HALF_DOWN))
-         *     println(x) // Prints: 400.00%
+         *     println(x) // Prints: 400%
          *
          * When the initial number is zero, an `ArgumentCanNotBeZero` exception is thrown as the relative change for
          * this case [is not defined](https://en.wikipedia.org/wiki/Relative_change).
@@ -253,7 +244,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          *
          * @param[initial]  The initial number.
          * @param[ending]   The ending number.
-         * @param[rounding] The [Rounding] strategy to round the decimal representation of the [Percentage].
+         * @param[rounding] The [Rounding] strategy to round the percentage calculations.
          *
          * @throws[IllegalArgumentException] When `initial` is zero.
          *
@@ -271,19 +262,18 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
     }
 
     /**
-     * Creates a `Percentage` based on this one with a new precision.
+     * Creates a `Percentage` based on this one with a new precision. Calculations using it will be rounded.
      *
-     * @param[precision] The precision scale to round the decimal (value / 100) representation of the [Percentage]. The
-     *   rounding is done using [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] policy).
+     * @param[precision] The precision scale to round percentage calculations.
      *
      * @return A [Percentage] with the precision scale.
      */
     infix fun with(precision: Int): Percentage = with(rounding with precision)
 
     /**
-     * Creates a `Percentage` based on this one with a new rounding strategy.
+     * Creates a `Percentage` based on this one with a new rounding strategy. Calculations using it will be rounded.
      *
-     * @param[rounding] The [Rounding] strategy to round the decimal representation of the [Percentage].
+     * @param[rounding] The [Rounding] strategy to round the percentage calculations.
      *
      * @return A [Percentage] with the rounding strategy.
      */
@@ -356,13 +346,12 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
     else
         this.rounding.compareTo(other.rounding)
 
-
     override fun equals(other: Any?): Boolean = this === other ||
-        (other is Percentage && value == other.value && decimal == other.decimal && rounding == other.rounding)
+        (other is Percentage && decimal == other.decimal && rounding == other.rounding)
 
     override fun hashCode(): Int = Objects.hash(decimal, rounding)
 
-    override fun toString(): String = "${rounding.roundingFormat()}%%".format(value)
+    override fun toString(): String = (if (abs(value) - abs(round(value)) == 0.0) "%.0f%%" else "%.2f%%").format(value)
 
     private inline fun <T> T.round(block: T.() -> Double): Double = rounding.round(block(this))
 }

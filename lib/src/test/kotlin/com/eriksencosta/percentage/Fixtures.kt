@@ -3,8 +3,6 @@ package com.eriksencosta.percentage
 import java.math.RoundingMode
 
 internal object Fixtures {
-    private const val PI_ROUNDING = Math.PI * 100
-
     private val ceiling = RoundingMode.CEILING
     private val up = RoundingMode.UP
     private val down = RoundingMode.DOWN
@@ -12,48 +10,6 @@ internal object Fixtures {
     private val halfUp = RoundingMode.HALF_UP
     private val halfDown = RoundingMode.HALF_DOWN
     private val halfEven = RoundingMode.HALF_EVEN
-
-    val creation = listOf(
-        Pair(100.0, 1.0),
-        Pair(50.0, 0.5),
-        Pair(25.0, 0.25),
-        Pair(0.0, 0.0),
-        Pair(0.25, 0.0025),
-        Pair(0.50, 0.005),
-        Pair(1.1, 0.011000000000000001),
-        Pair(100.0 / 3, 0.33333333333333337),
-    )
-
-    val preciseCreation = listOf(
-        Triple(1.1, 1, 0.0),
-        Triple(1.1, 2, 0.01),
-        Triple(1.1, 3, 0.011),
-        Triple(1.1, 4, 0.011),
-        Triple(11.11, 1, 0.1),
-        Triple(11.11, 2, 0.11),
-        Triple(11.11, 3, 0.111),
-        Triple(11.11, 4, 0.1111),
-        Triple(100.0 / 3, 8, 0.33333333),
-    )
-
-    val roundedCreation = listOf(
-        Triple(PI_ROUNDING, Rounding.default(), Math.PI),
-        Triple(PI_ROUNDING, Rounding.to(1), 3.1),
-        Triple(PI_ROUNDING, Rounding.to(2), 3.14),
-        Triple(PI_ROUNDING, Rounding.to(2, RoundingMode.CEILING), 3.15),
-        Triple(PI_ROUNDING, Rounding.to(2, RoundingMode.UP), 3.15),
-        Triple(PI_ROUNDING, Rounding.to(2, RoundingMode.DOWN), 3.14),
-        Triple(PI_ROUNDING, Rounding.to(2, RoundingMode.FLOOR), 3.14),
-        Triple(PI_ROUNDING, Rounding.to(2, RoundingMode.HALF_DOWN), 3.14),
-        Triple(PI_ROUNDING, Rounding.to(2, RoundingMode.HALF_EVEN), 3.14),
-        Triple(PI_ROUNDING, Rounding.to(3), 3.142),
-        Triple(PI_ROUNDING, Rounding.to(3, RoundingMode.CEILING), 3.142),
-        Triple(PI_ROUNDING, Rounding.to(3, RoundingMode.UP), 3.142),
-        Triple(PI_ROUNDING, Rounding.to(3, RoundingMode.DOWN), 3.141),
-        Triple(PI_ROUNDING, Rounding.to(3, RoundingMode.FLOOR), 3.141),
-        Triple(PI_ROUNDING, Rounding.to(3, RoundingMode.HALF_DOWN), 3.142),
-        Triple(PI_ROUNDING, Rounding.to(3, RoundingMode.HALF_EVEN), 3.142),
-    )
 
     val accessors = listOf(
         AccessorsTestTable(
@@ -214,68 +170,68 @@ internal object Fixtures {
     )
 
     val valueWhen = listOf(
-        Triple(Percentage.of(125), 25, 20.0),
-        Triple(Percentage.of(60), 45, 75.0),
-        Triple(Percentage.of(10), 10, 100.0),
-        Triple(Percentage.of(20), 25, 125.0),
+        Triple(Percentage.of(125), 25.0, 20.0),
+        Triple(Percentage.of(60), 45.0, 75.0),
+        Triple(Percentage.of(10), 10.0, 100.0),
+        Triple(Percentage.of(20), 25.0, 125.0),
 
-        Triple(Percentage.of(-125), 25, -20.0),
-        Triple(Percentage.of(-60), 45, -75.0),
-        Triple(Percentage.of(-10), 10, -100.0),
-        Triple(Percentage.of(-20), 25, -125.0),
+        Triple(Percentage.of(-125), 25.0, -20.0),
+        Triple(Percentage.of(-60), 45.0, -75.0),
+        Triple(Percentage.of(-10), 10.0, -100.0),
+        Triple(Percentage.of(-20), 25.0, -125.0),
 
-        Triple(Percentage.of(-125), -25, 20.0),
-        Triple(Percentage.of(-60), -45, 75.0),
-        Triple(Percentage.of(-10), -10, 100.0),
-        Triple(Percentage.of(-20), -25, 125.0),
+        Triple(Percentage.of(-125), -25.0, 20.0),
+        Triple(Percentage.of(-60), -45.0, 75.0),
+        Triple(Percentage.of(-10), -10.0, 100.0),
+        Triple(Percentage.of(-20), -25.0, 125.0),
 
-        Triple(Percentage.of(10), 0, 0.0),
-        Triple(Percentage.of(50), 0, 0.0),
-        Triple(Percentage.of(100), 0, 0.0),
+        Triple(Percentage.of(10), 0.0, 0.0),
+        Triple(Percentage.of(50), 0.0, 0.0),
+        Triple(Percentage.of(100), 0.0, 0.0),
 
         // Precision and rounding cases
-        Triple(Percentage.of((77 / 3.0 * 100)), 33, 1.2857142857142856),
-        Triple(Percentage.of((77 / 3.0 * 100), Rounding.to(2)), 33, 1.29), // w/o rounding: 1.2855473315153876
-        Triple(Percentage.of((77 / 3.0 * 100), Rounding.to(2, down)), 33, 1.28), // w/o rounding: 1.2860483242400624
+        Triple(Percentage.of((77 / 3.0 * 100)), 33.3, 1.2974025974025971),
+        Triple(Percentage.of((77 / 3.0 * 100), Rounding.to(4)), 33.3, 1.2974),
+        Triple(Percentage.of((77 / 3.0 * 100), Rounding.to(4, up)), 33.3, 1.2975),
     )
 
     val times = listOf(
-        Triple(100, Percentage.of(100), 100.0),
-        Triple(500, Percentage.of(20), 100.0),
-        Triple(1, Percentage.of(-100), -1.0),
-        Triple(100, Percentage.of(0), 0.0),
-        Triple(0, Percentage.of(100), 0.0),
+        Triple(100.0, Percentage.of(100), 100.0),
+        Triple(500.0, Percentage.of(20), 100.0),
+        Triple(1.0, Percentage.of(-100), -1.0),
+        Triple(100.0, Percentage.of(0), 0.0),
+        Triple(0.0, Percentage.of(100), 0.0),
 
         // Precision and rounding cases
-        Triple(33, Percentage.of((77 / 3.0 * 100)), 847.0000000000001),
-        Triple(33, Percentage.of((77 / 3.0 * 100), Rounding.to(2)), 847.11),
-        Triple(33, Percentage.of((77 / 3.0 * 100), Rounding.to(2, down)), 846.78),
+        Triple(33.3, Percentage.of((77 / 3.0 * 100)), 854.7),
+        Triple(33.3, Percentage.of((77 / 3.0 * 100), Rounding.to(4)), 854.7),
+        Triple(33.3, Percentage.of((77 / 3.0 * 100), Rounding.to(4, up)), 854.7),
     )
 
-    val plus = listOf(
-        Triple(100, Percentage.of(100), 200.0),
-        Triple(500, Percentage.of(20), 600.0),
-        Triple(1, Percentage.of(-100), 0.0),
-        Triple(100, Percentage.of(0), 100.0),
-        Triple(0, Percentage.of(100), 0.0),
+    val increase = listOf(
+        Triple(100.0, Percentage.of(100), 200.0),
+        Triple(500.0, Percentage.of(20), 600.0),
+        Triple(1.0, Percentage.of(-100), 0.0),
+        Triple(100.0, Percentage.of(0), 100.0),
+        Triple(0.0, Percentage.of(100), 0.0),
 
         // Precision and rounding cases
-        Triple(33, Percentage.of((77 / 3.0 * 100)), 880.0000000000001),
-        Triple(33, Percentage.of((77 / 3.0 * 100), Rounding.to(2)), 880.11),
-        Triple(33, Percentage.of((77 / 3.0 * 100), Rounding.to(2, down)), 879.78),
+        Triple(33.33, Percentage.of((77 / 3.0 * 100)), 888.8000000000002),
+        Triple(33.33, Percentage.of((77 / 3.0 * 100), Rounding.to(4)), 888.8),
+        Triple(33.33, Percentage.of((77 / 3.0 * 100), Rounding.to(4, up)), 888.8001),
     )
 
-    val subtraction = listOf(
-        Triple(100, Percentage.of(10), 90.0),
-        Triple(500, Percentage.of(20), 400.0),
-        Triple(1, Percentage.of(-100), 2.0),
-        Triple(100, Percentage.of(0), 100.0),
-        Triple(0, Percentage.of(100), 0.0),
+    val decrease = listOf(
+        Triple(100.0, Percentage.of(10), 90.0),
+        Triple(500.0, Percentage.of(20), 400.0),
+        Triple(1.0, Percentage.of(-100), 2.0),
+        Triple(100.0, Percentage.of(0), 100.0),
+        Triple(0.0, Percentage.of(100), 0.0),
 
         // Precision and rounding cases
-        Triple(33, Percentage.of((77 / 3.0 * 100)), -814.0000000000001),
-        Triple(33, Percentage.of((77 / 3.0 * 100), Rounding.to(2)), -814.11),
-        Triple(33, Percentage.of((77 / 3.0 * 100), Rounding.to(2, down)), -813.78),
+        Triple(33.33, Percentage.of((77 / 3.0 * 100)), -822.1400000000001),
+        Triple(33.33, Percentage.of((77 / 3.0 * 100), Rounding.to(4)), -822.14),
+        Triple(33.33, Percentage.of((77 / 3.0 * 100), Rounding.to(4, up)), -822.1401),
     )
 }
 

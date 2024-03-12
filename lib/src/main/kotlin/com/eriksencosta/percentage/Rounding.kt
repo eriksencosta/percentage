@@ -67,14 +67,6 @@ sealed class Rounding : Comparable<Rounding> {
      */
     abstract fun round(value: Double): Double
 
-    /**
-     * Returns a template string to convert a value using the appropriate significant digits based on the current
-     * [precision].
-     *
-     * @return A template string compatible with the [String.format] syntax.
-     */
-    internal abstract fun roundingFormat(): String
-
     override fun compareTo(other: Rounding): Int = precision.compareTo(other.precision)
 
     override fun equals(other: Any?): Boolean = this === other ||
@@ -82,7 +74,7 @@ sealed class Rounding : Comparable<Rounding> {
 
     override fun hashCode(): Int = precision.hashCode()
 
-    override fun toString(): String = "precision=%d mode=%s".format(precision, mode)
+
 }
 
 /**
@@ -91,9 +83,7 @@ sealed class Rounding : Comparable<Rounding> {
 class NoRounding internal constructor() : Rounding() {
     override fun round(value: Double): Double = value
 
-    override fun roundingFormat(): String = "%f"
-
-    override fun toString(): String = "mode=%s".format(mode)
+    override fun toString(): String = "NoRounding"
 }
 
 /**
@@ -102,5 +92,5 @@ class NoRounding internal constructor() : Rounding() {
 class PreciseRounding internal constructor(override val precision: Int, override val mode: RoundingMode) : Rounding() {
     override fun round(value: Double): Double = value.toBigDecimal().setScale(precision, mode).toDouble()
 
-    override fun roundingFormat(): String = if (0 >= precision) "%.0f" else "%.${precision}f"
+    override fun toString(): String = "PreciseRounding[%d %s]".format(precision, mode)
 }
