@@ -1,6 +1,6 @@
 # Module Percentage
 
-The Posostos library makes percentage calculations easy:
+The Percentage library makes percentage calculations easy:
 
     150 * 5.5.percent()          // 8.25
     150 decreaseBy 5.5.percent() // 141.75
@@ -17,22 +17,22 @@ and it's decimal representation (i.e., its value divided by 100):
 ## Rounding
 
 If you need to round your percentage value and its calculations, just pass an instance of the
-[Rounding][com.eriksencosta.percentage.Rounding] class to the [percent][com.eriksencosta.percentage.Number.percent]
+[Rounding][com.eriksencosta.percentage.Rounding] class to the [percent][com.eriksencosta.percentage.percent]
 method. Use the [Rounding.to][com.eriksencosta.percentage.Rounding.to] factory method to create the object, passing the
 number of decimal places and the desired rounding mode:
 
     val percentage = (615.0 / 53.0).percent()
-    val roundedOff = (615.0 / 53.0).percent(Rounding.to(2, RoundingMode.FLOOR))
+    val roundsDown = (615.0 / 53.0).percent(Rounding.to(2, RoundingMode.FLOOR))
 
     val value = 127
     value * percentage // 14.736792452830189
-    value * roundedOff // 14.73
+    value * roundsDown // 14.73
 
 The rounding mode to use is defined by one of [RoundingMode][java.math.RoundingMode] enum values. If you need to use
 [HALF_UP][java.math.RoundingMode], just pass the number of desired decimal places:
 
-    val roundedUp = (615.0 / 53.0).percent(2)
-    value * roundedUp  // 14.74
+    val roundsHalfUp = (615.0 / 53.0).percent(2)
+    value * roundsHalfUp // 14.74
 
 Note that [Percentage.value][com.eriksencosta.percentage.Percentage.value] is never rounded. This way you can query the
 original value of the percentage.
@@ -42,7 +42,7 @@ original value of the percentage.
 ### Create a Percentage based on a ratio
 
 To create a [Percentage][com.eriksencosta.percentage.Percentage] based on a ratio (e.g. 1/2, 1/3, 1/4, and so on), use
-the [percent][com.eriksencosta.percentage.Number.ratioOf] function:
+the [ratioOf][com.eriksencosta.percentage.ratioOf] function:
 
     1 ratioOf 4 // 25%
     1 ratioOf 3 // 33.33%
@@ -59,7 +59,7 @@ The function also has overloaded versions to control the rounding strategy of th
 ### Calculate the relative change as a Percentage for two numbers
 
 To calculate the relative change between two numbers, use the
-[relativeChange][com.eriksencosta.percentage.Number.relativeChange] function:
+[relativeChange][com.eriksencosta.percentage.relativeChange] function:
 
     1 relativeChange 3 // 200%
     3 relativeChange 1 // -66.67%
@@ -76,7 +76,7 @@ The function also has overloaded versions to control the rounding strategy of th
 ### Calculate the base value of a number when it's a given Percentage
 
 To calculate the base value of a number when it's a given Percentage, use the
-[valueWhen][com.eriksencosta.percentage.Number.valueWhen] function:
+[valueWhen][com.eriksencosta.percentage.valueWhen] function:
 
     5 valueWhen 20.percent() // 25.0
 
