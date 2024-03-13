@@ -10,7 +10,7 @@ import java.math.RoundingMode
  *   a specific rounding mode
  * * [default]: creates a [NoRounding] object, which doesn't round a value
  *
- * If you need to round a value, call the [to] factory method as pass its returned object to [Percentage]:
+ * If you need to round a value, call the [to] factory method and pass its returned object to [Percentage]:
  *
  *     Percentage.of(5.55, Rounding.to(1, RoundingMode.UP))
  *
@@ -19,7 +19,7 @@ import java.math.RoundingMode
  */
 sealed class Rounding : Comparable<Rounding> {
     /**
-     * The precision to round the decimal value (i.e., number of decimal places to keep).
+     * The precision to round the decimal value (i.e., number of significant figures to use).
      */
     open val precision: Int = Int.MAX_VALUE
 
