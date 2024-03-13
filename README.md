@@ -1,108 +1,66 @@
-# Percentage library
+# Posotos library
 
 [![Codacy code quality](https://app.codacy.com/project/badge/Grade/5feda3d6ceb54ec58806b144bc77f606)](https://app.codacy.com/gh/eriksencosta/percentage/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Codacy code coverage](https://app.codacy.com/project/badge/Coverage/5feda3d6ceb54ec58806b144bc77f606)](https://app.codacy.com/gh/eriksencosta/percentage/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 
-## Disclaimer
-
-This is WIP, published for close friends reviews only. This README is temporary.
+Posostos is a library that makes percentage calculations easy in Kotlin.
 
 ## Installation
 
-Install (for now) using Jitpack. Use the `trunk` branch: https://jitpack.io/#com.eriksencosta/percentage/trunk
+Add Posotos to your Gradle build script:
+
+```kotlin
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("com.eriksencosta:posotos:${posotosVersion}")
+}
+```
+
+If you're using Maven, add to your POM xml file:
+
+```xml
+<dependency>
+    <groupId>com.eriksencosta</groupId>
+    <artifactId>percentage</artifactId>
+    <version>${posotosVersion}</version>
+</dependency>
+```
 
 ## Usage
 
-Percentage is a library that introduces the `Percentage` type: a class make percentage calculations in Kotlin easier.
-
-Let's say you want to calculate a 5% discount of a value. In vanilla Kotlin, you would do:
+The library provides the `Percentage` type: an immutable and thread-safe class that makes percentage calculations easy.
 
 ```kotlin
-val value = 100
-val percentage = 5 / 100.0
-val discountedValue = value - value * percentage
+val percentage = 5.5.percent() // 5.5%
 
-println(discountedValue) // Prints: 95.0
+150 * percentage          // 8.25
+150 decreaseBy percentage // 141.75
+150 increaseBy percentage // 158.25
 ```
 
-With `Percentage`, you just do:
+Other convenience functions are also available. To create a percentage based on a ratio, use the `ratioOf` function:
 
 ```kotlin
-val value = 100
-val percentage = 5.percent()
-val discountedValue = value decreaseBy percentage
-
-println(discountedValue) // Prints: 95.0
+1 ratioOf 4 // 25%
 ```
 
-You may also simply multiply a value by a `Percentage` to calculate its result:
+To calculate the relative percentage change between two numbers, use the `relativeChange` function: 
 
 ```kotlin
-val result = 100 * Percentage(10)
-
-println(result) // Prints: 10.0
+1 relativeChange 3 // 200%
 ```
 
-## Other calculations
-
-### Relative change
+And to discover the base value of a number when its represents a given percentage, use the `valueWhen` function:
 
 ```kotlin
-val initial = 33
-val ending = 77
-val change = initial relativeChange ending
-
-println(change) // Prints: 133%
+5 valueWhen 20.percent() // 25.0 (i.e., 5 is 20% of 25)
 ```
 
-### Percentage calculation
+Read the [API documentation](https://blog.eriksen.com.br/opensource/percentage/) for further details.
 
-```kotlin
-val percentage = 4 ratioOf 5
+## License
 
-println(percentage) // Prints: 80%
-```
-
-### The basic value of a number and a percentage
-
-```kotlin
-val value = 5
-val percentage = 20.percent()
-val result = value valueWhen percentage
-
-println(result) // Prints: 25.0
-                // 5 is 20% of 25
-```
-
-## Development setup
-
-I used JDK 18 for IDE development while using version 8 as the Gradle JDK.
-
-### Running locally
-
-You need Gradle 8.6+ to run the project locally. If you don't have them, you may use Docker to build the project and
-check if it is working properly:
-
-```bash
-docker run --rm -u gradle -v "$PWD":/home/gradle/project -w /home/gradle/project gradle gradle build
-```
-
-## Publishing to Maven Central
-
-```bash
-./gradlew clean release
-```
-
-## TODO
-
-- [ ] Decide the library name
-- [X] Decide if the `Number` extension methods should throw their own exceptions instead of just throwing `Percentage`'s
-  exceptions > no, they shouldn't. They're just aliases
-- [X] Review scale and precision on `Percentage` > `Rounding` added
-- [X] Multiplatform build > not needed
-- [ ] Decent README
-- [ ] Explicit Library API mode in Gradle
-- [X] Configure static code analysis (Sonarcloud, Code Climate, Codacy, CodeRabbit, Snyk, detekt?)
-- [ ] OSSF scorecard - https://github.com/symfony/symfony/blob/7.1/.github/workflows/scorecards.yml
-- [ ] Squash all commits
-- [X] Dokka
+[Apache License 2.0](https://choosealicense.com/licenses/apache/)
