@@ -34,9 +34,6 @@ The rounding mode to use is defined by one of [RoundingMode][java.math.RoundingM
     val roundsHalfUp = (615.0 / 53.0).percent(2)
     value * roundsHalfUp // 14.74
 
-Note that [Percentage.value][com.eriksencosta.percentage.Percentage.value] is never rounded. This way you can query the
-original value of the percentage.
-
 ## Other utilities
 
 ### Create a Percentage based on a ratio
