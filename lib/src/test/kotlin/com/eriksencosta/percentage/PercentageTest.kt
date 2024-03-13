@@ -400,7 +400,6 @@ class PercentageTest {
         Pair(Percentage.of(-100.0 / 3.0), "-33.33%"),
         Pair(Percentage.of(-100.0 / 3.0, 2), "-33.33%"),
         Pair(Percentage.of(513.0 / 53.0), "9.68%"),
-
     )
         .map { (percentage, expected) ->
             dynamicTest("given $percentage when I convert it to string then I should get $expected") {
