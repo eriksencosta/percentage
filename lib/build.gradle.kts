@@ -97,7 +97,7 @@ tasks {
     withType<DokkaTask>().configureEach {
         dokkaSourceSets {
             named("main") {
-                moduleName = "Percentage"
+                moduleName = "Posotos"
                 includes.from("dokka.md")
 
                 sourceLink {

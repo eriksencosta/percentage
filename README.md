@@ -59,7 +59,7 @@ And to discover the base value of a number when its represents a given percentag
 5 valueWhen 20.percent() // 25.0 (i.e., 5 is 20% of 25)
 ```
 
-Read the [API documentation](https://blog.eriksen.com.br/opensource/percentage/) for further details.
+Read the [API documentation](https://blog.eriksen.com.br/opensource/posotos/) for further details.
 
 ## License
 
