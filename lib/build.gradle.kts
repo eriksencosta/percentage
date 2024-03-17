@@ -1,5 +1,5 @@
 import org.jetbrains.dokka.gradle.DokkaTask
-import java.net.URL
+import java.net.URI
 import java.util.Locale
 
 val snapshotOption = System.getenv("SNAPSHOT_BUILD").let {
@@ -99,7 +99,7 @@ tasks {
 
                 sourceLink {
                     localDirectory.set(file("src/main/kotlin"))
-                    remoteUrl.set(URL("https://github.com/eriksencosta/percentage/tree/trunk/lib/src/main/kotlin"))
+                    remoteUrl.set(URI("https://github.com/eriksencosta/percentage/tree/trunk/lib/src/main/kotlin").toURL())
                     remoteLineSuffix.set("#L")
                 }
             }
