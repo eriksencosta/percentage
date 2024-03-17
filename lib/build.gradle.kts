@@ -17,6 +17,7 @@ plugins {
     alias(libs.plugins.jvm)
     alias(libs.plugins.detekt)
     alias(libs.plugins.dokka)
+    alias(libs.plugins.serialization)
     alias(libs.plugins.sonatype.central.upload)
 }
 
@@ -25,6 +26,8 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.serialization.json)
+
     testImplementation(libs.kotlin.test.junit5)
     testImplementation(libs.junit.jupiter.engine)
     testRuntimeOnly(libs.junit.platform.launcher)

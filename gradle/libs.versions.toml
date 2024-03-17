@@ -6,6 +6,7 @@ kotlin-stdlib = { strictly = "[1.9,2.0[" }
 detekt = { strictly = "[1.23.5,2.0[" }
 junit-jupiter-engine = { strictly = "[5.10,6.0]" }
 junit-platform-launcher = { strictly = "[1.10,2.0]" }
+serialization-json = { strictly = "[1.6,2.0]" }
 sonatype-central-upload = { strictly = "[1.0.3,2.0]" }
 
 [libraries]
@@ -15,9 +16,11 @@ detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", 
 detekt-libraries = { module = "io.gitlab.arturbosch.detekt:detekt-rules-libraries", version.ref = "detekt" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter-engine" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform-launcher" }
+serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization-json" }
 
 [plugins]
 jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-stdlib" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "kotlin-stdlib" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-stdlib" }
 sonatype-central-upload = { id = "cl.franciscosolis.sonatype-central-upload", version.ref = "sonatype-central-upload" }
