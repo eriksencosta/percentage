@@ -1,16 +1,13 @@
-import cl.franciscosolis.sonatypecentralupload.SonatypeCentralUploadTask
 import org.jetbrains.dokka.gradle.DokkaTask
 import java.net.URL
 import java.util.Locale
 
-// TODO: this is reserved for automating snapshot builds. Create a snapshot release by default.
 val snapshotOption = System.getenv("SNAPSHOT_BUILD").let {
     it.isNullOrBlank() || "yes" == it.lowercase(Locale.getDefault())
 }
 
 val snapshot = if (snapshotOption) "-snapshot" else ""
 
-group = "com.eriksencosta"
 version = "%s%s".format(version, snapshot)
 
 plugins {
@@ -47,18 +44,18 @@ detekt {
 }
 
 tasks {
-    named<Test>("test") {
+    test {
         useJUnitPlatform()
         finalizedBy("jacocoTestReport")
     }
 
-    named<JacocoReport>("jacocoTestReport") {
+    jacocoTestReport {
         reports.xml.required = true
         sourceSets(sourceSets.main.get())
         dependsOn("test")
     }
 
-    named<Jar>("jar") {
+    jar {
         base {
             manifest {
                 attributes(mapOf(
@@ -69,7 +66,7 @@ tasks {
         }
     }
 
-    named<SonatypeCentralUploadTask>("sonatypeCentralUpload") {
+    sonatypeCentralUpload {
         username = System.getenv("MAVEN_CENTRAL_USERNAME")
         password = System.getenv("MAVEN_CENTRAL_PASSWORD")
 
@@ -82,22 +79,22 @@ tasks {
 
         publishingType = "MANUAL"
 
-        dependsOn("build")
-        mustRunAfter("build")
-
         // Allows to run the plugin without rebuilding the project due to available jar files in
         // its publishing directory.
         doFirst { delete("build/sonatype-central-upload") }
+
+        dependsOn("build")
+        mustRunAfter("build")
     }
 
-    named<Task>("build") {
+    build {
         dependsOn("detekt", "test", "generatePomFileForPomPublication", "generateJavadocJar")
     }
 
     withType<DokkaTask>().configureEach {
         dokkaSourceSets {
             named("main") {
-                moduleName = "Posotos"
+                moduleName = "Percentage"
                 includes.from("dokka.md")
 
                 sourceLink {
@@ -110,22 +107,25 @@ tasks {
     }
 
     register<Jar>("generateJavadocJar") {
-        dependsOn(dokkaJavadoc)
+        description = "Generates the Javadoc jar."
+        group = "Documentation"
+
         from(dokkaJavadoc.flatMap { it.outputDirectory })
         archiveClassifier.set("javadoc")
 
+        dependsOn("dokkaJavadoc")
         mustRunAfter("sourcesJar")
     }
 
     register<Task>("generateDocs") {
-        description = "Generate the project documentation (HTML, Markdown, and Javadoc)."
+        description = "Generates the project documentation (HTML, Markdown, and Javadoc)."
         group = "Documentation"
 
         dependsOn("dokkaHtml", "dokkaGfm", "dokkaJavadoc")
     }
 
     register<Task>("release") {
-        description = "Build and publish the library to Maven Central."
+        description = "Builds and publishes the library to Maven Central."
         group = "Release"
 
         dependsOn("build", "sonatypeCentralUpload", "version")
@@ -137,11 +137,7 @@ tasks {
         group = "Verification"
 
         doLast {
-            val versionMessage = "The current version stamp is: $version."
-            val snapshotMessage = "The snapshot option is: %s.".format(if (snapshotOption) "on" else "off")
-
-            logger.lifecycle(versionMessage)
-            logger.lifecycle(snapshotMessage)
+            logger.lifecycle("${project.group}:${project.name}:$version")
         }
     }
 }
@@ -162,7 +158,7 @@ publishing {
 
                 licenses {
                     license {
-                        name = "Apache License, Version 2.0"
+                        name = "The Apache Software License, Version 2.0"
                         url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
                     }
                 }
@@ -189,7 +185,7 @@ publishing {
     }
 }
 
-fun jars() = arrayOf(jarName(), jarName("javadoc"), jarName("sources"))
+private fun jars() = arrayOf(jarName(), jarName("javadoc"), jarName("sources"))
 
-fun jarName(kind: String = "") = "build/libs/$name-%s%s.jar"
+private fun jarName(kind: String = "") = "build/libs/$name-%s%s.jar"
     .format(version, if (kind.isNotBlank()) "-$kind" else "")

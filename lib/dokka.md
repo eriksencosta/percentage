@@ -1,6 +1,6 @@
-# Module Posotos
+# Module Percentage
 
-Posostos is a library that makes percentage calculations easy in Kotlin:
+Percentage is a library that makes percentage calculations easy in Kotlin:
 
     150 * 5.5.percent()          // 8.25
     150 decreaseBy 5.5.percent() // 141.75
