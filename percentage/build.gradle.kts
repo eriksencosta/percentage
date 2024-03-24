@@ -98,7 +98,8 @@ tasks {
                 sourceLink {
                     localDirectory.set(file("src/main/kotlin"))
                     remoteUrl.set(
-                        URI("https://github.com/eriksencosta/percentage/tree/trunk/lib/src/main/kotlin").toURL())
+                        URI("https://github.com/eriksencosta/percentage/tree/trunk/lib/src/main/kotlin").toURL()
+                    )
                     remoteLineSuffix.set("#L")
                 }
 
