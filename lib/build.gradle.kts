@@ -101,6 +101,13 @@ tasks {
                         URI("https://github.com/eriksencosta/percentage/tree/trunk/lib/src/main/kotlin").toURL())
                     remoteLineSuffix.set("#L")
                 }
+
+                externalDocumentationLink {
+                    url.set(URI("https://blog.eriksen.com.br/opensource/math-common/").toURL())
+                    packageListUrl.set(
+                        URI("https://blog.eriksen.com.br/opensource/math-common/-math%20-common/package-list").toURL()
+                    )
+                }
             }
         }
     }
