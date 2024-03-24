@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.eriksencosta:posotos:${posotosVersion}")
+    implementation("com.eriksencosta.math:percentage:${percentageVersion}")
 }
 ```
 
@@ -23,9 +23,9 @@ If you're using Maven, add to your POM xml file:
 
 ```xml
 <dependency>
-    <groupId>com.eriksencosta</groupId>
+    <groupId>com.eriksencosta.math</groupId>
     <artifactId>percentage</artifactId>
-    <version>${posotosVersion}</version>
+    <version>${percentageVersion}</version>
 </dependency>
 ```
 
@@ -59,7 +59,7 @@ And to discover the base value of a number when its represents a given percentag
 5 valueWhen 20.percent() // 25.0 (i.e., 5 is 20% of 25)
 ```
 
-Read the [API documentation](https://blog.eriksen.com.br/opensource/posotos/) for further details.
+Read the [API documentation](https://blog.eriksen.com.br/opensource/math-percentage/) for further details.
 
 ## License
 
