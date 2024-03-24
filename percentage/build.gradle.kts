@@ -128,8 +128,9 @@ tasks {
                 """
                 // The first sidebar navigation link doesn't work properly when the files are hosted on a subdirectory
                 // like "example.com/dokka/html".
-                if (0 != index)
-                    link.setAttribute("href", pathToRoot + link.getAttribute("href"));
+                link.setAttribute("href",
+                    pathToRoot + link.getAttribute("href").replace(/^(\/opensource\/.*?\/)(.*)/, "$2")
+                );
                 """
             else line
         }
