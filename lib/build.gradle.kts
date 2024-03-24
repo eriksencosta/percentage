@@ -99,11 +99,47 @@ tasks {
 
                 sourceLink {
                     localDirectory.set(file("src/main/kotlin"))
-                    remoteUrl.set(URI("https://github.com/eriksencosta/percentage/tree/trunk/lib/src/main/kotlin").toURL())
+                    remoteUrl.set(
+                        URI("https://github.com/eriksencosta/percentage/tree/trunk/lib/src/main/kotlin").toURL())
                     remoteLineSuffix.set("#L")
                 }
             }
         }
+    }
+
+
+    register<Copy>("patchDokkaNavigationJavascript") {
+        from(layout.buildDirectory.file("dokka/html/scripts/navigation-loader.js"))
+        into(layout.buildDirectory.dir("dokka/html"))
+
+        filter { line ->
+            if (line.trim() == "document.querySelectorAll(\".overview > a\").forEach(link => {")
+                "document.querySelectorAll(\".overview > a\").forEach((link, index) => {"
+            else line
+        }
+
+        filter { line ->
+            if (line.trim() == "link.setAttribute(\"href\", pathToRoot + link.getAttribute(\"href\"));")
+                """
+                // The first sidebar navigation link doesn't work properly when the files are hosted on a subdirectory
+                // like "example.com/dokka/html".
+                if (0 != index)
+                    link.setAttribute("href", pathToRoot + link.getAttribute("href"));
+                """
+            else line
+        }
+
+        dependsOn("dokkaHtml")
+    }
+
+    register<Copy>("dokkaHtmlPatched") {
+        description = "Generates documentation in 'html' format with applied patches."
+        group = "Documentation"
+
+        from(layout.buildDirectory.file("dokka/html/navigation-loader.js"))
+        into(layout.buildDirectory.dir("dokka/html/scripts"))
+
+        dependsOn("patchDokkaNavigationJavascript")
     }
 
     register<Jar>("generateJavadocJar") {
@@ -121,7 +157,7 @@ tasks {
         description = "Generates the project documentation (HTML, Markdown, and Javadoc)."
         group = "Documentation"
 
-        dependsOn("dokkaHtml", "dokkaGfm", "dokkaJavadoc")
+        dependsOn("dokkaHtmlPatched", "dokkaGfm", "dokkaJavadoc")
     }
 
     register<Task>("release") {
