@@ -16,22 +16,22 @@ and it's decimal representation (i.e., its value divided by 100):
 
 ## Rounding
 
-If you need to round your percentage value and its calculations, just pass an instance of the
-[Rounding][com.eriksencosta.percentage.Rounding] class to the [percent][com.eriksencosta.percentage.percent]
-method. Use the [Rounding.to][com.eriksencosta.percentage.Rounding.to] factory method to create the object, passing the
-number of decimal places and the desired rounding mode:
+If you need to round the resulting calculations using a [Percentage][com.eriksencosta.percentage.Percentage], just
+pass an instance of the [Rounding][com.eriksencosta.math.common.Rounding] class to the
+[percent][com.eriksencosta.percentage.percent] method. Use the [Rounding.to][com.eriksencosta.math.common.Rounding.to]
+factory method to create the object, passing the number of decimal places and the desired rounding mode:
 
-    val percentage = (615.0 / 53.0).percent()
-    val roundsDown = (615.0 / 53.0).percent(Rounding.to(2, RoundingMode.FLOOR))
+    val percentage = 11.603773.percent()
+    val roundsFloor = 11.603773.percent(Rounding.to(2, RoundingMode.FLOOR))
 
     val value = 127
-    value * percentage // 14.736792452830189
-    value * roundsDown // 14.73
+    value * percentage   // 14.73679171
+    value * roundsFloor  // 14.73
 
 The rounding mode to use is defined by one of [RoundingMode][java.math.RoundingMode] enum values. If you need to use
 [HALF_UP][java.math.RoundingMode], just pass the number of desired decimal places:
 
-    val roundsHalfUp = (615.0 / 53.0).percent(2)
+    val roundsHalfUp = 11.603773.percent(2)
     value * roundsHalfUp // 14.74
 
 ## Other utilities

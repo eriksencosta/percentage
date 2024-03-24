@@ -1,6 +1,8 @@
 package com.eriksencosta.percentage
 
-import java.util.Objects
+import com.eriksencosta.math.common.NoRounding
+import com.eriksencosta.math.common.Rounding
+import java.util.*
 import kotlin.math.abs
 import kotlin.math.round
 
@@ -89,7 +91,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
 
     companion object {
         private const val PERCENT: Double = 100.0
-        private val noRounding: NoRounding = Rounding.default()
+        private val noRounding: NoRounding = Rounding.no()
 
         /**
          * Creates a `Percentage` based on a number. Calculations using it won't be rounded.
@@ -102,7 +104,8 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          * Creates a `Percentage` based on a number. Calculations using it will be rounded.
          *
          * @param[precision] The precision scale to round percentage calculations. The rounding is done using
-         *   the [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] mode).
+         *   the [com.eriksencosta.math.common.PreciseRounding] policy (i.e. rounds using
+         *   [java.math.RoundingMode.HALF_UP] mode).
          *
          * @return A [Percentage].
          */
@@ -145,7 +148,8 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          * @param[number]    The first number.
          * @param[other]     The second number.
          * @param[precision] The precision scale to round percentage calculations. The rounding is done using
-         *   the [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] mode).
+         *   the [com.eriksencosta.math.common.PreciseRounding] policy (i.e. rounds using
+         *   [java.math.RoundingMode.HALF_UP] mode).
          *
          * @throws[IllegalArgumentException] When `other` is zero.
          *
@@ -217,7 +221,8 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          * @param[initial]   The initial number.
          * @param[ending]    The ending number.
          * @param[precision] The precision scale to round percentage calculations. The rounding is done using
-         *   the [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] mode).
+         *   the [com.eriksencosta.math.common.PreciseRounding] policy (i.e. rounds using
+         *   [java.math.RoundingMode.HALF_UP] mode).
          *
          * @throws[IllegalArgumentException] When `initial` is zero.
          *

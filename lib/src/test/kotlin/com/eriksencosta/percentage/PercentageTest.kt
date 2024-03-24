@@ -1,5 +1,6 @@
 package com.eriksencosta.percentage
 
+import com.eriksencosta.math.common.Rounding
 import org.junit.jupiter.api.DynamicTest.dynamicTest
 import org.junit.jupiter.api.TestFactory
 import org.junit.jupiter.api.assertThrows
@@ -40,7 +41,7 @@ class PercentageTest {
 
     @TestFactory
     fun `Create a Percentage with a Rounding strategy`() = listOf(
-        Triple(50, Rounding.default(), Percentage.of(50, Rounding.default())),
+        Triple(50, Rounding.no(), Percentage.of(50, Rounding.no())),
         Triple(50, Rounding.to(2), Percentage.of(50, Rounding.to(2))),
         Triple(50, Rounding.to(4, RoundingMode.HALF_DOWN), Percentage.of(50, Rounding.to(4, RoundingMode.HALF_DOWN))),
     )
@@ -188,7 +189,7 @@ class PercentageTest {
     fun `Apply a rounding to a percentage returns a rounded percentage`() = listOf(
         Triple(
             Percentage.of(100),
-            Rounding.default(),
+            Rounding.no(),
             Percentage.of(100)
         ),
         Triple(
@@ -198,8 +199,8 @@ class PercentageTest {
         ),
         Triple(
             Percentage.of(100, Rounding.to(2, RoundingMode.UP)),
-            Rounding.default(),
-            Percentage.of(100, Rounding.default())
+            Rounding.no(),
+            Percentage.of(100, Rounding.no())
         ),
     )
         .map { (percentage, rounding, expected) ->
@@ -382,8 +383,8 @@ class PercentageTest {
 
     @TestFactory
     fun `Calculate the percentage hash code`() = listOf(
-        Percentage.of(100) to 1_041_236_928,
-        Percentage.of(100, 2) to -1_106_246_717,
+        Percentage.of(100) to 1_041_237_863,
+        Percentage.of(100, 2) to -1_106_245_692,
     )
         .map { (percentage, expected) ->
             dynamicTest("given $percentage when I calculate its hash code then I should get $expected") {

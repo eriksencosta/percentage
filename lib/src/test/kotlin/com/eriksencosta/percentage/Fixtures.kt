@@ -1,5 +1,6 @@
 package com.eriksencosta.percentage
 
+import com.eriksencosta.math.common.Rounding
 import java.math.RoundingMode
 
 internal object Fixtures {
@@ -164,7 +165,7 @@ internal object Fixtures {
     )
 
     val ratioOfWithRounding = listOf(
-        Quadruple(1, 2, Rounding.default(), Percentage.of(50, Rounding.default())),
+        Quadruple(1, 2, Rounding.no(), Percentage.of(50, Rounding.no())),
         Quadruple(1, -2, Rounding.to(2, up), Percentage.of(-50, Rounding.to(2, up))),
         Quadruple(-1, -2, Rounding.to(3, down), Percentage.of(50, Rounding.to(3, down))),
     )

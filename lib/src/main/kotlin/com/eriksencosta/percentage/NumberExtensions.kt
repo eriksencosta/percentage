@@ -3,6 +3,8 @@
 
 package com.eriksencosta.percentage
 
+import com.eriksencosta.math.common.Rounding
+
 /**
  * Creates a `Percentage` based on this number. Calculations using it won't be rounded.
  *
@@ -10,7 +12,7 @@ package com.eriksencosta.percentage
  *
  * @return The [Percentage] value of this number.
  */
-fun Number.percent(): Percentage = percent(Rounding.default())
+fun Number.percent(): Percentage = percent(Rounding.no())
 
 /**
  * Creates a `Percentage` based on this number. Calculations using it will be rounded.
@@ -18,7 +20,7 @@ fun Number.percent(): Percentage = percent(Rounding.default())
  * @receiver[Number]
  *
  * @param[precision] The precision scale to round percentage calculations. The rounding is done using the
- * [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] mode).
+ * [com.eriksencosta.math.common.PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] mode).
  *
  * @return The [Percentage] value of this number.
  */
@@ -72,7 +74,7 @@ infix fun Number.toPercentage(rounding: Rounding): Percentage = percent(rounding
  *
  * @see Percentage.ratioOf
  */
-infix fun Number.ratioOf(other: Number): Percentage = ratioOf(other, Rounding.default())
+infix fun Number.ratioOf(other: Number): Percentage = ratioOf(other, Rounding.no())
 
 /**
  * Creates a `Percentage` based on the ratio of this number and other number. Calculations using it will be rounded.
@@ -86,7 +88,7 @@ infix fun Number.ratioOf(other: Number): Percentage = ratioOf(other, Rounding.de
  *
  * @param[other]     The other number.
  * @param[precision] The precision scale to round percentage calculations. The rounding is done using the
- * [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] mode).
+ * [com.eriksencosta.math.common.PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] mode).
  *
  * @throws[IllegalArgumentException] When `other` is zero.
  *
@@ -145,7 +147,7 @@ fun Number.ratioOf(other: Number, rounding: Rounding): Percentage = Percentage.r
  *
  * @return A [Percentage] that represents the percentage change of this number and the other number.
  */
-infix fun Number.relativeChange(other: Number): Percentage = relativeChange(other, Rounding.default())
+infix fun Number.relativeChange(other: Number): Percentage = relativeChange(other, Rounding.no())
 
 /**
  * Creates a `Percentage` which represents the relative change of this number to another number. Calculations using it
@@ -167,7 +169,7 @@ infix fun Number.relativeChange(other: Number): Percentage = relativeChange(othe
  *
  * @param[other]     The other number.
  * @param[precision] The precision scale to round percentage calculations. The rounding is done using the
- * [PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] mode).
+ * [com.eriksencosta.math.common.PreciseRounding] policy (i.e. rounds using [java.math.RoundingMode.HALF_UP] mode).
  *
  * @throws[IllegalArgumentException] When this number is zero.
  *
