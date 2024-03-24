@@ -28,7 +28,7 @@ import kotlin.math.round
  *     percentage.decimal // Results: 0.5
  *
  * You can also determine the precision used to round the percentage calculations to your needs/policies. Just pass the
- * number of desired decimal places as the `precision` argument:
+ * number of desired decimal places as the [precision] argument:
  *
  *     val imprecise = Percentage.of(23)
  *     val precise = Percentage.of(23, 2)
