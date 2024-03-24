@@ -14,9 +14,4 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "percentage"
-
 include("percentage")
-project(":percentage").apply {
-    projectDir = file("lib")
-}

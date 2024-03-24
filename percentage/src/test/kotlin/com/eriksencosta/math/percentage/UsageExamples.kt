@@ -1,4 +1,4 @@
-package com.eriksencosta.percentage
+package com.eriksencosta.math.percentage
 
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory

@@ -1,4 +1,4 @@
-package com.eriksencosta.percentage
+package com.eriksencosta.math.percentage
 
 import com.eriksencosta.math.common.Rounding
 import org.junit.jupiter.api.DynamicTest.dynamicTest

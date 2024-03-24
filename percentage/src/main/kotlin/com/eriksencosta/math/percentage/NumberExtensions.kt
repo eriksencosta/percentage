@@ -1,7 +1,7 @@
 @file:JvmName("NumberPercentage")
 @file:Suppress("TooManyFunctions")
 
-package com.eriksencosta.percentage
+package com.eriksencosta.math.percentage
 
 import com.eriksencosta.math.common.Rounding
 
@@ -202,8 +202,8 @@ fun Number.relativeChange(other: Number, precision: Int): Percentage = relativeC
  *
  * @return A [Percentage] that represents the percentage change of this number and the other number.
  */
-fun Number.relativeChange(other: Number, rounding: Rounding): Percentage = Percentage
-    .relativeChange(this, other, rounding)
+fun Number.relativeChange(other: Number, rounding: Rounding): Percentage =
+    Percentage.relativeChange(this, other, rounding)
 
 /**
  * Calculates the base value of this number for the given `Percentage`. This method helps to answer the question:
