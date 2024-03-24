@@ -20,10 +20,6 @@ plugins {
     alias(libs.plugins.sonatype.central.upload)
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     testImplementation(libs.kotlin.test.junit5)
     testImplementation(libs.junit.jupiter.engine)
@@ -31,6 +27,8 @@ dependencies {
 
     detektPlugins(libs.detekt.formatting)
     detektPlugins(libs.detekt.libraries)
+
+    implementation("com.eriksencosta:math-common:v0.0.1-snapshot")
 }
 
 java {
