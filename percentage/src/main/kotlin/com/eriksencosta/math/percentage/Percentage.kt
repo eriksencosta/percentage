@@ -24,18 +24,18 @@ import kotlin.math.round
  * You can also query the `Percentage` value (the original number you passed to the factory method) and its decimal
  * value (the value used for the calculations):
  *
- *     percentage.value   // Results: 50.0
- *     percentage.decimal // Results: 0.5
+ *     percentage.value   // Results: 25.0
+ *     percentage.decimal // Results: 0.25
  *
- * You can also determine the precision used to round the percentage calculations to your needs/policies. Just pass the
- * number of desired decimal places as the [precision] argument:
+ * You can also round the percentage calculations results. Just pass the number of desired decimal places as the
+ * `precision` argument:
  *
- *     val imprecise = Percentage.of(23)
- *     val precise = Percentage.of(23, 2)
+ *     val noRoundingPercentage = Percentage.of(23)
+ *     val roundingPercentage = Percentage.of(23, 2)
  *
  *     val number = 57
- *     println(imprecise * number)  // Prints: 13.110000000000001
- *     println(precise * number)    // Prints: 13.11
+ *     println(noRoundingPercentage * number)  // Prints: 13.110000000000001
+ *     println(roundingPercentage * number)    // Prints: 13.11
  *
  * By default, the rounding mode used to round the value is [java.math.RoundingMode.HALF_UP]. If you need to use
  * another mode, use the factory method which receives a [Rounding] as an argument:
