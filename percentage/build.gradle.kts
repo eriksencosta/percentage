@@ -10,6 +10,10 @@ val snapshot = if (snapshotOption) "-snapshot" else ""
 
 version = "%s%s".format(version, snapshot)
 
+kotlin {
+    explicitApi()
+}
+
 plugins {
     `java-library`
     `maven-publish`

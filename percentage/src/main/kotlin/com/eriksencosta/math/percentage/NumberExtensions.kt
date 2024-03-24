@@ -12,7 +12,7 @@ import com.eriksencosta.math.common.Rounding
  *
  * @return The [Percentage] value of this number.
  */
-fun Number.percent(): Percentage = percent(Rounding.no())
+public fun Number.percent(): Percentage = percent(Rounding.no())
 
 /**
  * Creates a `Percentage` based on this number. Calculations using it will be rounded.
@@ -24,7 +24,7 @@ fun Number.percent(): Percentage = percent(Rounding.no())
  *
  * @return The [Percentage] value of this number.
  */
-infix fun Number.percent(precision: Int): Percentage = percent(Rounding.to(precision))
+public infix fun Number.percent(precision: Int): Percentage = percent(Rounding.to(precision))
 
 /**
  * Creates a `Percentage` based on this number. Calculations using it will be rounded.
@@ -35,22 +35,22 @@ infix fun Number.percent(precision: Int): Percentage = percent(Rounding.to(preci
  *
  * @return The [Percentage] value of this number.
  */
-infix fun Number.percent(rounding: Rounding): Percentage = Percentage.of(this, rounding)
+public infix fun Number.percent(rounding: Rounding): Percentage = Percentage.of(this, rounding)
 
 /**
  * Alias to [Number.percent].
  */
-fun Number.toPercentage(): Percentage = percent()
+public fun Number.toPercentage(): Percentage = percent()
 
 /**
  * Alias to [Number.percent].
  */
-infix fun Number.toPercentage(precision: Int): Percentage = percent(precision)
+public infix fun Number.toPercentage(precision: Int): Percentage = percent(precision)
 
 /**
  * Alias to [Number.percent].
  */
-infix fun Number.toPercentage(rounding: Rounding): Percentage = percent(rounding)
+public infix fun Number.toPercentage(rounding: Rounding): Percentage = percent(rounding)
 
 /**
  * Creates a `Percentage` based on the ratio of this number and other number. Calculations using it won't be rounded.
@@ -74,7 +74,7 @@ infix fun Number.toPercentage(rounding: Rounding): Percentage = percent(rounding
  *
  * @see Percentage.ratioOf
  */
-infix fun Number.ratioOf(other: Number): Percentage = ratioOf(other, Rounding.no())
+public infix fun Number.ratioOf(other: Number): Percentage = ratioOf(other, Rounding.no())
 
 /**
  * Creates a `Percentage` based on the ratio of this number and other number. Calculations using it will be rounded.
@@ -96,7 +96,7 @@ infix fun Number.ratioOf(other: Number): Percentage = ratioOf(other, Rounding.no
  *
  * @see Percentage.ratioOf
  */
-fun Number.ratioOf(other: Number, precision: Int): Percentage = ratioOf(other, Rounding.to(precision))
+public fun Number.ratioOf(other: Number, precision: Int): Percentage = ratioOf(other, Rounding.to(precision))
 
 /**
  * Creates a `Percentage` based on the ratio of this number and other number. Calculations using it will be rounded.
@@ -117,7 +117,7 @@ fun Number.ratioOf(other: Number, precision: Int): Percentage = ratioOf(other, R
  *
  * @see Percentage.ratioOf
  */
-fun Number.ratioOf(other: Number, rounding: Rounding): Percentage = Percentage.ratioOf(this, other, rounding)
+public fun Number.ratioOf(other: Number, rounding: Rounding): Percentage = Percentage.ratioOf(this, other, rounding)
 
 /**
  * Creates a `Percentage` which represents the relative change of this number to another number. Calculations using it
@@ -147,7 +147,7 @@ fun Number.ratioOf(other: Number, rounding: Rounding): Percentage = Percentage.r
  *
  * @return A [Percentage] that represents the percentage change of this number and the other number.
  */
-infix fun Number.relativeChange(other: Number): Percentage = relativeChange(other, Rounding.no())
+public infix fun Number.relativeChange(other: Number): Percentage = relativeChange(other, Rounding.no())
 
 /**
  * Creates a `Percentage` which represents the relative change of this number to another number. Calculations using it
@@ -175,7 +175,8 @@ infix fun Number.relativeChange(other: Number): Percentage = relativeChange(othe
  *
  * @return A [Percentage] that represents the percentage change of this number and the other number.
  */
-fun Number.relativeChange(other: Number, precision: Int): Percentage = relativeChange(other, Rounding.to(precision))
+public fun Number.relativeChange(other: Number, precision: Int): Percentage =
+    relativeChange(other, Rounding.to(precision))
 
 /**
  * Creates a `Percentage` which represents the relative change of this number to another number. Calculations using it
@@ -202,7 +203,7 @@ fun Number.relativeChange(other: Number, precision: Int): Percentage = relativeC
  *
  * @return A [Percentage] that represents the percentage change of this number and the other number.
  */
-fun Number.relativeChange(other: Number, rounding: Rounding): Percentage =
+public fun Number.relativeChange(other: Number, rounding: Rounding): Percentage =
     Percentage.relativeChange(this, other, rounding)
 
 /**
@@ -226,7 +227,7 @@ fun Number.relativeChange(other: Number, rounding: Rounding): Percentage =
  *
  * @return The number that this number represents as the given [Percentage].
  */
-infix fun Number.valueWhen(percentage: Percentage): Double = percentage valueWhen this
+public infix fun Number.valueWhen(percentage: Percentage): Double = percentage valueWhen this
 
 /**
  * Multiplies this number by the given `Percentage`.
@@ -239,7 +240,7 @@ infix fun Number.valueWhen(percentage: Percentage): Double = percentage valueWhe
  *
  * @see Percentage.times
  */
-operator fun Number.times(percentage: Percentage): Double = percentage * this
+public operator fun Number.times(percentage: Percentage): Double = percentage * this
 
 /**
  * Increases this number by the given `Percentage`.
@@ -252,7 +253,7 @@ operator fun Number.times(percentage: Percentage): Double = percentage * this
  *
  * @see Percentage.increase
  */
-infix fun Number.increaseBy(percentage: Percentage): Number = percentage increase this
+public infix fun Number.increaseBy(percentage: Percentage): Number = percentage increase this
 
 /**
  * Decreases this number by the given `Percentage`.
@@ -265,4 +266,4 @@ infix fun Number.increaseBy(percentage: Percentage): Number = percentage increas
  *
  * @see Percentage.decrease
  */
-infix fun Number.decreaseBy(percentage: Percentage): Number = percentage decrease this
+public infix fun Number.decreaseBy(percentage: Percentage): Number = percentage decrease this

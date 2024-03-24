@@ -48,48 +48,48 @@ import kotlin.math.round
  * @param[rounding] The [Rounding] strategy to round the decimal representation of the [Percentage].
  */
 @Suppress("TooManyFunctions")
-class Percentage private constructor(value: Number, private val rounding: Rounding) : Comparable<Percentage> {
+public class Percentage private constructor(value: Number, private val rounding: Rounding) : Comparable<Percentage> {
     /**
      * The percentage value.
      */
-    val value: Double = value.toDouble()
+    public val value: Double = value.toDouble()
 
     /**
      * The percentage decimal value.
      */
-    val decimal: Double = this.value / PERCENT
+    public val decimal: Double = this.value / PERCENT
 
     /**
      * true if the `Percentage` is zero.
      */
-    val isZero: Boolean = 0.0 == decimal
+    public val isZero: Boolean = 0.0 == decimal
 
     /**
      * true if the `Percentage` is not zero.
      */
-    val isNotZero: Boolean = !isZero
+    public val isNotZero: Boolean = !isZero
 
     /**
      * true if the `Percentage` is positive.
      */
-    val isPositive: Boolean = 0 < decimal
+    public val isPositive: Boolean = 0 < decimal
 
     /**
      * true if the `Percentage` is positive or zero.
      */
-    val isPositiveOrZero: Boolean = isPositive || isZero
+    public val isPositiveOrZero: Boolean = isPositive || isZero
 
     /**
      * true if the `Percentage` is negative.
      */
-    val isNegative: Boolean = 0 > decimal
+    public val isNegative: Boolean = 0 > decimal
 
     /**
      * true if the `Percentage` is negative or zero.
      */
-    val isNegativeOrZero: Boolean = isNegative || isZero
+    public val isNegativeOrZero: Boolean = isNegative || isZero
 
-    companion object {
+    public companion object {
         private const val PERCENT: Double = 100.0
         private val noRounding: NoRounding = Rounding.no()
 
@@ -98,7 +98,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          *
          * @return A [Percentage].
          */
-        fun of(value: Number): Percentage = of(value, noRounding)
+        public fun of(value: Number): Percentage = of(value, noRounding)
 
         /**
          * Creates a `Percentage` based on a number. Calculations using it will be rounded.
@@ -109,7 +109,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          *
          * @return A [Percentage].
          */
-        fun of(value: Number, precision: Int): Percentage = of(value, Rounding.to(precision))
+        public fun of(value: Number, precision: Int): Percentage = of(value, Rounding.to(precision))
 
         /**
          * Creates a `Percentage` based on a number. Calculations using it will be rounded.
@@ -118,7 +118,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          *
          * @return A [Percentage].
          */
-        fun of(value: Number, rounding: Rounding): Percentage = Percentage(value, rounding)
+        public fun of(value: Number, rounding: Rounding): Percentage = Percentage(value, rounding)
 
         /**
          * Creates a `Percentage` based on the ratio of two numbers. Calculations using it won't be rounded.
@@ -135,7 +135,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          *
          * @return A [Percentage] that represents the ratio of [number] and [other].
          */
-        fun ratioOf(number: Number, other: Number): Percentage = ratioOf(number, other, noRounding)
+        public fun ratioOf(number: Number, other: Number): Percentage = ratioOf(number, other, noRounding)
 
         /**
          * Creates a `Percentage` based on the ratio of two numbers. Calculations using it will be rounded.
@@ -155,7 +155,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          *
          * @return A [Percentage] that represents the ratio of [number] and [other].
          */
-        fun ratioOf(number: Number, other: Number, precision: Int): Percentage =
+        public fun ratioOf(number: Number, other: Number, precision: Int): Percentage =
             ratioOf(number, other, Rounding.to(precision))
 
         /**
@@ -172,7 +172,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          *
          * @return A [Percentage] that represents the ratio of [number] and [other].
          */
-        fun ratioOf(number: Number, other: Number, rounding: Rounding): Percentage =
+        public fun ratioOf(number: Number, other: Number, rounding: Rounding): Percentage =
             require(0 != other) { "The argument \"other\" can not be zero" }.run {
                 of(number.toDouble() / other.toDouble() * PERCENT, rounding)
             }
@@ -200,7 +200,8 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          *
          * @return A [Percentage] that represents the percentage change of an initial and ending numbers.
          */
-        fun relativeChange(initial: Number, ending: Number): Percentage = relativeChange(initial, ending, noRounding)
+        public fun relativeChange(initial: Number, ending: Number): Percentage =
+            relativeChange(initial, ending, noRounding)
 
         /**
          * Creates a `Percentage` which represents the relative change of an initial and ending numbers. Calculations
@@ -228,7 +229,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          *
          * @return A [Percentage] that represents the percentage change of an initial and ending numbers.
          */
-        fun relativeChange(initial: Number, ending: Number, precision: Int): Percentage =
+        public fun relativeChange(initial: Number, ending: Number, precision: Int): Percentage =
             relativeChange(initial, ending, Rounding.to(precision))
 
         /**
@@ -255,7 +256,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
          *
          * @return A [Percentage] that represents the percentage change of an initial and ending numbers.
          */
-        fun relativeChange(initial: Number, ending: Number, rounding: Rounding): Percentage = when {
+        public fun relativeChange(initial: Number, ending: Number, rounding: Rounding): Percentage = when {
             0 == initial && 0 == ending -> of(0, rounding)
             else -> {
                 require(0 != initial) { "The argument \"initial\" can not be zero" }
@@ -273,7 +274,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
      *
      * @return A [Percentage] with the precision scale.
      */
-    infix fun with(precision: Int): Percentage = with(rounding with precision)
+    public infix fun with(precision: Int): Percentage = with(rounding with precision)
 
     /**
      * Creates a `Percentage` based on this one with a new rounding strategy. Calculations using it will be rounded.
@@ -282,7 +283,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
      *
      * @return A [Percentage] with the rounding strategy.
      */
-    infix fun with(rounding: Rounding): Percentage = of(value, rounding)
+    public infix fun with(rounding: Rounding): Percentage = of(value, rounding)
 
     /**
      * Calculates the base value of a number for the current `Percentage`. This method helps to answer the question:
@@ -296,7 +297,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
      *
      * @return The number that the given number represents as the current [Percentage].
      */
-    infix fun valueWhen(number: Number): Double =
+    public infix fun valueWhen(number: Number): Double =
         check(0.0 != decimal) { "This operation can not execute when Percentage is zero" }.run {
             round { number.toDouble() / decimal }
         }
@@ -306,14 +307,14 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
      *
      * @return A positive [Percentage] object.
      */
-    operator fun unaryPlus(): Percentage = if (isPositive) this else of(value * -1, rounding)
+    public operator fun unaryPlus(): Percentage = if (isPositive) this else of(value * -1, rounding)
 
     /**
      * Creates a `Percentage` after negating this one.
      *
      * @return A [Percentage] object with the negation applied.
      */
-    operator fun unaryMinus(): Percentage = of(value * -1, rounding)
+    public operator fun unaryMinus(): Percentage = of(value * -1, rounding)
 
     /**
      * Multiplies this `Percentage` by a number.
@@ -322,7 +323,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
      *
      * @return The resulting value.
      */
-    operator fun times(number: Number): Double = round { number.toDouble() * decimal }
+    public operator fun times(number: Number): Double = round { number.toDouble() * decimal }
 
     /**
      * Increases a number by this `Percentage`.
@@ -331,7 +332,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
      *
      * @return The resulting value.
      */
-    infix fun increase(number: Number): Double = number.toDouble().let { whole ->
+    public infix fun increase(number: Number): Double = number.toDouble().let { whole ->
         round { whole + whole * decimal }
     }
 
@@ -342,7 +343,7 @@ class Percentage private constructor(value: Number, private val rounding: Roundi
      *
      * @return The resulting value.
      */
-    infix fun decrease(number: Number): Double = number.toDouble().let { whole ->
+    public infix fun decrease(number: Number): Double = number.toDouble().let { whole ->
         round { whole - whole * decimal }
     }
 
