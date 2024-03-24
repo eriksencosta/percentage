@@ -1,13 +1,13 @@
-# Posotos
+# Percentage
 
 [![Codacy code quality](https://app.codacy.com/project/badge/Grade/5feda3d6ceb54ec58806b144bc77f606)](https://app.codacy.com/gh/eriksencosta/percentage/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Codacy code coverage](https://app.codacy.com/project/badge/Coverage/5feda3d6ceb54ec58806b144bc77f606)](https://app.codacy.com/gh/eriksencosta/percentage/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 
-Posostos is a library that makes percentage calculations easy in Kotlin.
+Percentage calculations made easy in Kotlin.
 
 ## Installation
 
-Add Posotos to your Gradle build script:
+Add Percentage to your Gradle build script:
 
 ```kotlin
 repositories {
