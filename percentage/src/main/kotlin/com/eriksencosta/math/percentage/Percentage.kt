@@ -2,7 +2,7 @@ package com.eriksencosta.math.percentage
 
 import com.eriksencosta.math.common.NoRounding
 import com.eriksencosta.math.common.Rounding
-import java.util.*
+import java.util.Objects.hash
 import kotlin.math.abs
 import kotlin.math.round
 
@@ -367,7 +367,7 @@ public class Percentage private constructor(value: Number, private val rounding:
     override fun equals(other: Any?): Boolean = this === other ||
         (other is Percentage && decimal == other.decimal && rounding == other.rounding)
 
-    override fun hashCode(): Int = Objects.hash(decimal, rounding)
+    override fun hashCode(): Int = hash(decimal, rounding)
 
     override fun toString(): String = (if (abs(value) - abs(round(value)) == 0.0) "%.0f%%" else "%.2f%%").format(value)
 }
