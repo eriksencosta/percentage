@@ -83,7 +83,7 @@ jobs:
 
     - name: Submit code coverage to Codacy
       uses: codacy/codacy-coverage-reporter-action@v1.3.0
-      if: ${{ env.CODACY_ENABLE == 'yes' }}
+      if: env.CODACY_ENABLE == 'yes'
       with:
         project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
         coverage-reports: percentage/build/reports/jacoco/test/jacocoTestReport.xml
