@@ -100,7 +100,7 @@ tasks {
                 sourceLink {
                     localDirectory.set(file("src/main/kotlin"))
                     remoteUrl.set(
-                        URI("https://github.com/eriksencosta/percentage/tree/trunk/lib/src/main/kotlin").toURL()
+                        URI("https://github.com/eriksencosta/math-percentage/tree/trunk/percentage/src/main/kotlin").toURL()
                     )
                     remoteLineSuffix.set("#L")
                 }
@@ -192,7 +192,7 @@ publishing {
         create<MavenPublication>("pom") {
             pom {
                 description = "Percentage calculation made easy"
-                url = "https://github.com/eriksencosta/percentage"
+                url = "https://github.com/eriksencosta/math-percentage"
 
                 developers {
                     developer {
@@ -209,18 +209,18 @@ publishing {
                 }
 
                 scm {
-                    url = "git@github.com:eriksencosta/percentage.git"
+                    url = "git@github.com:eriksencosta/math-percentage.git"
                     tag = "trunk"
                 }
 
                 issueManagement {
                     system = "GitHub"
-                    url = "https://github.com/eriksencosta/percentage/issues"
+                    url = "https://github.com/eriksencosta/math-percentage/issues"
                 }
 
                 ciManagement {
                     system = "GitHub Actions"
-                    url = "https://github.com/eriksencosta/percentage/actions"
+                    url = "https://github.com/eriksencosta/math-percentage/actions"
                 }
 
                 // Dependencies
