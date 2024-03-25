@@ -54,15 +54,18 @@ public infix fun Number.toPercentage(rounding: Rounding): Percentage = percent(r
 
 /**
  * Creates a `Percentage` based on the ratio of this number and other number. Calculations using it won't be rounded.
- *
  * Example:
  *
- *     val x = 1.ratioOf(5)
- *     println(x) // Prints: 20%
+ * ```
+ * val x = 1.ratioOf(5)
+ * println(x) // Prints: 20%
+ * ```
  *
  * Or using the infix notation:
  *
- *     1 ratioOf 5
+ * ```
+ * 1 ratioOf 5
+ * ```
  *
  * @receiver[Number]
  *
@@ -78,11 +81,12 @@ public infix fun Number.ratioOf(other: Number): Percentage = ratioOf(other, Roun
 
 /**
  * Creates a `Percentage` based on the ratio of this number and other number. Calculations using it will be rounded.
- *
  * Example:
  *
- *     val x = 1.ratioOf(5, 2)
- *     println(x) // Prints: 20%
+ * ```
+ * val x = 1.ratioOf(5, 2)
+ * println(x) // Prints: 20%
+ * ```
  *
  * @receiver[Number]
  *
@@ -100,11 +104,12 @@ public fun Number.ratioOf(other: Number, precision: Int): Percentage = ratioOf(o
 
 /**
  * Creates a `Percentage` based on the ratio of this number and other number. Calculations using it will be rounded.
- *
  * Example:
  *
- *     val x = 1.ratioOf(5, Rounding.to(2, RoundingMode.HALF_DOWN))
- *     println(x) // Prints: 20%
+ * ```
+ * val x = 1.ratioOf(5, Rounding.to(2, RoundingMode.HALF_DOWN))
+ * println(x) // Prints: 20%
+ * ```
  *
  * @receiver[Number]
  *
@@ -121,16 +126,18 @@ public fun Number.ratioOf(other: Number, rounding: Rounding): Percentage = Perce
 
 /**
  * Creates a `Percentage` which represents the relative change of this number to another number. Calculations using it
- * won't be rounded.
+ * won't be rounded. Example:
  *
- * Example:
- *
- *     val x = 1.changeOf(5)
- *     println(x) // Prints: 400%
+ * ```
+ * val x = 1.changeOf(5)
+ * println(x) // Prints: 400%
+ * ```
  *
  * Or using the infix notation:
  *
- *     1 changeOf 5
+ * ```
+ * 1 changeOf 5
+ * ```
  *
  * When this Number is zero, an `ArgumentCanNotBeZero` exception is thrown as the relative change for this case
  * [is not defined](https://en.wikipedia.org/wiki/Relative_change).
@@ -151,12 +158,12 @@ public infix fun Number.relativeChange(other: Number): Percentage = relativeChan
 
 /**
  * Creates a `Percentage` which represents the relative change of this number to another number. Calculations using it
- * will be rounded.
+ * will be rounded. Example:
  *
- * Example:
- *
- *     val x = 1.changeOf(5, 2)
- *     println(x) // Prints: 400%
+ * ```
+ * val x = 1.changeOf(5, 2)
+ * println(x) // Prints: 400%
+ * ```
  *
  * When this Number is zero, an `ArgumentCanNotBeZero` exception is thrown as the relative change for this case
  * [is not defined](https://en.wikipedia.org/wiki/Relative_change).
@@ -180,12 +187,12 @@ public fun Number.relativeChange(other: Number, precision: Int): Percentage =
 
 /**
  * Creates a `Percentage` which represents the relative change of this number to another number. Calculations using it
- * will be rounded.
+ * will be rounded. Example:
  *
- * Example:
- *
- *     val x = 1.changeOf(5, Rounding.to(2, RoundingMode.HALF_DOWN))
- *     println(x) // Prints: 400%
+ * ```
+ * val x = 1.changeOf(5, Rounding.to(2, RoundingMode.HALF_DOWN))
+ * println(x) // Prints: 400%
+ * ```
  *
  * When this Number is zero, an `ArgumentCanNotBeZero` exception is thrown as the relative change for this case
  * [is not defined](https://en.wikipedia.org/wiki/Relative_change).
@@ -210,14 +217,16 @@ public fun Number.relativeChange(other: Number, rounding: Rounding): Percentage 
  * Calculates the base value of this number for the given `Percentage`. This method helps to answer the question:
  * "5 is 20% of what number?" Example:
  *
- * Example:
- *
- *     val x = 5
- *     x.of(Percentage(20)) // Results: 25.0 as 5 is 20% of 25
+ * ```
+ * val x = 5
+ * x.of(Percentage(20)) // Results: 25.0 as 5 is 20% of 25
+ * ```
  *
  * Or using the infix notation:
  *
- *     x of 20.percent()
+ * ```
+ * x of 20.percent()
+ * ```
  *
  * @receiver[Number]
  *

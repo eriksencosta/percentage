@@ -12,35 +12,45 @@ import kotlin.math.round
  * To create a `Percentage`, just pass the desired percentage value to its factory method. For example, to create a
  * `Percentage` for 25%, do:
  *
- *     val percentage = Percentage.of(25)
+ * ```
+ * val percentage = Percentage.of(25)
+ * ```
  *
  * Then you can do percentage calculations like multiplication, increase, and decrease:
  *
- *     val number = 100
- *     percentage * number        // Results: 25.0
- *     percentage increase number // Results: 125.0
- *     percentage decrease number // Results: 75.0
+ * ```
+ * val number = 100
+ * percentage * number        // Results: 25.0
+ * percentage increase number // Results: 125.0
+ * percentage decrease number // Results: 75.0
+ * ```
  *
  * You can also query the `Percentage` value (the original number you passed to the factory method) and its decimal
  * value (the value used for the calculations):
  *
- *     percentage.value   // Results: 25.0
- *     percentage.decimal // Results: 0.25
+ * ```
+ * percentage.value   // Results: 25.0
+ * percentage.decimal // Results: 0.25
+ * ```
  *
  * You can also round the percentage calculations results. Just pass the number of desired decimal places as the
  * `precision` argument:
  *
- *     val noRoundingPercentage = Percentage.of(23)
- *     val roundingPercentage = Percentage.of(23, 2)
+ * ```
+ * val noRoundingPercentage = Percentage.of(23)
+ * val roundingPercentage = Percentage.of(23, 2)
  *
- *     val number = 57
- *     println(noRoundingPercentage * number)  // Prints: 13.110000000000001
- *     println(roundingPercentage * number)    // Prints: 13.11
+ * val number = 57
+ * println(noRoundingPercentage * number)  // Prints: 13.110000000000001
+ * println(roundingPercentage * number)    // Prints: 13.11
+ * ```
  *
  * By default, the rounding mode used to round the value is [java.math.RoundingMode.HALF_UP]. If you need to use
  * another mode, use the factory method which receives a [Rounding] as an argument:
  *
- *     Percentage.of(50, Rounding.to(2, RoundingMode.HALF_DOWN))
+ * ```
+ * Percentage.of(50, Rounding.to(2, RoundingMode.HALF_DOWN))
+ * ```
  *
  * The `Percentage` class is immutable and thread-safe.
  *
@@ -121,12 +131,12 @@ public class Percentage private constructor(value: Number, private val rounding:
         public fun of(value: Number, rounding: Rounding): Percentage = Percentage(value, rounding)
 
         /**
-         * Creates a `Percentage` based on the ratio of two numbers. Calculations using it won't be rounded.
+         * Creates a `Percentage` based on the ratio of two numbers. Calculations using it won't be rounded. Example:
          *
-         * Example:
-         *
-         *     val x = Percentage.ratioOf(1, 5)
-         *     println(x) // Prints: 20%
+         * ```
+         * val x = Percentage.ratioOf(1, 5)
+         * println(x) // Prints: 20%
+         * ```
          *
          * @param[number] The first number.
          * @param[other]  The second number.
@@ -138,12 +148,12 @@ public class Percentage private constructor(value: Number, private val rounding:
         public fun ratioOf(number: Number, other: Number): Percentage = ratioOf(number, other, noRounding)
 
         /**
-         * Creates a `Percentage` based on the ratio of two numbers. Calculations using it will be rounded.
+         * Creates a `Percentage` based on the ratio of two numbers. Calculations using it will be rounded. Example:
          *
-         * Example:
-         *
-         *     val x = Percentage.ratioOf(1, 5, 2)
-         *     println(x) // Prints: 20%
+         * ```
+         * val x = Percentage.ratioOf(1, 5, 2)
+         * println(x) // Prints: 20%
+         * ```
          *
          * @param[number]    The first number.
          * @param[other]     The second number.
@@ -159,12 +169,12 @@ public class Percentage private constructor(value: Number, private val rounding:
             ratioOf(number, other, Rounding.to(precision))
 
         /**
-         * Creates a `Percentage` based on the ratio of two numbers. Calculations using it will be rounded.
+         * Creates a `Percentage` based on the ratio of two numbers. Calculations using it will be rounded. Example:
          *
-         * Example:
-         *
-         *     val x = Percentage.ratioOf(1, 5, Rounding.to(2, RoundingMode.HALF_DOWN))
-         *     println(x) // Prints: 20%
+         * ```
+         * val x = Percentage.ratioOf(1, 5, Rounding.to(2, RoundingMode.HALF_DOWN))
+         * println(x) // Prints: 20%
+         * ```
          *
          * @param[number]   The first number.
          * @param[other]    The second number.
@@ -179,12 +189,12 @@ public class Percentage private constructor(value: Number, private val rounding:
 
         /**
          * Creates a `Percentage` which represents the relative change of an initial and ending numbers. Calculations
-         * using it won't be rounded.
+         * using it won't be rounded. Example:
          *
-         * Example:
-         *
-         *     val x = Percentage.relativeChange(1, 5)
-         *     println(x) // Prints: 400%
+         * ```
+         * val x = Percentage.relativeChange(1, 5)
+         * println(x) // Prints: 400%
+         * ```
          *
          * When the initial number is zero, an `ArgumentCanNotBeZero` exception is thrown as the relative change for
          * this case [is not defined](https://en.wikipedia.org/wiki/Relative_change).
@@ -205,12 +215,12 @@ public class Percentage private constructor(value: Number, private val rounding:
 
         /**
          * Creates a `Percentage` which represents the relative change of an initial and ending numbers. Calculations
-         * using it will be rounded.
+         * using it will be rounded. Example:
          *
-         * Example:
-         *
-         *     val x = Percentage.relativeChange(1, 5, 2)
-         *     println(x) // Prints: 400%
+         * ```
+         * val x = Percentage.relativeChange(1, 5, 2)
+         * println(x) // Prints: 400%
+         * ```
          *
          * When the initial number is zero, an `ArgumentCanNotBeZero` exception is thrown as the relative change for
          * this case [is not defined](https://en.wikipedia.org/wiki/Relative_change).
@@ -234,12 +244,12 @@ public class Percentage private constructor(value: Number, private val rounding:
 
         /**
          * Creates a `Percentage` which represents the relative change of an initial and ending numbers. Calculations
-         * using it will be rounded.
+         * using it will be rounded. Example:
          *
-         * Example:
-         *
-         *     val x = Percentage.relativeChange(1, 5, Rounding.to(2, RoundingMode.HALF_DOWN))
-         *     println(x) // Prints: 400%
+         * ```
+         * val x = Percentage.relativeChange(1, 5, Rounding.to(2, RoundingMode.HALF_DOWN))
+         * println(x) // Prints: 400%
+         * ```
          *
          * When the initial number is zero, an `ArgumentCanNotBeZero` exception is thrown as the relative change for
          * this case [is not defined](https://en.wikipedia.org/wiki/Relative_change).
@@ -289,7 +299,9 @@ public class Percentage private constructor(value: Number, private val rounding:
      * Calculates the base value of a number for the current `Percentage`. This method helps to answer the question:
      * "5 is 20% of what number?" Example:
      *
-     *     Percentage.of(20).valueWhen(5) // Results: 25.0 as 5 is 20% of 25
+     * ```
+     * Percentage.of(20).valueWhen(5) // Results: 25.0 as 5 is 20% of 25
+     * ```
      *
      * @param[number] The number to find its base value when representing this [Percentage].
      *
