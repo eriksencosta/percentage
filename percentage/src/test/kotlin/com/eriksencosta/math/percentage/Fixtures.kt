@@ -12,6 +12,10 @@ internal object Fixtures {
     private val halfDown = RoundingMode.HALF_DOWN
     private val halfEven = RoundingMode.HALF_EVEN
 
+    private val zero = Percentage.of(0)
+    private val one = Percentage.of(1)
+    private val minusOne = Percentage.of(-1)
+
     val accessors = listOf(
         AccessorsTestTable(
             number = -1,
@@ -40,6 +44,25 @@ internal object Fixtures {
             isNegative = false,
             isNegativeOrZero = false
         )
+    )
+
+    val ratioOf = listOf(
+        Triple(0, 1, Percentage.of(0)),
+        Triple(1, 2, Percentage.of(50)),
+        Triple(1, -2, Percentage.of(-50)),
+        Triple(-1, -2, Percentage.of(50)),
+    )
+
+    val ratioOfWithPrecision = listOf(
+        Quadruple(1, 2, 1, Percentage.of(50, 1)),
+        Quadruple(1, -2, 2, Percentage.of(-50, 2)),
+        Quadruple(-1, -2, 3, Percentage.of(50, 3)),
+    )
+
+    val ratioOfWithRounding = listOf(
+        Quadruple(1, 2, Rounding.no(), Percentage.of(50, Rounding.no())),
+        Quadruple(1, -2, Rounding.to(2, up), Percentage.of(-50, Rounding.to(2, up))),
+        Quadruple(-1, -2, Rounding.to(3, down), Percentage.of(50, Rounding.to(3, down))),
     )
 
     val relativeChange = listOf(
@@ -80,7 +103,7 @@ internal object Fixtures {
         Quadruple(0, 0, 14, Percentage.of(0, 14)),
     )
 
-    val roundedChangeWithPrecision = listOf(
+    val relativeChangeWithRounding = listOf(
         Quadruple(
             50,
             -250,
@@ -151,23 +174,35 @@ internal object Fixtures {
         ),
     )
 
-    val ratioOf = listOf(
-        Triple(0, 1, Percentage.of(0)),
-        Triple(1, 2, Percentage.of(50)),
-        Triple(1, -2, Percentage.of(-50)),
-        Triple(-1, -2, Percentage.of(50)),
+    val withPrecision = listOf(
+        Triple(Percentage.of(100), 2, Percentage.of(100, 2)),
+        Triple(Percentage.of(100), 4, Percentage.of(100, 4)),
+        Triple(Percentage.of(100, 4), 4, Percentage.of(100, 4)),
+        Triple(Percentage.of(100, 4), 6, Percentage.of(100, 6)),
+        Triple(Percentage.of(100, 6), 6, Percentage.of(100, 6)),
+        Triple(
+            Percentage.of(100, Rounding.to(6, RoundingMode.HALF_DOWN)),
+            6,
+            Percentage.of(100, Rounding.to(6, RoundingMode.HALF_DOWN))
+        ),
     )
 
-    val ratioOfWithPrecision = listOf(
-        Quadruple(1, 2, 1, Percentage.of(50, 1)),
-        Quadruple(1, -2, 2, Percentage.of(-50, 2)),
-        Quadruple(-1, -2, 3, Percentage.of(50, 3)),
-    )
-
-    val ratioOfWithRounding = listOf(
-        Quadruple(1, 2, Rounding.no(), Percentage.of(50, Rounding.no())),
-        Quadruple(1, -2, Rounding.to(2, up), Percentage.of(-50, Rounding.to(2, up))),
-        Quadruple(-1, -2, Rounding.to(3, down), Percentage.of(50, Rounding.to(3, down))),
+    val withRounding = listOf(
+        Triple(
+            Percentage.of(100),
+            Rounding.no(),
+            Percentage.of(100)
+        ),
+        Triple(
+            Percentage.of(100),
+            Rounding.to(2, RoundingMode.HALF_DOWN),
+            Percentage.of(100, Rounding.to(2, RoundingMode.HALF_DOWN))
+        ),
+        Triple(
+            Percentage.of(100, Rounding.to(2, RoundingMode.UP)),
+            Rounding.no(),
+            Percentage.of(100, Rounding.no())
+        ),
     )
 
     val valueWhen = listOf(
@@ -194,6 +229,36 @@ internal object Fixtures {
         Triple(Percentage.of((77 / 3.0 * 100)), 33.3, 1.2974025974025971),
         Triple(Percentage.of((77 / 3.0 * 100), Rounding.to(4)), 33.3, 1.2974),
         Triple(Percentage.of((77 / 3.0 * 100), Rounding.to(4, up)), 33.3, 1.2975),
+    )
+
+    val unaryPlus = listOf(
+        Pair(minusOne, one),
+        Pair(zero, zero),
+        Pair(one, one),
+
+        // Precision case
+        Pair(Percentage.of(-11.11, 4), Percentage.of(11.11, 4)),
+
+        // Rounding case
+        Pair(
+            Percentage.of(-11.11, Rounding.to(2, RoundingMode.HALF_DOWN)),
+            Percentage.of(11.11, Rounding.to(2, RoundingMode.HALF_DOWN))
+        ),
+    )
+
+    val unaryMinus = listOf(
+        Pair(one, minusOne),
+        Pair(zero, zero),
+        Pair(minusOne, one),
+
+        // Precision case
+        Pair(Percentage.of(11.11, 4), Percentage.of(-11.11, 4)),
+
+        // Rounding case
+        Pair(
+            Percentage.of(11.11, Rounding.to(2, RoundingMode.HALF_DOWN)),
+            Percentage.of(-11.11, Rounding.to(2, RoundingMode.HALF_DOWN))
+        ),
     )
 
     val times = listOf(
