@@ -2,11 +2,9 @@ import org.jetbrains.dokka.gradle.DokkaTask
 import java.net.URI
 import java.util.Locale
 
-val snapshotOption = System.getenv("SNAPSHOT_BUILD").let {
-    it.isNullOrBlank() || "yes" == it.lowercase(Locale.getDefault())
+val snapshot = System.getenv("SNAPSHOT_BUILD").let {
+    if (it.isNullOrBlank() || "yes" == it.lowercase(Locale.getDefault())) "-snapshot" else ""
 }
-
-val snapshot = if (snapshotOption) "-snapshot" else ""
 
 version = "%s%s".format(version, snapshot)
 
