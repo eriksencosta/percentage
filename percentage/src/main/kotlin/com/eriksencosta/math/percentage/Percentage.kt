@@ -311,7 +311,7 @@ public class Percentage private constructor(value: Number, private val rounding:
      */
     public infix fun valueWhen(number: Number): Double =
         check(0.0 != decimal) { "This operation can not execute when Percentage is zero" }.run {
-            round { number.toDouble() / decimal }
+            rounding.round { number.toDouble() / decimal }
         }
 
     /**
@@ -335,7 +335,7 @@ public class Percentage private constructor(value: Number, private val rounding:
      *
      * @return The resulting value.
      */
-    public operator fun times(number: Number): Double = round { number.toDouble() * decimal }
+    public operator fun times(number: Number): Double = rounding.round { number.toDouble() * decimal }
 
     /**
      * Increases a number by this `Percentage`.
@@ -345,7 +345,7 @@ public class Percentage private constructor(value: Number, private val rounding:
      * @return The resulting value.
      */
     public infix fun increase(number: Number): Double = number.toDouble().let { whole ->
-        round { whole + whole * decimal }
+        rounding.round { whole + whole * decimal }
     }
 
     /**
@@ -356,7 +356,7 @@ public class Percentage private constructor(value: Number, private val rounding:
      * @return The resulting value.
      */
     public infix fun decrease(number: Number): Double = number.toDouble().let { whole ->
-        round { whole - whole * decimal }
+        rounding.round { whole - whole * decimal }
     }
 
     override fun compareTo(other: Percentage): Int = if (decimal != other.decimal)
@@ -370,6 +370,4 @@ public class Percentage private constructor(value: Number, private val rounding:
     override fun hashCode(): Int = Objects.hash(decimal, rounding)
 
     override fun toString(): String = (if (abs(value) - abs(round(value)) == 0.0) "%.0f%%" else "%.2f%%").format(value)
-
-    private inline fun <T> T.round(block: T.() -> Double): Double = rounding.round(block(this))
 }
