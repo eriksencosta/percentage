@@ -18,6 +18,9 @@ concurrency:
 permissions:
   contents: read
 
+env:
+  CODACY_ENABLE: yes
+
 jobs:
   security-scan:
     name: Codacy Security Scan
